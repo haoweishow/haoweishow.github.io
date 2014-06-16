@@ -4,10 +4,10 @@
 
 url: http://haoweishow.github.io
 title: haoweishow Blog
-subtitle: 居安思危
+subtitle: 高性能/高并发/高可靠/架构/ESB/Java/Oracle/DB2
 author: haoweishow
 simple_search: https://www.google.com/search
-description:
+description: 郝伟的个人博客
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -92,6 +92,9 @@ delicious_count: 3
 # Disqus Comments
 disqus_short_name:
 disqus_show_comment_count: false
+
+# Duoshuo Comments
+duoshuo_show_comment_count: true
 
 # Google Analytics
 google_analytics_tracking_id:
