@@ -9,7 +9,10 @@
   <meta name="author" content="haoweishow">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="过程 按照octpress.org网站上的说明，本地安装完成，并成功部署到github上;
+访问http://haoweishow.com可以看到部署的页面;
+但是在通过safari访问repo,在网页上增加了README.md的文件，提交成功；
+然后本地修改其它配置，通过reke &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +69,73 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-16T00:00:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>过程</h2>
+
+<hr />
+
+<ol>
+<li>按照<a href="http://www.octpress.org">octpress.org</a>网站上的说明，本地安装完成，并成功部署到github上;</li>
+<li>访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;</li>
+<li>但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；</li>
+<li>然后本地修改其它配置，通过reke deploy的时候出现下面的错误<br/>
+ <code>To git@github.com:haoweishow/haoweishow.github.io.git</code><br/>
+ <code>! [rejected]        master -&gt; master (non-fast-forward)</code><br/>
+ <code>error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'</code><br/>
+ <code>hint: Updates were rejected because the tip of your current branch is behind</code><br/>
+ <code>hint: its remote counterpart. Integrate the remote changes (e.g.</code><br/>
+ <code>hint: 'git pull ...') before pushing again.</code><br/>
+ <code>hint: See the 'Note about fast-forwards' in 'git push --help' for details.</code></li>
+</ol>
+
+
+<h2>解决</h2>
+
+<hr />
+
+<ol>
+<li>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方案</a>;<br/>
+ 需要修改项目中Rakefile文件的内容：<br/>
+ 原始内容：system &ldquo;git push origin #{deploy_branch}&#8221;<br/>
+ 改后内容：system &#8220;git push origin +#{deploy_branch}&rdquo;  多个+号；<br/>
+ 再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，再回头将+号去掉；</li>
+<li>目前还存在的问题是repo的master分支上没有README.md文件。</li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -77,6 +147,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a>
+      </li>
     
   </ul>
 </section>
