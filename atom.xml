@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.github.io/atom.xml" rel="self"/>
   <link href="http://haoweishow.github.io/"/>
-  <updated>2014-06-16T13:40:48+08:00</updated>
+  <updated>2014-06-16T15:26:33+08:00</updated>
   <id>http://haoweishow.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[haoweishow]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
