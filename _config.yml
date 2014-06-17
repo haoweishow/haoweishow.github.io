@@ -6,7 +6,8 @@ url: http://haoweishow.github.io
 title: haoweishow Blog
 subtitle: 高性能/高并发/高可靠/架构/ESB/Java/Oracle/DB2
 author: haoweishow
-simple_search: https://www.google.com/search
+simple_search:
+  #https://www.google.com/search
 description: 郝伟的个人博客
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
@@ -50,7 +51,8 @@ titlecase: true       # Converts page and post titles to titlecase
 
 # list each of the sidebar modules you want to include, in the order you want them to appear.
 # To add custom asides, create files in /source/_includes/custom/asides/ and add them to the list like 'custom/asides/custom_aside_name.html'
-default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
+default_asides: [asides/recent_posts.html]
+#[asides/recent_posts.html, asides/github.html, asides/delicious.html, asides/pinboard.html, asides/googleplus.html]
 
 # Each layout uses the default asides, but they can have their own asides instead. Simply uncomment the lines below
 # and add an array with the asides you want to use.
@@ -95,6 +97,7 @@ disqus_show_comment_count: false
 
 # Duoshuo Comments
 duoshuo_show_comment_count: true
+duoshuo_short_name: haoweishow
 
 # Google Analytics
 google_analytics_tracking_id:
