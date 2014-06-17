@@ -2,19 +2,23 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://haoweishow.github.io/blog/2014/06/16/rake-deploy-failed/</loc>
-        <lastmod>2014-06-17T12:36:07+08:00</lastmod>
+        <lastmod>2014-06-17T16:50:01+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://haoweishow.github.io/404.html</loc>
+        <lastmod>2014-06-17T16:54:41+08:00</lastmod>
     </url>
     <url>
         <loc>http://haoweishow.github.io/about/</loc>
-        <lastmod>2014-06-17T12:42:21+08:00</lastmod>
+        <lastmod>2014-06-17T16:50:49+08:00</lastmod>
     </url>
     <url>
         <loc>http://haoweishow.github.io/blog/archives/</loc>
-        <lastmod>2014-06-17T12:42:21+08:00</lastmod>
+        <lastmod>2014-06-17T16:50:49+08:00</lastmod>
     </url>
     <url>
         <loc>http://haoweishow.github.io/</loc>
-        <lastmod>2014-06-16T23:25:38+08:00</lastmod>
+        <lastmod>2014-06-17T16:18:29+08:00</lastmod>
     </url>
     <url>
         <loc>http://haoweishow.github.io/robots.txt</loc>
