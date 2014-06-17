@@ -3,14 +3,14 @@ layout: post
 title: "rake deploy failed"
 date: 2014-06-16 17:20:04 +0800
 comments: true
-categories: [octopress] 
+categories: [octopress]
 ---
 ## 过程
 ***
 1.按照[octopress.org](http://www.octopress.org)网站上的说明，本地安装完成，并成功部署到github上;  
 2. 访问[http://haoweishow.com](http://haoweishow.com)可以看到部署的页面;
 3. 但是在通过safari访问[repo](https://github.com/haoweishow/haoweishow.github.io),在网页上增加了README.md的文件，提交成功；  
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误<!-- more -->    
+4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误<!-- more -->
     To git@github.com:haoweishow/haoweishow.github.io.git  
     ! [rejected]        master -> master (non-fast-forward)  
     error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'  
