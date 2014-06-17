@@ -16,7 +16,9 @@ keywords: Java,ESB,数据库
     {% if paginator.next_page %}
       <a class="prev" href="{{paginator.next_page}}">&larr; Older</a>
     {% endif %}
+    <!-- delete this href at 2014-06-17 by haowei-->
     <a href="/blog/archives">Blog Archives</a>
+
     {% if paginator.previous_page %}
     <a class="next" href="{{paginator.previous_page}}">Newer &rarr;</a>
     {% endif %}
