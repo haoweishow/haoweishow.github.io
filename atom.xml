@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.github.io/atom.xml" rel="self"/>
   <link href="http://haoweishow.github.io/"/>
-  <updated>2014-07-07T18:18:26+08:00</updated>
+  <updated>2014-07-07T22:17:13+08:00</updated>
   <id>http://haoweishow.github.io/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -42,7 +42,7 @@ bundle update
 rake install
 </code></pre>
 
-<p>设置github信息</p>
+<p>设置github信息<!-- more --></p>
 
 <pre><code>rake setup_github_pages
 输入：git@github.com:haoweishow/haoweishow.github.io.git
