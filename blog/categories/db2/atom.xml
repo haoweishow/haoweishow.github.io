@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
   <link href="http://haoweishow.github.io/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.github.io/"/>
-  <updated>2014-07-07T22:17:13+08:00</updated>
+  <updated>2014-07-08T14:27:21+08:00</updated>
   <id>http://haoweishow.github.io/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -22,8 +22,8 @@
 
 <hr />
 
-<p>操作系统：  CentOS <br/>
-数据库版本：DB2express-c <br/>
+<p>操作系统：  CentOS 6 <br/>
+数据库版本：db2_v101_linuxia32_expc <br/>
 数据库实例名称：esbinst<br/>
 实例用户名称：esbinst <br/>
 数据库安装成功 <br/>
