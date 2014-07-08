@@ -7,7 +7,7 @@ categories: octopress
 ---
 ## 背景
 ***
-操作系统：MacOS  
+操作系统：MacOS 10.9.4  
 已有域名：haoweishow.com
 
 ## 安装

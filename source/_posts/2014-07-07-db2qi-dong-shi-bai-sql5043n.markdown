@@ -7,8 +7,8 @@ categories: db2
 ---
 ## 背景
 ***
-操作系统：  CentOS   
-数据库版本：DB2express-c   
+操作系统：  CentOS 6   
+数据库版本：db2_v101_linuxia32_expc   
 数据库实例名称：esbinst  
 实例用户名称：esbinst   
 数据库安装成功   
