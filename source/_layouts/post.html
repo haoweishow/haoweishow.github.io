@@ -31,13 +31,6 @@ single: true
     <div id="disqus_thread" aria-live="polite">{% include post/disqus_thread.html %}</div>
   </section>
 {% endif %}
-<!-- add by haowei at 2014-06-16 for duoshuo_comment -->
-{% if site.duoshuo_show_comment_count and page.comments %}
-  <section>
-    <h1>Comments</h1>
-    <div id="comments" aria-live="polite">{% include post/duoshuo.html %}</div>
-  </section>
-{% endif %}
 </div>
 {% unless page.sidebar == false %}
 <aside class="sidebar">
