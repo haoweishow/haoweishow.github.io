@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>DB2启动失败(SQL5043N) - haoweishow Blog</title>
+  <meta name="author" content="haoweishow">
+
+  
+  <meta name="description" content="背景 操作系统： CentOS 6 数据库版本：db2_v101_linuxia32_expc 数据库实例名称：esbinst
+实例用户名称：esbinst 数据库安装成功 数据库实例创建成功 问题 执行db2start命令，启动数据库报错如下： SQL5043N Support for one &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="haoweishow Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/libs/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!--
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+-->
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">haoweishow Blog</a></h1>
+  
+    <h2>ESB/Java</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<ul class="main-navigation">
+  <li><a href="/">首页</a></li>
+  <li><a href="/blog/archives">归档</a></li>
+  <li><a href="/blog/about">关于</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">DB2启动失败(SQL5043N)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true">2014-07-07</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>背景</h2>
+
+<hr />
+
+<p>操作系统：  CentOS 6 <br/>
+数据库版本：db2_v101_linuxia32_expc <br/>
+数据库实例名称：esbinst<br/>
+实例用户名称：esbinst <br/>
+数据库安装成功 <br/>
+数据库实例创建成功</p>
+
+<h2>问题</h2>
+
+<hr />
+
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：</p>
+
+<pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
+</code></pre>
+
+<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。<!-- more --></p>
+
+<h2>排查</h2>
+
+<hr />
+
+<p>在实例用户的目录中查看日志</p>
+
+<pre><code>home/esbinst/sqllib/db2dump/db2diag.0.log  
+</code></pre>
+
+<p>存在如下的内容：</p>
+
+<pre><code>2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error  
+PID     : 25807                TID : 3025136496     PROC : db2sysc  
+INSTANCE: esbinst              NODE : 000  
+HOSTNAME: localhost.localdomain  
+EDUID   : 1                    EDUNAME: db2sysc  
+FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50  
+MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.  
+</code></pre>
+
+<h2>解决</h2>
+
+<hr />
+
+<p>Step1:</p>
+
+<pre><code>db2 update dbm cfg using SVCENAME esbinst  
+</code></pre>
+
+<p>Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：</p>
+
+<pre><code>esbinst     50000/tcp  
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">haoweishow</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true">2014-07-07</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/db2/'>db2</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/16/rake-deploy-failed/" title="Previous Post: rake deploy failed">&laquo; rake deploy failed</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/07/bu-shu-octopress/" title="Next Post: 部署octopress">部署octopress &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>文章分类</h1>
+    <ul id="category-list"><li><a href='/blog/categories/db2/'>db2 (1)</a></li><li><a href='/blog/categories/java/'>java (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li></ul>
+</section><section>
+  <h1>最近评论</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">格式化Java代码</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/07/bu-shu-octopress/">部署octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">DB2启动失败(SQL5043N)</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+<h1>最近评论</h1>
+<ul class="ds-recent-comments" data-num-items="10">
+</ul>
+<!--多说js加载开始，一个页面只需要加载一次 -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"haoweishow"};
+(function() {
+var ds = document.createElement('script');
+ds.type = 'text/javascript';
+ds.async = true;ds.src = 'http://static.duoshuo.com/embed.js';
+ds.charset = 'UTF-8';
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>
+<!--多说js加载结束，一个页面只需要加载一次 -->
+</section>
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - haoweishow -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

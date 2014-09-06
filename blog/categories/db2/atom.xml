@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
+  <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
+  <link href="http://haoweishow.com/"/>
+  <updated>2014-09-06T23:43:34+08:00</updated>
+  <id>http://haoweishow.com/</id>
+  <author>
+    <name><![CDATA[haoweishow]]></name>
+    <email><![CDATA[haoweishow@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[DB2启动失败(SQL5043N)]]></title>
+    <link href="http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/"/>
+    <updated>2014-07-07T16:41:11+08:00</updated>
+    <id>http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n</id>
+    <content type="html"><![CDATA[<h2>背景</h2>
+
+<hr />
+
+<p>操作系统：  CentOS 6 <br/>
+数据库版本：db2_v101_linuxia32_expc <br/>
+数据库实例名称：esbinst<br/>
+实例用户名称：esbinst <br/>
+数据库安装成功 <br/>
+数据库实例创建成功</p>
+
+<h2>问题</h2>
+
+<hr />
+
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：</p>
+
+<pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
+</code></pre>
+
+<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。<!-- more --></p>
+
+<h2>排查</h2>
+
+<hr />
+
+<p>在实例用户的目录中查看日志</p>
+
+<pre><code>home/esbinst/sqllib/db2dump/db2diag.0.log  
+</code></pre>
+
+<p>存在如下的内容：</p>
+
+<pre><code>2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error  
+PID     : 25807                TID : 3025136496     PROC : db2sysc  
+INSTANCE: esbinst              NODE : 000  
+HOSTNAME: localhost.localdomain  
+EDUID   : 1                    EDUNAME: db2sysc  
+FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50  
+MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.  
+</code></pre>
+
+<h2>解决</h2>
+
+<hr />
+
+<p>Step1:</p>
+
+<pre><code>db2 update dbm cfg using SVCENAME esbinst  
+</code></pre>
+
+<p>Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：</p>
+
+<pre><code>esbinst     50000/tcp  
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

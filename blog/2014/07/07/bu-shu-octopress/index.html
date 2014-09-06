@@ -5,12 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>haoweishow Blog</title>
+  <title>部署octopress - haoweishow Blog</title>
   <meta name="author" content="haoweishow">
 
   
-  <meta name="description" content="郝伟的博客">
-  <meta name="keywords" content="Java,ESB">
+  <meta name="description" content="背景 操作系统：MacOS 10.9.4
+已有域名：haoweishow.com 安装 克隆octopress cd /Users/haoweishow/Documents git clone git://github.com/imathis/octopress.git octopress &hellip;">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://haoweishow.com">
+  <link rel="canonical" href="http://haoweishow.com/blog/2014/07/07/bu-shu-octopress">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="haoweishow Blog" type="application/atom+xml">
@@ -59,74 +60,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">格式化Java代码</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T10:55:16+08:00" pubdate data-updated="true">2014-09-05</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>背景</h2>
-
-<hr />
-
-<ul>
-<li>产品中一个核心模块，会根据配置文件生成运行时的java代码（一个完整的java类）。</li>
-<li>自动生成的java类，没有对其进行格式化。</li>
-<li>排错时不方便阅读，代码量小还好，代码多的话，很难看清楚里面的逻辑，因此每次都是把代码拷贝到eclipse里面格式之后再看。</li>
-</ul>
-
-
-<h2>过程</h2>
-
-<hr />
-
-<ul>
-<li>搜索到这个文章,<a href="http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/">How to use the eclipse code formatter from your code</a>,自备梯子.</li>
-<li>作者是通过eclipse的formatter组件实现代码的格式化.</li>
-<li>按照文章的描述逐步实现,引入eclipse的10个jar包,可以实现代码的格式化.</li>
-<li>但是引入10个jar到项目中,过于复杂.</li>
-<li>该文章的评论中有人提到<a href="http://sourceforge.net/projects/jastyle/">jastyle</a>.</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">阅读全部 &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/07/bu-shu-octopress/">部署octopress</a></h1>
+      <h1 class="entry-title">部署octopress</h1>
     
     
       <p class="meta">
@@ -149,7 +88,7 @@
   </header>
 
 
-  <div class="entry-content"><h2>背景</h2>
+<div class="entry-content"><h2>背景</h2>
 
 <hr />
 
@@ -173,128 +112,113 @@ bundle update
 rake install
 </code></pre>
 
-<p>设置github信息</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/07/bu-shu-octopress/">阅读全部 &rarr;</a>
-    </footer>
-  
+<p>设置github信息<!-- more --></p>
 
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">DB2启动失败(SQL5043N)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true">2014-07-07</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>背景</h2>
-
-<hr />
-
-<p>操作系统：  CentOS 6 <br/>
-数据库版本：db2_v101_linuxia32_expc <br/>
-数据库实例名称：esbinst<br/>
-实例用户名称：esbinst <br/>
-数据库安装成功 <br/>
-数据库实例创建成功</p>
-
-<h2>问题</h2>
-
-<hr />
-
-<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：</p>
-
-<pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
+<pre><code>rake setup_github_pages
+输入：git@github.com:haoweishow/haoweishow.github.io.git
 </code></pre>
 
-<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">阅读全部 &rarr;</a>
-    </footer>
-  
+<p>设置域名信息</p>
 
+<pre><code>echo ‘haoweishow.com' &gt;&gt; source/CNAME
+</code></pre>
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true">2014-06-16</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>过程</h2>
+<h2>发布</h2>
 
 <hr />
 
-<p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
-2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
-3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/16/rake-deploy-failed/">阅读全部 &rarr;</a>
-    </footer>
-  
+<p>创建文章</p>
 
+<pre><code>alias rake='noglob rake'  #使rake命令支持[和]符号
+rake new_post['title']
+</code></pre>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+<p>编辑文章</p>
+
+<pre><code>本文使用Mou工具编写
+</code></pre>
+
+<p>提交文章</p>
+
+<pre><code>rake generate
+rake deploy               #将文章部署到github服务器上
+</code></pre>
+
+<p>提交源码</p>
+
+<pre><code>git add .
+git commit -m "xxxx"
+git push origin source    #将本地代码提交至github
+</code></pre>
+
+<h2>测试</h2>
+
+<hr />
+
+<p>在本地服务器上预览页面<br/>
+启动本地服务</p>
+
+<pre><code>rake preview  
+</code></pre>
+
+<p>访问本地页面</p>
+
+<pre><code>http://localhost:4000
+</code></pre>
 </div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">haoweishow</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T17:52:56+08:00" pubdate data-updated="true">2014-07-07</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/" title="Previous Post: DB2启动失败(SQL5043N)">&laquo; DB2启动失败(SQL5043N)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/09/05/ge-shi-hua-javadai-ma/" title="Next Post: 格式化Java代码">格式化Java代码 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -341,6 +265,7 @@ ds.charset = 'UTF-8';
 </section>
   
 </aside>
+
 
     </div>
   </div>
