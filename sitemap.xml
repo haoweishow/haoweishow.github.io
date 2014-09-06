@@ -3,6 +3,7 @@
   
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/blog/2014/09/05/ge-shi-hua-javadai-ma/</loc>
     <lastmod>2014-09-05T10:55:16+08:00</lastmod>
     <priority>0.8</priority>
@@ -10,47 +11,78 @@
   
   <url>
     <loc>http://haoweishow.com/blog/2014/07/07/bu-shu-octopress/</loc>
+=======
+    <loc>http://haoweishow.github.io/blog/2014/07/07/bu-shu-octopress/</loc>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <lastmod>2014-07-07T17:52:56+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/</loc>
+=======
+    <loc>http://haoweishow.github.io/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/</loc>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <lastmod>2014-07-07T16:41:11+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/blog/2014/06/16/rake-deploy-failed/</loc>
+=======
+    <loc>http://haoweishow.github.io/blog/2014/06/16/rake-deploy-failed/</loc>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <lastmod>2014-06-16T17:20:04+08:00</lastmod>
     <priority>0.8</priority>
   </url>
   
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/404.html</loc>
     <lastmod>2014-09-06T23:47:43+08:00</lastmod>
+=======
+    <loc>http://haoweishow.github.io/404.html</loc>
+    <lastmod>2014-07-09T14:54:05+08:00</lastmod>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/</loc>
     <lastmod>2014-09-06T23:47:43+08:00</lastmod>
+=======
+    <loc>http://haoweishow.github.io/</loc>
+    <lastmod>2014-07-09T14:54:05+08:00</lastmod>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/blog/archives/</loc>
     <lastmod>2014-09-06T23:47:43+08:00</lastmod>
+=======
+    <loc>http://haoweishow.github.io/blog/archives/</loc>
+    <lastmod>2014-07-09T14:54:05+08:00</lastmod>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
+<<<<<<< HEAD
     <loc>http://haoweishow.com/blog/about/</loc>
     <lastmod>2014-09-06T23:47:43+08:00</lastmod>
+=======
+    <loc>http://haoweishow.github.io/blog/about/</loc>
+    <lastmod>2014-07-09T14:54:05+08:00</lastmod>
+>>>>>>> bd32c2701873744325436b985042473d2571aa11
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
