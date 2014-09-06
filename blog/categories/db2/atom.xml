@@ -2,17 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
-<<<<<<< HEAD
   <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-09-06T23:47:43+08:00</updated>
+  <updated>2014-09-06T23:51:55+08:00</updated>
   <id>http://haoweishow.com/</id>
-=======
-  <link href="http://haoweishow.github.io/blog/categories/db2/atom.xml" rel="self"/>
-  <link href="http://haoweishow.github.io/"/>
-  <updated>2014-07-08T14:27:21+08:00</updated>
-  <id>http://haoweishow.github.io/</id>
->>>>>>> bd32c2701873744325436b985042473d2571aa11
   <author>
     <name><![CDATA[haoweishow]]></name>
     <email><![CDATA[haoweishow@gmail.com]]></email>
@@ -22,15 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[DB2启动失败(SQL5043N)]]></title>
-<<<<<<< HEAD
     <link href="http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/"/>
     <updated>2014-07-07T16:41:11+08:00</updated>
     <id>http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n</id>
-=======
-    <link href="http://haoweishow.github.io/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/"/>
-    <updated>2014-07-07T16:41:11+08:00</updated>
-    <id>http://haoweishow.github.io/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n</id>
->>>>>>> bd32c2701873744325436b985042473d2571aa11
     <content type="html"><![CDATA[<h2>背景</h2>
 
 <hr />
