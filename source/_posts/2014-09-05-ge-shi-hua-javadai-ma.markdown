@@ -13,11 +13,11 @@ categories: java
 
 ## 过程
 ***
-* 搜索到这个文章,[How to use the eclipse code formatter from your code](http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/),自备梯子.  
+* 搜索到这个文章,[How to use the eclipse code formatter from your code](http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/),自备梯子.<!-- more -->  
 * 作者是通过eclipse的formatter组件实现代码的格式化.   
 * 按照文章的描述逐步实现,引入eclipse的10个jar包,可以实现代码的格式化.   
 * 但是引入10个jar到项目中,过于复杂.   
-* 该文章的评论中有人提到[jastyle](http://sourceforge.net/projects/jastyle/).<!-- more -->    
+* 该文章的评论中有人提到[jastyle](http://sourceforge.net/projects/jastyle/).    
 
 ## 实现
 * 下载jastyle的源码,并导入到eclipse工程中,当然也可以直接下载jar包使用.下图是导入到ecipse里的源码,可以看到代码还是很精简独立的.      
