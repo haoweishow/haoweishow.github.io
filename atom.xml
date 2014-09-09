@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-09-09T17:40:54+08:00</updated>
+  <updated>2014-09-09T23:45:00+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[浦发银行ESB项目实施经验总结]]></title>
+    <link href="http://haoweishow.com/blog/2014/09/09/pu-fa-yin-xing-esbxiang-mu-shi-shi-jing-yan-zong-jie/"/>
+    <updated>2014-09-09T23:41:37+08:00</updated>
+    <id>http://haoweishow.com/blog/2014/09/09/pu-fa-yin-xing-esbxiang-mu-shi-shi-jing-yan-zong-jie</id>
+    <content type="html"><![CDATA[<h3>项目实施经验总结</h3>
+
+<hr />
+
+<ul>
+<li>XML报文的转义字符处理</li>
+<li>如果XML报文要传输不可见字符，则要制定相应的规范（例如转换成十六进制字符）</li>
+<li>数据库建表，添加约束，可以避免不必要的重复数据或者空数据，主键或者约束必须落在关键的字段上，否则无法避免关键数据的重复</li>
+<li>日志打印，info日志是描述做什么，debug日志描述怎么做的</li>
+<li>异常日志，没有特殊情况，不能把日志吞掉，相反，详细的输出出现异常情况时运行态相关的数据到日志中，可以方便问题定位</li>
+<li>数据从数据库加载到内存，如果是静态数据，可以先将数据落地到文件系统，再从文件系统加载到内存中，这样如果出现运行时异常，可以查看本地文件系统进行问题定位（此方法要结合实际情况）</li>
+<li>项目过程中的问题、环境、联系人等一些静态信息，可以使用wiki或者blog系统存放，这样的好处是查看、检索、修订方便</li>
+<li>项目组环境等信息及时更新，记录到文档中，方便归档，但是不方便使用；</li>
+<li>问题总结清单</li>
+<li>每次代码更新需要review&mdash;-这个要根据项目实际情况而定</li>
+<li>所有的备份操作必须进行恢复性验证，特别是数据库的备份</li>
+<li>与外围系统的通讯模式之类的方案，需要项目组统一评审确定</li>
+<li>代码库与版本库更新部署流程</li>
+<li>确定标准字段/定义标准报文的时候，需要明确每个字段的含义，如果有出现模糊不清楚，或者未来废弃的字段，必须在服务化治理过程中，逐步废弃掉这些含糊不清的字段</li>
+<li>线程池使用过程中必须根据根据其实际功能 为 不同的线程池 设置相应的名称，这样在dump出线程信息里面，可以根据名称来区分线程</li>
+<li>标准性的接口规范，例如SOP报文转SOAP报文，这个转换过程中，需要字段映射，同时还需要将每个字段对应的转换方式在工作之初，要确定下来，如果前期因为接口有些字段不明确，很可能造成后期频繁的修改规范或者处理方式</li>
+<li>上线的脚本，制定标准的格式：脚本名称（脚本文件名称格式标准化；脚本名称分类：ddl和dml分类；功能分类；insert和update等分类），脚本内容（每条语句或者每组语句，必须添加脚本注释）</li>
+<li>监控功能，监控内容：数据库连接池，容器线程池，虚拟机内存监控，队列监控</li>
+<li>交接工作一定要对其交接的内容深入了解。</li>
+<li>性能测试由行内进行</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[格式化Java代码]]></title>
