@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-09-09T23:45:00+08:00</updated>
+  <updated>2014-09-09T23:48:03+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -34,11 +34,11 @@
 <hr />
 
 <ul>
-<li>搜索到这个文章,<a href="http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/">How to use the eclipse code formatter from your code</a>,自备梯子.</li>
+<li>搜索到这个文章,<a href="http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/">How to use the eclipse code formatter from your code</a>,自备梯子.<!-- more --></li>
 <li>作者是通过eclipse的formatter组件实现代码的格式化.</li>
 <li>按照文章的描述逐步实现,引入eclipse的10个jar包,可以实现代码的格式化.</li>
 <li>但是引入10个jar到项目中,过于复杂.</li>
-<li>该文章的评论中有人提到<a href="http://sourceforge.net/projects/jastyle/">jastyle</a>.<!-- more --></li>
+<li>该文章的评论中有人提到<a href="http://sourceforge.net/projects/jastyle/">jastyle</a>.</li>
 </ul>
 
 
