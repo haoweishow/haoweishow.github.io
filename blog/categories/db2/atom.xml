@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-09-09T23:48:03+08:00</updated>
+  <updated>2014-09-11T11:24:46+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -38,7 +38,7 @@
 <pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
 </code></pre>
 
-<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。<!-- more --></p>
+<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
 
 <h2>排查</h2>
 

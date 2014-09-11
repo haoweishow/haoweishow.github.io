@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-09-09T23:48:03+08:00</updated>
+  <updated>2014-09-11T11:24:46+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -42,7 +42,7 @@ bundle update
 rake install
 </code></pre>
 
-<p>设置github信息<!-- more --></p>
+<p>设置github信息</p>
 
 <pre><code>rake setup_github_pages
 输入：git@github.com:haoweishow/haoweishow.github.io.git
@@ -110,7 +110,7 @@ git push origin source    #将本地代码提交至github
 <p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
 2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
 3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误<!-- more --></p>
+4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</p>
 
 <pre><code>To git@github.com:haoweishow/haoweishow.github.io.git  
 ! [rejected]        master -&gt; master (non-fast-forward)  

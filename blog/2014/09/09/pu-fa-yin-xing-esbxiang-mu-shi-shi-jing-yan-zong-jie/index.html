@@ -99,7 +99,7 @@
 <li>如果XML报文要传输不可见字符，则要制定相应的规范（例如转换成十六进制字符）</li>
 <li>数据库建表，添加约束，可以避免不必要的重复数据或者空数据，主键或者约束必须落在关键的字段上，否则无法避免关键数据的重复</li>
 <li>日志打印，info日志是描述做什么，debug日志描述怎么做的</li>
-<li>异常日志，没有特殊情况，不能把日志吞掉，相反，详细的输出出现异常情况时运行态相关的数据到日志中，可以方便问题定位<!-- more --></li>
+<li>异常日志，没有特殊情况，不能把日志吞掉，相反，详细的输出出现异常情况时运行态相关的数据到日志中，可以方便问题定位</li>
 <li>数据从数据库加载到内存，如果是静态数据，可以先将数据落地到文件系统，再从文件系统加载到内存中，这样如果出现运行时异常，可以查看本地文件系统进行问题定位（此方法要结合实际情况）</li>
 <li>项目过程中的问题、环境、联系人等一些静态信息，可以使用wiki或者blog系统存放，这样的好处是查看、检索、修订方便</li>
 <li>项目组环境等信息及时更新，记录到文档中，方便归档，但是不方便使用；</li>
@@ -163,6 +163,8 @@
         <a class="basic-alignment left" href="/blog/2014/09/05/ge-shi-hua-javadai-ma/" title="Previous Post: 格式化Java代码">&laquo; 格式化Java代码</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/09/11/wo-de-vimrcpei-zhi/" title="Next Post: 我的vimrc配置">我的vimrc配置 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -173,10 +175,18 @@
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/db2/'>db2 (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/db2/'>db2 (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/shell/'>shell (1)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/wo-de-zshpei-zhi/">我的zsh配置</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/11/wo-de-vimrcpei-zhi/">我的vimrc配置</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/09/pu-fa-yin-xing-esbxiang-mu-shi-shi-jing-yan-zong-jie/">浦发银行ESB项目实施经验总结</a>
@@ -188,14 +198,6 @@
     
       <li class="post">
         <a href="/blog/2014/07/07/bu-shu-octopress/">部署octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">DB2启动失败(SQL5043N)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a>
       </li>
     
   </ul>

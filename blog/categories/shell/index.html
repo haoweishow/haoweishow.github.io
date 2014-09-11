@@ -5,14 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Rake Deploy Failed - haoweishow Blog</title>
+  <title>Category: Shell - haoweishow Blog</title>
   <meta name="author" content="haoweishow">
 
   
-  <meta name="description" content="过程 1.按照octopress.org网站上的说明，本地安装完成，并成功部署到github上;
-2. 访问http://haoweishow.com可以看到部署的页面;
-3. 但是在通过safari访问repo,在网页上增加了README.md的文件，提交成功；
-4. 然后本地修改其它配置， &hellip;">
+  <meta name="description" content="Category: shell">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://haoweishow.com/blog/2014/06/16/rake-deploy-failed">
+  <link rel="canonical" href="http://haoweishow.com/blog/categories/shell">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="haoweishow Blog" type="application/atom+xml">
@@ -63,110 +60,35 @@
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Rake Deploy Failed</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true">2014-06-16</time>
-        
-      </p>
+    <h1 class="entry-title">Category: Shell</h1>
     
   </header>
+  
+  <div id="blog-archives" class="category">
 
 
-<div class="entry-content"><h2>过程</h2>
 
-<hr />
+  
+  <h2>2014</h2>
 
-<p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
-2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
-3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</p>
+<article>
+  
+<h1><a href="/blog/2014/09/11/wo-de-vimrcpei-zhi/">我的vimrc配置</a></h1>
+<time datetime="2014-09-11T11:11:27+08:00" pubdate><span class='month'>Sep</span> <span class='day'>11</span> <span class='year'>2014</span></time>
 
-<pre><code>To git@github.com:haoweishow/haoweishow.github.io.git  
-! [rejected]        master -&gt; master (non-fast-forward)  
-error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'  
-hint: Updates were rejected because the tip of your current branch is behind  
-hint: its remote counterpart. Integrate the remote changes (e.g.  
-hint: 'git pull ...') before pushing again.  
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.  
-</code></pre>
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/shell/'>shell</a>, <a class='category' href='/blog/categories/vim/'>vim</a></span>
+</footer>
 
-<h2>解决</h2>
 
-<hr />
+</article>
 
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;</p>
-
-<pre><code>需要修改项目中Rakefile文件的内容：  
-原始内容：system "git push origin #{deploy_branch}"  
-改后内容：system "git push origin +#{deploy_branch}"  多个+号；  
-再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；  
-</code></pre>
 </div>
 
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">haoweishow</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true">2014-06-16</time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/" title="Next Post: DB2启动失败(SQL5043N)">DB2启动失败(SQL5043N) &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
 </div>
@@ -221,7 +143,6 @@ ds.charset = 'UTF-8';
 </section>
   
 </aside>
-
 
     </div>
   </div>
