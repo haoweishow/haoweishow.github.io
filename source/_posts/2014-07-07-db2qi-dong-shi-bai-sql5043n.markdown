@@ -18,7 +18,7 @@ categories: db2
 ***
 执行***db2start***命令，启动数据库报错如下：  
     SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
-执行***netstat -na|grep 50000***，返回空。<!-- more -->
+执行***netstat -na|grep 50000***，返回空。
 
 ## 排查
 ***

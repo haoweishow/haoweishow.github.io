@@ -19,7 +19,7 @@ categories: octopress
     cd /Users/haoweishow/Documents/octopress  
     bundle update
     rake install
-设置github信息<!-- more -->
+设置github信息
     rake setup_github_pages
     输入：git@github.com:haoweishow/haoweishow.github.io.git
 设置域名信息
