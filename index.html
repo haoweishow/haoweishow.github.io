@@ -67,6 +67,228 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-13T10:10:42+08:00" pubdate data-updated="true">2014-09-13</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>背景</h3>
+
+<hr />
+
+<ul>
+<li>生产环境,应用刚上线,几乎每天一次OOM.</li>
+<li>操作系统: AIX 6.1</li>
+<li>JDK版本: J2RE 5.0 IBM J9 2.3 AIX ppc64-64 build j9vmap6423-20100808</li>
+<li>JVM参数: -Xmx2048m -Xms2048m 无其它参数设置,采用JVM默认设置</li>
+<li>分析工具: jca455.jar  ibm_ha446.jar</li>
+</ul>
+
+
+<h3>分析1</h3>
+
+<hr />
+
+<p>第一次出现故障,发过来java进程的dump文件,3组12个文件:</p>
+
+<ul>
+<li>4个heapdump.xxxx.phd;</li>
+<li>4个javacore.xxxx.txt;</li>
+<li>4个Snap.xxxx.trc</li>
+</ul>
+
+
+<h4>使用IBM HA工具分析phd文件</h4>
+
+<p>打开<strong>[Analysis View]</strong>如下:<br/>
+<img src="/images/postImage/20140913-1-IBM-ha-AnalysisView.png"></p>
+
+<ul>
+<li>通过HA的分析,结果很明显,java/util/Stack里的数据量超大,占用内存92.2%</li>
+<li>这个Stack是自定义的XML解析器里的一个属性,用于存储在解析过程中存储XML节点信息</li>
+<li>看到这里,如果对应用了解的话,是能够找到程序哪个模块调用这个XML解析器,可是我不了解这个应用,而且不在现场</li>
+<li>接下来的分析过程,包括未来几天陆续出现的OOM,分析其中的phd文件都是同样的现象,Stack里的数据量超大,都是超过90%的堆内存占用</li>
+</ul>
+
+
+<p>打开<strong>[Root List]</strong>如下:<br/>
+<img src="/images/postImage/20140913-2-IBM-ha-RootList.png"></p>
+
+<ul>
+<li>排名第一的是XML解析器,其它的对象内存使用都很小</li>
+</ul>
+
+
+<p>打开<strong>[Tree View]</strong>如下:<br/>
+<img src="/images/postImage/20140913-3-IBM-ha-TreeView.png"></p>
+
+<ul>
+<li>这里有个疑问,为什么这个解析器是root object,明明是有线程调用这个解析器进行XML解析的</li>
+<li><strong>关于JVM的root object还是不了解!!</strong></li>
+</ul>
+
+
+<h4>使用IBM JCA工具分析javacore文件</h4>
+
+<p>打开<strong>[Thread Dump List]</strong>如下:<br/>
+<img src="/images/postImage/20140913-4-IBM-jca-Thread.png"></p>
+
+<ul>
+<li>在网上查找关于javacore文件相关资料的时候,网上有个案例,可以根据这里的WARN提示就定位出产生OOM的线程</li>
+<li>我的这个案例不一样了,可以看到这几个WARN涉及的线程申请的内存都很小,说明这个时候内存已经被使用殆尽,这几个线程不是导致OOM的真正原因</li>
+</ul>
+
+
+<p>打开<strong>[Thread Status]</strong>如下:<br/>
+<img src="/images/postImage/20140913-5-IBM-jca-ThreadStatus.png"></p>
+
+<ul>
+<li>这里显示的线程信息,与OOM没有关系,但是可以看到这个应用里的一些问题,很多线程都处于Blocked状态,左下角框起来的仅仅是部分,几乎都是由于日志记录引起的</li>
+<li>这个应用由于业务场景的需要,需要记录交易的详细日志.后来到现场看到系统的日志,一共2个还是3个日志文件,每个小时切换一个日志文件.</li>
+<li>近300个线程,将大量的交易日志写到两个文件中,锁的竞争可想而知;这里其实也有优化的空间的,可以根据某些关键字,将日志文件分类,就像数据库表分区一样;相信300个线程写分散到20个日志文件中,性能的提升应该是可见的.</li>
+</ul>
+
+
+<h4>初步分析</h4>
+
+<ul>
+<li>至此,导致OOM的直接原因是解析XML的时候,该解析器的Stack里的数据超大</li>
+<li>而Stack里的数据超大,是不是解析过程中陷入某种循环无法退出导致呢?</li>
+</ul>
+
+
+<h3>分析2</h3>
+
+<p>终于到现场进行分析了,很庆幸的是,在现场的性能测试环境能够重现该问题.<br/>
+分析该解析器:</p>
+
+<ul>
+<li>该类在解析XML的时候,用Stack来存储节点的信息</li>
+<li>遇到节点开始,将节点的对象入栈,遇到节点结束,弹栈</li>
+<li>因此造成Stack数据量大就这能出现在入栈的地方了.</li>
+<li>所以在入栈之后,增加判断,当栈的size超过阀值之后,打印出一些信息</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">//伪代码  </span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">xxxxReader</span> <span class="kd">extends</span> <span class="n">xxxx</span><span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Stack</span> <span class="n">stack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">();</span>
+</span><span class='line'>    <span class="cm">/**************************************************************/</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">debug</span><span class="o">(){</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">stack</span><span class="o">.</span><span class="na">size</span><span class="o">()&gt;</span><span class="mi">1000</span><span class="o">){</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;stacksize:&quot;</span><span class="o">+</span><span class="n">stack</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">Thread</span><span class="o">.</span><span class="na">dumpStack</span><span class="o">();</span><span class="c1">//打印栈信息,就知道哪个模块调用到这个解析器</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="cm">/**************************************************************/</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startElement</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">debug</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">endElement</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startArray</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">debug</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">endArray</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在性能测试环境打上该类,重启,再次进行压力测试.</li>
+<li>半个小时左右的样子,出现OOM,经过统计System.out和Thread.dumpStack()的日志,锁定了两个调用的地方.</li>
+<li>再次修改这个解析器,加入临时属性,用于保存要解析的报文,这样在出现超大Stack的时候,可以将报文打印出来,这个代码就不贴了.</li>
+<li>重启,再压,得到异常时候的报文,该报文的结构正常,应该不会导致死循环,于是在本地编写解析器的测试代码,解析该报文1次,1万次都正常.</li>
+<li>难道是多线程的问题呢?</li>
+<li>修改测试代码,两个线程,同时各执行1万次,问题重现了!!!!</li>
+<li>又多跑了很多次,稳定重现,有时候是OOM,有时候是解析过程中抛解析的异常,很明显这个解析器多线不安全</li>
+<li>至此,该问题已经基本定位,该解析模块比较复杂,没深入研究,因为我这里有替代的解决方法,而且该方法十分成熟.</li>
+<li>替换调用该解析器的两处代码,重启,再压.</li>
+</ul>
+
+
+<h3>感受</h3>
+
+<ul>
+<li>刚开始被派到现场解决这个问题的时候,心里一直很忐忑,解决不了怎么办?因为之前给的dump文件没有分析出问题点,现场能提供的肯定也是这些文件.解决不了怎么跟客户交代呢&hellip;</li>
+<li>来到现场,问题能够重现,悬着的心降了一半.</li>
+<li>分析过程就如上面的<strong>分析2</strong></li>
+<li>问题解决,跟客户沟通过.不过他们已经按照该产品架构师的建议调整了堆内存为4GB,稳定运行了2天.无奈,跟他们再解释,这个缺陷就是个定时炸弹,随时可能再次出现,是否优化,他们决定吧,我不管了.(之后几天果然又出现OOM了,发给我的dump文件,给HA分配了5GB的内存,才能分析完那个phd文件),还是一样的现象.</li>
+</ul>
+
+
+<h3>吐槽</h3>
+
+<p>有些东西不吐不快啊</p>
+
+<ul>
+<li>出现OOM,竟然会认为机器CPU,内存不够</li>
+<li>调调这个参数,跑跑挂了;调调那个参数,跑跑又挂;那是生产环境,不是实验田.</li>
+<li>产品这东西,还是需要一位<strong>敢做敢为,有能力</strong>的架构师才行.</li>
+<li>产品的内部貌似没人懂,因此也没人敢改,呵呵</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/11/antming-ling-hui-zong/">Ant命令汇总</a></h1>
     
     
@@ -1341,10 +1563,14 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/shell/'>shell (1)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/shell/'>shell (1)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/11/antming-ling-hui-zong/">Ant命令汇总</a>
@@ -1360,10 +1586,6 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
     
       <li class="post">
         <a href="/blog/2014/09/09/pu-fa-yin-xing-esbxiang-mu-shi-shi-jing-yan-zong-jie/">浦发银行ESB项目实施经验总结</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">格式化Java代码</a>
       </li>
     
   </ul>

@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://haoweishow.com/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/</loc>
+    <lastmod>2014-09-13T10:10:42+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://haoweishow.com/blog/2014/09/11/antming-ling-hui-zong/</loc>
     <lastmod>2014-09-11T14:49:43+08:00</lastmod>
     <priority>0.8</priority>
@@ -53,28 +59,28 @@
   
   <url>
     <loc>http://haoweishow.com/404.html</loc>
-    <lastmod>2014-09-11T15:03:05+08:00</lastmod>
+    <lastmod>2014-09-13T13:45:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://haoweishow.com/</loc>
-    <lastmod>2014-09-11T15:03:05+08:00</lastmod>
+    <lastmod>2014-09-13T13:45:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://haoweishow.com/blog/archives/</loc>
-    <lastmod>2014-09-11T15:03:05+08:00</lastmod>
+    <lastmod>2014-09-13T13:45:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://haoweishow.com/blog/about/</loc>
-    <lastmod>2014-09-11T15:03:05+08:00</lastmod>
+    <lastmod>2014-09-13T13:45:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
