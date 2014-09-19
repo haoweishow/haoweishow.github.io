@@ -3,7 +3,7 @@ layout: post
 title: "我的zsh配置"
 date: 2014-09-11 11:20:34 +0800
 comments: true
-categories: 
+categories: shell
 ---
 ``` java .zshrc  
 #################### trace zsh time step 1/2 ######################################
