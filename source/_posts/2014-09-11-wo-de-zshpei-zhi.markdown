@@ -144,6 +144,7 @@ h1()
 {
     echo 'FTP服务: sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist'
     echo '         sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
+	echo 'Http服务: python -m SimpleHTTPServer 8888'
     echo "环境变量: JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands"
     echo "系统维护: sudo periodic daily weekly monthly"
     echo "保持唤醒: pmset noidle"
