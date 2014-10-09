@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-09-24T20:58:02+08:00</updated>
+  <updated>2014-10-09T14:27:34+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[性能问题排查]]></title>
+    <link href="http://haoweishow.com/blog/2014/10/09/xing-neng-wen-ti-pai-cha/"/>
+    <updated>2014-10-09T14:09:46+08:00</updated>
+    <id>http://haoweishow.com/blog/2014/10/09/xing-neng-wen-ti-pai-cha</id>
+    <content type="html"><![CDATA[<h3>Linux系统</h3>
+
+<ul>
+<li>定位占用cpu高的java线程</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>top -H -p &lt;pid&gt; -d 1 -n3</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>查看该线程的执行时间</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD,tid,time</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>通过pstack查看进程的栈信息</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pstack &lt;pid&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Aix系统</h3>
+
+<ul>
+<li>定位占用cpu高的java线程</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD
+</span><span class='line'>结果显示格式：线程十进制的ID 状态:(R/S/Z) CPU占用百分比 其它...</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>将十进制线程ID转换为十六进制</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>printf "%x\n" 131268965</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>查找线程</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>kill -3 &lt;pid&gt;
+</span><span class='line'>根据十六进制的线程ID，可以定位到占用CPU高的线程</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[OOM故障分析-案例1]]></title>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: 性能 | haoweishow Blog]]></title>
+  <link href="http://haoweishow.com/blog/categories/xing-neng/atom.xml" rel="self"/>
+  <link href="http://haoweishow.com/"/>
+  <updated>2014-10-09T14:27:34+08:00</updated>
+  <id>http://haoweishow.com/</id>
+  <author>
+    <name><![CDATA[haoweishow]]></name>
+    <email><![CDATA[haoweishow@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[性能问题排查]]></title>
+    <link href="http://haoweishow.com/blog/2014/10/09/xing-neng-wen-ti-pai-cha/"/>
+    <updated>2014-10-09T14:09:46+08:00</updated>
+    <id>http://haoweishow.com/blog/2014/10/09/xing-neng-wen-ti-pai-cha</id>
+    <content type="html"><![CDATA[<h3>Linux系统</h3>
+
+<ul>
+<li>定位占用cpu高的java线程 <br/>
+<code>
+top -H -p &lt;pid&gt; -d 1 -n3
+</code></li>
+<li>查看该线程的执行时间<br/>
+<code>
+ps -mp &lt;pid&gt; -o THREAD,tid,time
+</code></li>
+<li>通过pstack查看进程的栈信息<br/>
+<code>
+pstack &lt;pid&gt;
+</code></li>
+</ul>
+
+
+<h3>Aix系统</h3>
+
+<ul>
+<li>定位占用cpu高的java线程 <br/>
+<code>
+ps -mp &lt;pid&gt; -o THREAD
+结果显示格式：线程十进制的ID 状态:(R/S/Z) CPU占用百分比 其它...
+</code></li>
+<li>将十进制线程ID转换为十六进制<br/>
+<code>
+printf "%x\n" 131268965
+</code></li>
+<li>查找线程<br/>
+<code>
+kill -3 &lt;pid&gt;
+根据十六进制的线程ID，可以定位到占用CPU高的线程
+</code></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
