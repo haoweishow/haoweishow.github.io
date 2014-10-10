@@ -67,6 +67,53 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/10/10/db2jian-kong-db2top/">DB2监控-db2top</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-10T11:18:41+08:00" pubdate data-updated="true">2014-10-10</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>db2top命令使用</h3>
+
+<ul>
+<li><strong>db2top -d <dbname></strong>  该命令的面板<br/>
+<img src="/images/postImage/20141010-db2top1.png"></li>
+<li><strong>shift+d</strong> 查看SQL执行情况,包括SQL的调用次数,执行时间等<br/>
+通常可以根据SQL的<strong>执行次数</strong>以及<strong>执行时间</strong>可以判断数据库当前的处理能力
+<img src="/images/postImage/20141010-db2top2.png"></li>
+<li>每条sql都有对应的HashValue,<strong>shift+l</strong>可以根据该sql的HashValue查看完整的sql语句<br/>
+<img src="/images/postImage/20141010-db2top3.png"></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a></h1>
     
     
@@ -828,6 +875,20 @@
 <span class='line-number'>191</span>
 <span class='line-number'>192</span>
 <span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="err">####################</span> <span class="n">trace</span> <span class="n">zsh</span> <span class="n">time</span> <span class="n">step</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span> <span class="err">######################################</span>
 </span><span class='line'><span class="err">####</span> <span class="n">set</span> <span class="n">the</span> <span class="n">trace</span> <span class="n">prompt</span> <span class="n">to</span> <span class="n">include</span> <span class="n">seconds</span><span class="o">,</span> <span class="n">nanoseconds</span><span class="o">,</span> <span class="n">script</span> <span class="n">name</span> <span class="n">and</span> <span class="n">line</span> <span class="n">number</span>
 </span><span class='line'><span class="err">#</span><span class="n">PS4</span><span class="o">=</span><span class="err">&#39;</span><span class="o">+</span><span class="n">$</span><span class="o">(</span><span class="n">date</span> <span class="s">&quot;+%s:%N&quot;</span><span class="o">)</span> <span class="o">%</span><span class="nl">N:</span><span class="o">%</span><span class="n">i</span><span class="o">&gt;</span> <span class="err">&#39;</span>
@@ -964,55 +1025,69 @@
 </span><span class='line'>
 </span><span class='line'><span class="n">h1</span><span class="o">()</span>
 </span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="err">&#39;</span><span class="n">FTP</span><span class="err">服务</span><span class="o">:</span> <span class="n">sudo</span> <span class="o">-</span><span class="n">s</span> <span class="n">launchctl</span> <span class="n">load</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">LaunchDaemons</span><span class="o">/</span><span class="n">ftp</span><span class="o">.</span><span class="na">plist</span><span class="err">&#39;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="err">&#39;</span>         <span class="n">sudo</span> <span class="o">-</span><span class="n">s</span> <span class="n">launchctl</span> <span class="n">unload</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span><span class="n">System</span><span class="o">/</span><span class="n">Library</span><span class="o">/</span><span class="n">LaunchDaemons</span><span class="o">/</span><span class="n">ftp</span><span class="o">.</span><span class="na">plist</span><span class="err">&#39;</span>
-</span><span class='line'>  <span class="n">echo</span> <span class="err">&#39;</span><span class="n">Http</span><span class="err">服务</span><span class="o">:</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">SimpleHTTPServer</span> <span class="mi">8888</span><span class="err">&#39;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;环境变量: JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;系统维护: sudo periodic daily weekly monthly&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;保持唤醒: pmset noidle&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;程序配置: open -a GoShell —args config&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;更新Xcode: sudo xcode-select -switch /Applications/Xcode6-Beta5.app&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;****************博客***************&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;博客发布: rake new_post[&#39;title&#39;]&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;          rp = rake preview&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;          rd = rake generate;rake deploy&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;*******************************************************************************************************&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;共享服务&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist    #启动FTP服务&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist  #关闭FTP服务&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      python -m SimpleHTTPServer 8888                                      #启动Http服务&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;环境变量&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;系统优化&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      sudo periodic daily weekly monthly                  #系统维护&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      sudo xcode-select -switch /Applications/Xcode.app   #更新Xcode&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;保持唤醒&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      pmset noidle&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;程序配置&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      open -a GoShell —args config                             #GoShell程序配置&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      defaults write com.apple.finder AppleShowAllFiles TRUE   #Finder显示隐藏文件&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      defaults write com.apple.finder AppleShowAllFiles FALSE  #Finder不显示隐藏文件&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;*******************************************************************************************************&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;博客发布&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      rake new_post[&#39;title&#39;]          #创建一篇新的文章&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      rp = rake preview               #启动本地服务,预览博客&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      rd = rake generate;rake deploy  #发布文章到github&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git push origin source          #提交本地代码到github的远程仓库的source分支&quot;</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">hgit</span><span class="o">()</span>
 </span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;****************brew***************&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;git操作: git remote update&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;         git add .&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;         git commit -m xxx&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;         git push origin source&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;         git rm --cache &lt;file&gt;&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;         git status&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;         git log&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;*******************************************************************************************************&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;git操作&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git remote update&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git add .&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git commit -m xxx&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git push origin source&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git rm --cache &lt;file&gt;&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git status&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git log&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      git diff &lt;file&gt;      #比较文件的历史版本&quot;</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">h2</span><span class="o">()</span>
 </span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;****************brew***************&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;aria2c http://example.org/mylinux.iso&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;aria2c http://a/f.iso ftp://b/f.iso&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;aria2c http://example.org/mylinux.torrent&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;aria2c &#39;magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C&#39;&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;aria2c -i uri.txt&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;aria2c -S bit.torrent #显示种子中包含了哪些文件&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;*******************************************************************************************************&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;软件下载&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      aria2c http://example.org/mylinux.iso&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      aria2c http://a/f.iso ftp://b/f.iso&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      aria2c http://example.org/mylinux.torrent&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      aria2c &#39;magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C&#39;&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      aria2c -i uri.txt&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;      aria2c -S bit.torrent #显示种子中包含了哪些文件&quot;</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">h3</span><span class="o">()</span>
 </span><span class='line'><span class="o">{</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;****************brew***************&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;搜索软件: brew search&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;软件检查: brew info xxxx&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;安装列表: brew list&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;软件更新: brew update&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;全部更新: brew upgrade&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;安装软件: brew install xxxx&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;软件删除: brew remove xxxx&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;软件依赖: brew deps xxxx&quot;</span>
-</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;过期软件: brew outdated&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;******************************************************************************************************&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;软件管理&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew search           #搜索软件&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew info xxxx        #软件检查&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew list             #安装列表&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew update           #软件更新&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew upgrade          #全部更新&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew install xxxx     #安装软件&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew remove xxxx      #软件删除&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew deps xxxx        #软件依赖&quot;</span>
+</span><span class='line'>    <span class="n">echo</span> <span class="s">&quot;       brew outdated         #过期软件&quot;</span>
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="err">####################</span> <span class="n">trace</span> <span class="n">zsh</span> <span class="n">time</span> <span class="n">step</span> <span class="mi">2</span><span class="o">/</span><span class="mi">2</span> <span class="err">######################################</span>
@@ -1574,71 +1649,9 @@ MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true">2014-06-16</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>过程</h2>
-
-<hr />
-
-<p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
-2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
-3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</p>
-
-<pre><code>To git@github.com:haoweishow/haoweishow.github.io.git  
-! [rejected]        master -&gt; master (non-fast-forward)  
-error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'  
-hint: Updates were rejected because the tip of your current branch is behind  
-hint: its remote counterpart. Integrate the remote changes (e.g.  
-hint: 'git pull ...') before pushing again.  
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.  
-</code></pre>
-
-<h2>解决</h2>
-
-<hr />
-
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;</p>
-
-<pre><code>需要修改项目中Rakefile文件的内容：  
-原始内容：system "git push origin #{deploy_branch}"  
-改后内容：system "git push origin +#{deploy_branch}"  多个+号；  
-再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；  
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1648,10 +1661,14 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/shell/'>shell (2)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (2)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/shell/'>shell (2)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/10/db2jian-kong-db2top/">DB2监控-db2top</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a>
@@ -1667,10 +1684,6 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
     
       <li class="post">
         <a href="/blog/2014/09/11/wo-de-zshpei-zhi/">我的zsh配置</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/11/wo-de-vimrcpei-zhi/">我的vimrc配置</a>
       </li>
     
   </ul>
