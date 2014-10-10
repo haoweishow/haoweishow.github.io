@@ -142,55 +142,69 @@ hh()
 
 h1()
 {
-    echo 'FTP服务: sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist'
-    echo '         sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist'
-	echo 'Http服务: python -m SimpleHTTPServer 8888'
-    echo "环境变量: JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands"
-    echo "系统维护: sudo periodic daily weekly monthly"
-    echo "保持唤醒: pmset noidle"
-    echo "程序配置: open -a GoShell —args config"
-    echo "更新Xcode: sudo xcode-select -switch /Applications/Xcode6-Beta5.app"
-    echo "****************博客***************"
-    echo "博客发布: rake new_post['title']"
-    echo "          rp = rake preview"
-    echo "          rd = rake generate;rake deploy"
+    echo "*******************************************************************************************************"
+    echo "共享服务"
+    echo "      sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist    #启动FTP服务"
+    echo "      sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist  #关闭FTP服务"
+    echo "      python -m SimpleHTTPServer 8888                                      #启动Http服务"
+    echo "环境变量"
+    echo "      JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands"
+    echo "系统优化"
+    echo "      sudo periodic daily weekly monthly                  #系统维护"
+    echo "      sudo xcode-select -switch /Applications/Xcode.app   #更新Xcode"
+    echo "保持唤醒"
+    echo "      pmset noidle"
+    echo "程序配置"
+    echo "      open -a GoShell —args config                             #GoShell程序配置"
+    echo "      defaults write com.apple.finder AppleShowAllFiles TRUE   #Finder显示隐藏文件"
+    echo "      defaults write com.apple.finder AppleShowAllFiles FALSE  #Finder不显示隐藏文件"
+    echo "*******************************************************************************************************"
+    echo "博客发布"
+    echo "      rake new_post['title']          #创建一篇新的文章"
+    echo "      rp = rake preview               #启动本地服务,预览博客"
+    echo "      rd = rake generate;rake deploy  #发布文章到github"
+    echo "      git push origin source          #提交本地代码到github的远程仓库的source分支"
 }
 
 hgit()
 {
-    echo "****************brew***************"
-    echo "git操作: git remote update"
-    echo "         git add ." 
-    echo "         git commit -m xxx"
-    echo "         git push origin source"
-    echo "         git rm --cache <file>"
-    echo "         git status"
-    echo "         git log"
+    echo "*******************************************************************************************************"
+    echo "git操作"
+    echo "      git remote update"
+    echo "      git add ."
+    echo "      git commit -m xxx"
+    echo "      git push origin source"
+    echo "      git rm --cache <file>"
+    echo "      git status"
+    echo "      git log"
+    echo "      git diff <file>      #比较文件的历史版本"
 }
 
 h2()
 {
-    echo "****************brew***************"
-    echo "aria2c http://example.org/mylinux.iso"
-    echo "aria2c http://a/f.iso ftp://b/f.iso"
-    echo "aria2c http://example.org/mylinux.torrent"
-    echo "aria2c 'magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C'"
-    echo "aria2c -i uri.txt"
-    echo "aria2c -S bit.torrent #显示种子中包含了哪些文件"
+    echo "*******************************************************************************************************"
+    echo "软件下载"
+    echo "      aria2c http://example.org/mylinux.iso"
+    echo "      aria2c http://a/f.iso ftp://b/f.iso"
+    echo "      aria2c http://example.org/mylinux.torrent"
+    echo "      aria2c 'magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C'"
+    echo "      aria2c -i uri.txt"
+    echo "      aria2c -S bit.torrent #显示种子中包含了哪些文件"
 }
 
 h3()
 {
-    echo "****************brew***************"
-    echo "搜索软件: brew search"
-    echo "软件检查: brew info xxxx"
-    echo "安装列表: brew list"
-    echo "软件更新: brew update"
-    echo "全部更新: brew upgrade"
-    echo "安装软件: brew install xxxx"
-    echo "软件删除: brew remove xxxx"
-    echo "软件依赖: brew deps xxxx"
-    echo "过期软件: brew outdated"
+    echo "******************************************************************************************************"
+    echo "软件管理"
+    echo "       brew search           #搜索软件"
+    echo "       brew info xxxx        #软件检查"
+    echo "       brew list             #安装列表"
+    echo "       brew update           #软件更新"
+    echo "       brew upgrade          #全部更新"
+    echo "       brew install xxxx     #安装软件"
+    echo "       brew remove xxxx      #软件删除"
+    echo "       brew deps xxxx        #软件依赖"
+    echo "       brew outdated         #过期软件"
 }
 
 #################### trace zsh time step 2/2 ######################################
