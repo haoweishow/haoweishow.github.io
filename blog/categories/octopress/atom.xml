@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-10-10T12:21:30+08:00</updated>
+  <updated>2014-10-13T16:15:15+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -29,72 +29,45 @@
 
 <hr />
 
-<p>克隆octopress</p>
-
-<pre><code>cd /Users/haoweishow/Documents  
-git clone git://github.com/imathis/octopress.git octopress
-</code></pre>
-
-<p>安装octopress</p>
-
-<pre><code>cd /Users/haoweishow/Documents/octopress  
-bundle update
-rake install
-</code></pre>
-
-<p>设置github信息</p>
-
-<pre><code>rake setup_github_pages
-输入：git@github.com:haoweishow/haoweishow.github.io.git
-</code></pre>
-
-<p>设置域名信息</p>
-
-<pre><code>echo ‘haoweishow.com' &gt;&gt; source/CNAME
-</code></pre>
+<p>克隆octopress
+    cd /Users/haoweishow/Documents<br/>
+    git clone git://github.com/imathis/octopress.git octopress
+安装octopress
+    cd /Users/haoweishow/Documents/octopress<br/>
+    bundle update
+    rake install
+设置github信息
+    rake setup_github_pages
+    输入：git@github.com:haoweishow/haoweishow.github.io.git
+设置域名信息
+    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
 
 <h2>发布</h2>
 
 <hr />
 
-<p>创建文章</p>
-
-<pre><code>alias rake='noglob rake'  #使rake命令支持[和]符号
-rake new_post['title']
-</code></pre>
-
-<p>编辑文章</p>
-
-<pre><code>本文使用Mou工具编写
-</code></pre>
-
-<p>提交文章</p>
-
-<pre><code>rake generate
-rake deploy               #将文章部署到github服务器上
-</code></pre>
-
-<p>提交源码</p>
-
-<pre><code>git add .
-git commit -m "xxxx"
-git push origin source    #将本地代码提交至github
-</code></pre>
+<p>创建文章<br/>
+    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
+    rake new_post[&lsquo;title&rsquo;]
+编辑文章
+    本文使用Mou工具编写
+提交文章
+    rake generate
+    rake deploy               #将文章部署到github服务器上
+提交源码
+    git add .
+    git commit -m &ldquo;xxxx&rdquo;
+    git push origin source    #将本地代码提交至github</p>
 
 <h2>测试</h2>
 
 <hr />
 
 <p>在本地服务器上预览页面<br/>
-启动本地服务</p>
-
-<pre><code>rake preview  
-</code></pre>
-
-<p>访问本地页面</p>
-
-<pre><code>http://localhost:4000
-</code></pre>
+启动本地服务<br/>
+    rake preview<br/>
+访问本地页面<br/>
+    <a href="http://localhost:4000">http://localhost:4000</a></p>
 ]]></content>
   </entry>
   
@@ -110,28 +83,24 @@ git push origin source    #将本地代码提交至github
 <p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
 2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
 3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</p>
-
-<pre><code>To git@github.com:haoweishow/haoweishow.github.io.git  
-! [rejected]        master -&gt; master (non-fast-forward)  
-error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'  
-hint: Updates were rejected because the tip of your current branch is behind  
-hint: its remote counterpart. Integrate the remote changes (e.g.  
-hint: 'git pull ...') before pushing again.  
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.  
-</code></pre>
+4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误
+    To git@github.com:haoweishow/haoweishow.github.io.git<br/>
+    ! [rejected]        master -> master (non-fast-forward)<br/>
+    error: failed to push some refs to &lsquo;git@github.com:haoweishow/ haoweishow.github.io.git&rsquo;<br/>
+    hint: Updates were rejected because the tip of your current branch is behind<br/>
+    hint: its remote counterpart. Integrate the remote changes (e.g.<br/>
+    hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.<br/>
+    hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.</p>
 
 <h2>解决</h2>
 
 <hr />
 
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;</p>
-
-<pre><code>需要修改项目中Rakefile文件的内容：  
-原始内容：system "git push origin #{deploy_branch}"  
-改后内容：system "git push origin +#{deploy_branch}"  多个+号；  
-再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；  
-</code></pre>
+<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;<br/>
+    需要修改项目中Rakefile文件的内容：<br/>
+    原始内容：system &ldquo;git push origin #{deploy_branch}&rdquo;<br/>
+    改后内容：system &ldquo;git push origin +#{deploy_branch}&rdquo;  多个+号；<br/>
+    再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；</p>
 ]]></content>
   </entry>
   

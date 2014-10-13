@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-10-10T12:21:30+08:00</updated>
+  <updated>2014-10-13T16:15:15+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -53,46 +53,33 @@
 
 <hr />
 
-<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：</p>
-
-<pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
-</code></pre>
-
-<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
+    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
+执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
 
 <h2>排查</h2>
 
 <hr />
 
-<p>在实例用户的目录中查看日志</p>
-
-<pre><code>home/esbinst/sqllib/db2dump/db2diag.0.log  
-</code></pre>
-
-<p>存在如下的内容：</p>
-
-<pre><code>2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error  
-PID     : 25807                TID : 3025136496     PROC : db2sysc  
-INSTANCE: esbinst              NODE : 000  
-HOSTNAME: localhost.localdomain  
-EDUID   : 1                    EDUNAME: db2sysc  
-FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50  
-MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.  
-</code></pre>
+<p>在实例用户的目录中查看日志<br/>
+    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
+存在如下的内容：<br/>
+    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
+    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
+    INSTANCE: esbinst              NODE : 000<br/>
+    HOSTNAME: localhost.localdomain<br/>
+    EDUID   : 1                    EDUNAME: db2sysc<br/>
+    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
+    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
 
 <h2>解决</h2>
 
 <hr />
 
-<p>Step1:</p>
-
-<pre><code>db2 update dbm cfg using SVCENAME esbinst  
-</code></pre>
-
-<p>Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：</p>
-
-<pre><code>esbinst     50000/tcp  
-</code></pre>
+<p>Step1:<br/>
+    db2 update dbm cfg using SVCENAME esbinst<br/>
+Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
+    esbinst     50000/tcp</p>
 ]]></content>
   </entry>
   

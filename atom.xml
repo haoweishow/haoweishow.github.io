@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-10-10T12:21:30+08:00</updated>
+  <updated>2014-10-13T16:15:15+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -1042,7 +1042,7 @@
 <li>项目过程中的问题、环境、联系人等一些静态信息，可以使用wiki或者blog系统存放，这样的好处是查看、检索、修订方便</li>
 <li>项目组环境等信息及时更新，记录到文档中，方便归档，但是不方便使用；</li>
 <li>问题总结清单</li>
-<li>每次代码更新需要review&mdash;-这个要根据项目实际情况而定</li>
+<li>每次代码更新需要review&mdash;这个要根据项目实际情况而定</li>
 <li>所有的备份操作必须进行恢复性验证，特别是数据库的备份</li>
 <li>与外围系统的通讯模式之类的方案，需要项目组统一评审确定</li>
 <li>代码库与版本库更新部署流程</li>
@@ -1198,72 +1198,45 @@
 
 <hr />
 
-<p>克隆octopress</p>
-
-<pre><code>cd /Users/haoweishow/Documents  
-git clone git://github.com/imathis/octopress.git octopress
-</code></pre>
-
-<p>安装octopress</p>
-
-<pre><code>cd /Users/haoweishow/Documents/octopress  
-bundle update
-rake install
-</code></pre>
-
-<p>设置github信息</p>
-
-<pre><code>rake setup_github_pages
-输入：git@github.com:haoweishow/haoweishow.github.io.git
-</code></pre>
-
-<p>设置域名信息</p>
-
-<pre><code>echo ‘haoweishow.com' &gt;&gt; source/CNAME
-</code></pre>
+<p>克隆octopress
+    cd /Users/haoweishow/Documents<br/>
+    git clone git://github.com/imathis/octopress.git octopress
+安装octopress
+    cd /Users/haoweishow/Documents/octopress<br/>
+    bundle update
+    rake install
+设置github信息
+    rake setup_github_pages
+    输入：git@github.com:haoweishow/haoweishow.github.io.git
+设置域名信息
+    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
 
 <h2>发布</h2>
 
 <hr />
 
-<p>创建文章</p>
-
-<pre><code>alias rake='noglob rake'  #使rake命令支持[和]符号
-rake new_post['title']
-</code></pre>
-
-<p>编辑文章</p>
-
-<pre><code>本文使用Mou工具编写
-</code></pre>
-
-<p>提交文章</p>
-
-<pre><code>rake generate
-rake deploy               #将文章部署到github服务器上
-</code></pre>
-
-<p>提交源码</p>
-
-<pre><code>git add .
-git commit -m "xxxx"
-git push origin source    #将本地代码提交至github
-</code></pre>
+<p>创建文章<br/>
+    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
+    rake new_post[&lsquo;title&rsquo;]
+编辑文章
+    本文使用Mou工具编写
+提交文章
+    rake generate
+    rake deploy               #将文章部署到github服务器上
+提交源码
+    git add .
+    git commit -m &ldquo;xxxx&rdquo;
+    git push origin source    #将本地代码提交至github</p>
 
 <h2>测试</h2>
 
 <hr />
 
 <p>在本地服务器上预览页面<br/>
-启动本地服务</p>
-
-<pre><code>rake preview  
-</code></pre>
-
-<p>访问本地页面</p>
-
-<pre><code>http://localhost:4000
-</code></pre>
+启动本地服务<br/>
+    rake preview<br/>
+访问本地页面<br/>
+    <a href="http://localhost:4000">http://localhost:4000</a></p>
 ]]></content>
   </entry>
   
@@ -1287,46 +1260,33 @@ git push origin source    #将本地代码提交至github
 
 <hr />
 
-<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：</p>
-
-<pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
-</code></pre>
-
-<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
+    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
+执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
 
 <h2>排查</h2>
 
 <hr />
 
-<p>在实例用户的目录中查看日志</p>
-
-<pre><code>home/esbinst/sqllib/db2dump/db2diag.0.log  
-</code></pre>
-
-<p>存在如下的内容：</p>
-
-<pre><code>2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error  
-PID     : 25807                TID : 3025136496     PROC : db2sysc  
-INSTANCE: esbinst              NODE : 000  
-HOSTNAME: localhost.localdomain  
-EDUID   : 1                    EDUNAME: db2sysc  
-FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50  
-MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.  
-</code></pre>
+<p>在实例用户的目录中查看日志<br/>
+    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
+存在如下的内容：<br/>
+    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
+    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
+    INSTANCE: esbinst              NODE : 000<br/>
+    HOSTNAME: localhost.localdomain<br/>
+    EDUID   : 1                    EDUNAME: db2sysc<br/>
+    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
+    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
 
 <h2>解决</h2>
 
 <hr />
 
-<p>Step1:</p>
-
-<pre><code>db2 update dbm cfg using SVCENAME esbinst  
-</code></pre>
-
-<p>Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：</p>
-
-<pre><code>esbinst     50000/tcp  
-</code></pre>
+<p>Step1:<br/>
+    db2 update dbm cfg using SVCENAME esbinst<br/>
+Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
+    esbinst     50000/tcp</p>
 ]]></content>
   </entry>
   
@@ -1342,28 +1302,24 @@ MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.
 <p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
 2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
 3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</p>
-
-<pre><code>To git@github.com:haoweishow/haoweishow.github.io.git  
-! [rejected]        master -&gt; master (non-fast-forward)  
-error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'  
-hint: Updates were rejected because the tip of your current branch is behind  
-hint: its remote counterpart. Integrate the remote changes (e.g.  
-hint: 'git pull ...') before pushing again.  
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.  
-</code></pre>
+4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误
+    To git@github.com:haoweishow/haoweishow.github.io.git<br/>
+    ! [rejected]        master -> master (non-fast-forward)<br/>
+    error: failed to push some refs to &lsquo;git@github.com:haoweishow/ haoweishow.github.io.git&rsquo;<br/>
+    hint: Updates were rejected because the tip of your current branch is behind<br/>
+    hint: its remote counterpart. Integrate the remote changes (e.g.<br/>
+    hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.<br/>
+    hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.</p>
 
 <h2>解决</h2>
 
 <hr />
 
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;</p>
-
-<pre><code>需要修改项目中Rakefile文件的内容：  
-原始内容：system "git push origin #{deploy_branch}"  
-改后内容：system "git push origin +#{deploy_branch}"  多个+号；  
-再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；  
-</code></pre>
+<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;<br/>
+    需要修改项目中Rakefile文件的内容：<br/>
+    原始内容：system &ldquo;git push origin #{deploy_branch}&rdquo;<br/>
+    改后内容：system &ldquo;git push origin +#{deploy_branch}&rdquo;  多个+号；<br/>
+    再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ant | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/ant/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-10-10T12:21:30+08:00</updated>
+  <updated>2014-10-13T16:15:15+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -22,38 +22,28 @@
 
 <hr />
 
-<p>```
-<target name="zip"></p>
-
-<pre><code>&lt;zip destFile="111.zip" basedir="." includes="123.txt" update="true" /&gt;
+<pre><code>&lt;target name="zip"&gt;
+    &lt;zip destFile="111.zip" basedir="." includes="123.txt" update="true" /&gt;
+&lt;/target&gt;
 </code></pre>
-
-<p></target>
-```</p>
 
 <h3>调用target</h3>
 
 <hr />
 
 <p>方法1<br/>
-```
-<target name="war.import" depends="svn.task,war.name"></p>
-
-<pre><code>&lt;echo&gt;A: ${war.name}&lt;/echo&gt;
-</code></pre>
-
-<p></target>
 <code>
-方法2  
+&lt;target name="war.import" depends="svn.task,war.name"&gt;
+    &lt;echo&gt;A: ${war.name}&lt;/echo&gt;
+&lt;/target&gt;
 </code>
-<target name="war.import" depends="svn.task"></p>
-
-<pre><code>&lt;antcall target="war.name"/&gt;
-&lt;echo&gt;B: ${war.name}&lt;/echo&gt;
-</code></pre>
-
-<p></target>
-```</p>
+方法2<br/>
+<code>
+&lt;target name="war.import" depends="svn.task"&gt;
+    &lt;antcall target="war.name"/&gt;
+    &lt;echo&gt;B: ${war.name}&lt;/echo&gt;
+&lt;/target&gt;
+</code></p>
 
 <h3>copy命令</h3>
 
@@ -64,17 +54,14 @@
 &lt;copy todir="/home/esb" file="/tmp/config/build.xml"/&gt;
 </code>
 拷贝文件夹<br/>
-```
-<copy todir="/home/esb" includeEmptyDirs="yes" overwrite=“true” verbose="true"></p>
-
-<pre><code>&lt;fileset dir="/test/config"&gt;
-    &lt;include name="aaa/**"/&gt;
-    &lt;exclude name="bbb/**"/&gt;
-&lt;/fileset&gt;
-</code></pre>
-
-<p></copy>
-```</p>
+<code>
+&lt;copy todir="/home/esb" includeEmptyDirs="yes" overwrite=“true” verbose="true"&gt;
+    &lt;fileset dir="/test/config"&gt;
+        &lt;include name="aaa/**"/&gt;
+        &lt;exclude name="bbb/**"/&gt;
+    &lt;/fileset&gt;
+&lt;/copy&gt;
+</code></p>
 
 <h3>文件移动</h3>
 
@@ -89,103 +76,82 @@
 &lt;move file="src1/test.txt" todir="src"/&gt;
 </code>
 文件夹移动<br/>
-```
-<move todir="src"></p>
-
-<pre><code>&lt;fileset dir="src1"/&gt;
-</code></pre>
-
-<p></move>
-```</p>
+<code>
+&lt;move todir="src"&gt;
+    &lt;fileset dir="src1"/&gt;
+&lt;/move&gt;
+</code></p>
 
 <h3>javac设置classpath</h3>
 
 <hr />
 
 <p>方法1<br/>
-```
-<javac srcdir="${src}" destdir="${classes}"></p>
-
-<pre><code>&lt;classpath&gt;
-    &lt;fileset dir="lib"&gt;
-        &lt;include name="*.jar"/&gt;
-    &lt;/fileset&gt;
-    &lt;path locaiton="build/classes" /&gt;
-&lt;/classpath&gt;
-</code></pre>
-
-<p></javac>
 <code>
-方法2  
+&lt;javac srcdir="${src}" destdir="${classes}"&gt;
+    &lt;classpath&gt;
+        &lt;fileset dir="lib"&gt;
+            &lt;include name="*.jar"/&gt;
+        &lt;/fileset&gt;
+        &lt;path locaiton="build/classes" /&gt;
+    &lt;/classpath&gt;
+&lt;/javac&gt;
 </code>
-<javac srcdir="${src}" destdir="${classes}"></p>
-
-<pre><code>&lt;classpath&gt;
-    &lt;fileset dir="build/lib/" includes="*.jar" /&gt;
-    &lt;dirset dir="build/classes/" /&gt;
-&lt;/classpath&gt;
-</code></pre>
-
-<p></javac>
-```</p>
+方法2<br/>
+<code>
+&lt;javac srcdir="${src}" destdir="${classes}"&gt;
+    &lt;classpath&gt;
+        &lt;fileset dir="build/lib/" includes="*.jar" /&gt;
+        &lt;dirset dir="build/classes/" /&gt;
+    &lt;/classpath&gt;
+&lt;/javac&gt;
+</code></p>
 
 <h3>javac参数</h3>
 
 <hr />
 
-<p>```
-<javac srcdir="${common.src.dir}" destdir="${build.temp.common.classes.dir}" debug="on" memoryMaximumSize="256m" fork="true" deprecation="off" failonerror="false"></p>
-
-<pre><code>&lt;!--给编译器指定编码，防止出现："警告： 编码 GBK 的不可映射字符"--&gt;
-&lt;compilerarg line="-encoding UTF-8"/&gt;
-&lt;classpath refid="common.lib.path"/&gt;
-&lt;include name="**"/&gt;
+<pre><code>&lt;javac srcdir="${common.src.dir}" destdir="${build.temp.common.classes.dir}" debug="on" memoryMaximumSize="256m" fork="true" deprecation="off" failonerror="false"&gt;
+    &lt;!--给编译器指定编码，防止出现："警告： 编码 GBK 的不可映射字符"--&gt;
+    &lt;compilerarg line="-encoding UTF-8"/&gt;
+    &lt;classpath refid="common.lib.path"/&gt;
+    &lt;include name="**"/&gt;
+&lt;/javac&gt;
 </code></pre>
-
-<p></javac>
-```</p>
 
 <h3>jar参数</h3>
 
 <hr />
 
-<p>```
-<jar destfile="aaa.jar"></p>
-
-<pre><code>&lt;fileset dir=""&gt;
-    &lt;include name="com/**/**/*.class /&gt;
-&lt;/fileset&gt;
+<pre><code>&lt;jar destfile="aaa.jar"&gt;
+    &lt;fileset dir=""&gt;
+        &lt;include name="com/**/**/*.class /&gt;
+    &lt;/fileset&gt;
+&lt;/jar&gt;
 </code></pre>
-
-<p></jar>
-```</p>
 
 <h3>执行java程序</h3>
 
-<p>```
-<target name="test-crawl1"></p>
-
-<pre><code>&lt;java classname="org.apache.nutch.crawl.Crawl"&gt;
-    &lt;classpath&gt;
-        &lt;path location="build/classes"&gt;&lt;/path&gt;
-    &lt;/classpath&gt;
-    &lt;classpath&gt;
-        &lt;fileset dir="lib" includes="**/*.jar"&gt;&lt;/fileset&gt;
-    &lt;/classpath&gt;
-    &lt;arg value="multiurls1.txt"/&gt;
-    &lt;arg value="-dir"/&gt;
-    &lt;arg value="crawed1"/&gt;
-    &lt;arg value="-depth"/&gt;
-    &lt;arg value="7"/&gt;
-    &lt;arg value="-threads"/&gt;
-    &lt;arg value="7"/&gt;
-    &lt;arg value="-topN"/&gt;
-    &lt;arg value="-100"/&gt;
-&lt;/java&gt;
+<pre><code>&lt;target name="test-crawl1"&gt;
+    &lt;java classname="org.apache.nutch.crawl.Crawl"&gt;
+        &lt;classpath&gt;
+            &lt;path location="build/classes"&gt;&lt;/path&gt;
+        &lt;/classpath&gt;
+        &lt;classpath&gt;
+            &lt;fileset dir="lib" includes="**/*.jar"&gt;&lt;/fileset&gt;
+        &lt;/classpath&gt;
+        &lt;arg value="multiurls1.txt"/&gt;
+        &lt;arg value="-dir"/&gt;
+        &lt;arg value="crawed1"/&gt;
+        &lt;arg value="-depth"/&gt;
+        &lt;arg value="7"/&gt;
+        &lt;arg value="-threads"/&gt;
+        &lt;arg value="7"/&gt;
+        &lt;arg value="-topN"/&gt;
+        &lt;arg value="-100"/&gt;
+    &lt;/java&gt;
+&lt;/target&gt;
 </code></pre>
-
-<p></target>
-```</p>
 ]]></content>
   </entry>
   

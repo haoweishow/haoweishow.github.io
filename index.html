@@ -26,12 +26,7 @@
   <script src="/javascripts/libs/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<!--
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
--->
-
+  
   
 
 </head>
@@ -83,7 +78,7 @@
   
 
 
-<time datetime="2014-10-10T11:18:41+08:00" pubdate data-updated="true">2014-10-10</time>
+<time datetime="2014-10-10T11:18:41+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -130,7 +125,7 @@
   
 
 
-<time datetime="2014-10-09T14:09:46+08:00" pubdate data-updated="true">2014-10-09</time>
+<time datetime="2014-10-09T14:09:46+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -226,7 +221,7 @@
   
 
 
-<time datetime="2014-09-13T10:10:42+08:00" pubdate data-updated="true">2014-09-13</time>
+<time datetime="2014-09-13T10:10:42+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -435,7 +430,7 @@
   
 
 
-<time datetime="2014-09-11T14:49:43+08:00" pubdate data-updated="true">2014-09-11</time>
+<time datetime="2014-09-11T14:49:43+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -675,7 +670,7 @@
   
 
 
-<time datetime="2014-09-11T11:20:34+08:00" pubdate data-updated="true">2014-09-11</time>
+<time datetime="2014-09-11T11:20:34+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -1126,7 +1121,7 @@
   
 
 
-<time datetime="2014-09-11T11:11:27+08:00" pubdate data-updated="true">2014-09-11</time>
+<time datetime="2014-09-11T11:11:27+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -1255,7 +1250,7 @@
   
 
 
-<time datetime="2014-09-09T23:41:37+08:00" pubdate data-updated="true">2014-09-09</time>
+<time datetime="2014-09-09T23:41:37+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -1276,7 +1271,7 @@
 <li>项目过程中的问题、环境、联系人等一些静态信息，可以使用wiki或者blog系统存放，这样的好处是查看、检索、修订方便</li>
 <li>项目组环境等信息及时更新，记录到文档中，方便归档，但是不方便使用；</li>
 <li>问题总结清单</li>
-<li>每次代码更新需要review&mdash;-这个要根据项目实际情况而定</li>
+<li>每次代码更新需要review&mdash;这个要根据项目实际情况而定</li>
 <li>所有的备份操作必须进行恢复性验证，特别是数据库的备份</li>
 <li>与外围系统的通讯模式之类的方案，需要项目组统一评审确定</li>
 <li>代码库与版本库更新部署流程</li>
@@ -1317,7 +1312,7 @@
   
 
 
-<time datetime="2014-09-05T10:55:16+08:00" pubdate data-updated="true">2014-09-05</time>
+<time datetime="2014-09-05T10:55:16+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -1468,7 +1463,7 @@
   
 
 
-<time datetime="2014-07-07T17:52:56+08:00" pubdate data-updated="true">2014-07-07</time>
+<time datetime="2014-07-07T17:52:56+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -1486,72 +1481,45 @@
 
 <hr />
 
-<p>克隆octopress</p>
-
-<pre><code>cd /Users/haoweishow/Documents  
-git clone git://github.com/imathis/octopress.git octopress
-</code></pre>
-
-<p>安装octopress</p>
-
-<pre><code>cd /Users/haoweishow/Documents/octopress  
-bundle update
-rake install
-</code></pre>
-
-<p>设置github信息</p>
-
-<pre><code>rake setup_github_pages
-输入：git@github.com:haoweishow/haoweishow.github.io.git
-</code></pre>
-
-<p>设置域名信息</p>
-
-<pre><code>echo ‘haoweishow.com' &gt;&gt; source/CNAME
-</code></pre>
+<p>克隆octopress
+    cd /Users/haoweishow/Documents<br/>
+    git clone git://github.com/imathis/octopress.git octopress
+安装octopress
+    cd /Users/haoweishow/Documents/octopress<br/>
+    bundle update
+    rake install
+设置github信息
+    rake setup_github_pages
+    输入：git@github.com:haoweishow/haoweishow.github.io.git
+设置域名信息
+    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
 
 <h2>发布</h2>
 
 <hr />
 
-<p>创建文章</p>
-
-<pre><code>alias rake='noglob rake'  #使rake命令支持[和]符号
-rake new_post['title']
-</code></pre>
-
-<p>编辑文章</p>
-
-<pre><code>本文使用Mou工具编写
-</code></pre>
-
-<p>提交文章</p>
-
-<pre><code>rake generate
-rake deploy               #将文章部署到github服务器上
-</code></pre>
-
-<p>提交源码</p>
-
-<pre><code>git add .
-git commit -m "xxxx"
-git push origin source    #将本地代码提交至github
-</code></pre>
+<p>创建文章<br/>
+    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
+    rake new_post[&lsquo;title&rsquo;]
+编辑文章
+    本文使用Mou工具编写
+提交文章
+    rake generate
+    rake deploy               #将文章部署到github服务器上
+提交源码
+    git add .
+    git commit -m &ldquo;xxxx&rdquo;
+    git push origin source    #将本地代码提交至github</p>
 
 <h2>测试</h2>
 
 <hr />
 
 <p>在本地服务器上预览页面<br/>
-启动本地服务</p>
-
-<pre><code>rake preview  
-</code></pre>
-
-<p>访问本地页面</p>
-
-<pre><code>http://localhost:4000
-</code></pre>
+启动本地服务<br/>
+    rake preview<br/>
+访问本地页面<br/>
+    <a href="http://localhost:4000">http://localhost:4000</a></p>
 </div>
   
   
@@ -1580,7 +1548,7 @@ git push origin source    #将本地代码提交至github
   
 
 
-<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true">2014-07-07</time>
+<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -1602,46 +1570,33 @@ git push origin source    #将本地代码提交至github
 
 <hr />
 
-<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：</p>
-
-<pre><code>SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully.   
-</code></pre>
-
-<p>执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
+    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
+执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
 
 <h2>排查</h2>
 
 <hr />
 
-<p>在实例用户的目录中查看日志</p>
-
-<pre><code>home/esbinst/sqllib/db2dump/db2diag.0.log  
-</code></pre>
-
-<p>存在如下的内容：</p>
-
-<pre><code>2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error  
-PID     : 25807                TID : 3025136496     PROC : db2sysc  
-INSTANCE: esbinst              NODE : 000  
-HOSTNAME: localhost.localdomain  
-EDUID   : 1                    EDUNAME: db2sysc  
-FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50  
-MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.  
-</code></pre>
+<p>在实例用户的目录中查看日志<br/>
+    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
+存在如下的内容：<br/>
+    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
+    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
+    INSTANCE: esbinst              NODE : 000<br/>
+    HOSTNAME: localhost.localdomain<br/>
+    EDUID   : 1                    EDUNAME: db2sysc<br/>
+    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
+    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
 
 <h2>解决</h2>
 
 <hr />
 
-<p>Step1:</p>
-
-<pre><code>db2 update dbm cfg using SVCENAME esbinst  
-</code></pre>
-
-<p>Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：</p>
-
-<pre><code>esbinst     50000/tcp  
-</code></pre>
+<p>Step1:<br/>
+    db2 update dbm cfg using SVCENAME esbinst<br/>
+Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
+    esbinst     50000/tcp</p>
 </div>
   
   

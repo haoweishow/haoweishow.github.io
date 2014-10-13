@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-10-10T12:21:30+08:00</updated>
+  <updated>2014-10-13T16:15:15+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -18,278 +18,214 @@
     <link href="http://haoweishow.com/blog/2014/09/11/wo-de-zshpei-zhi/"/>
     <updated>2014-09-11T11:20:34+08:00</updated>
     <id>http://haoweishow.com/blog/2014/09/11/wo-de-zshpei-zhi</id>
-    <content type="html"><![CDATA[<p>``` java .zshrc</p>
+    <content type="html"><![CDATA[<pre><code class="java .zshrc  ">#################### trace zsh time step 1/2 ######################################
+#### set the trace prompt to include seconds, nanoseconds, script name and line number
+#PS4='+$(date "+%s:%N") %N:%i&gt; '
 
-<h6>############## trace zsh time step &frac12;</h6>
-
-<h4>set the trace prompt to include seconds, nanoseconds, script name and line number</h4>
-
-<h1>PS4=&lsquo;+$(date &ldquo;+%s:%N&rdquo;) %N:%i> &rsquo;</h1>
-
-<h4>save file stderr to file descriptor 3 and redirect stderr (including trace</h4>
-
-<h4>output) to a file with the script&rsquo;s PID as an extension</h4>
-
-<h1>exec 3>&amp;2 2>/tmp/startlog.$$</h1>
-
-<h4>set options to turn on tracing and expansion of commands contained in the prompt</h4>
-
-<h1>setopt xtrace prompt_subst</h1>
-
-<h6>############## trace zsh time step &frac12;</h6>
-
-<h1>Path to your oh-my-zsh configuration.</h1>
-
-<p>ZSH=$HOME/.oh-my-zsh</p>
-
-<h1>Set name of the theme to load.</h1>
-
-<h1>Look in ~/.oh-my-zsh/themes/</h1>
-
-<h1>Optionally, if you set this to &ldquo;random&rdquo;, it&rsquo;ll load a random theme each</h1>
-
-<h1>time that oh-my-zsh is loaded.</h1>
-
-<h1>ZSH_THEME=&ldquo;robbyrussell&rdquo;</h1>
-
-<p>ZSH_THEME=&ldquo;af-magic&rdquo;</p>
-
-<h1>Example aliases</h1>
-
-<h1>alias zshconfig=&ldquo;mate ~/.zshrc&rdquo;</h1>
-
-<h1>alias ohmyzsh=&ldquo;mate ~/.oh-my-zsh&rdquo;</h1>
-
-<h1>Set to this to use case-sensitive completion</h1>
-
-<h1>CASE_SENSITIVE=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment this to disable bi-weekly auto-update checks</h1>
-
-<h1>DISABLE_AUTO_UPDATE=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment to change how often before auto-updates occur? (in days)</h1>
-
-<h1>export UPDATE_ZSH_DAYS=13</h1>
-
-<h1>Uncomment following line if you want to disable colors in ls</h1>
-
-<h1>DISABLE_LS_COLORS=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment following line if you want to disable autosetting terminal title.</h1>
-
-<h1>DISABLE_AUTO_TITLE=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment following line if you want to disable command autocorrection</h1>
-
-<h1>DISABLE_CORRECTION=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment following line if you want red dots to be displayed while waiting for completion</h1>
-
-<h1>COMPLETION_WAITING_DOTS=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment following line if you want to disable marking untracked files under</h1>
-
-<h1>VCS as dirty. This makes repository status check for large repositories much,</h1>
-
-<h1>much faster.</h1>
-
-<h1>DISABLE_UNTRACKED_FILES_DIRTY=&ldquo;true&rdquo;</h1>
-
-<h1>Uncomment following line if you want to  shown in the command execution time stamp</h1>
-
-<h1>in the history command output. The optional three formats: &ldquo;mm/dd/yyyy&rdquo;|&ldquo;dd.mm.yyyy&rdquo;|</h1>
-
-<h1>yyyy-mm-dd</h1>
-
-<h1>HIST_STAMPS=&ldquo;mm/dd/yyyy&rdquo;</h1>
-
-<h1>Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)</h1>
-
-<h1>Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/</h1>
-
-<h1>Example format: plugins=(rails git textmate ruby lighthouse)</h1>
-
-<p>plugins=(git osx)</p>
-
-<p>source $ZSH/oh-my-zsh.sh</p>
-
-<h1>User configuration</h1>
-
-<p>export PATH=&ldquo;/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/go/bin:/Users/haoweishow/Downloads/software/software.mac/apache-ant-1.8.4/bin:/opt/local/bin:&rdquo;</p>
-
-<h1>export MANPATH=&ldquo;/usr/local/man:$MANPATH&rdquo;</h1>
-
-<h1># Preferred editor for local and remote sessions</h1>
-
-<h1>if [[ -n $SSH_CONNECTION ]]; then</h1>
-
-<h1>export EDITOR=&lsquo;vim&rsquo;</h1>
-
-<h1>else</h1>
-
-<h1>export EDITOR=&lsquo;mvim&rsquo;</h1>
-
-<h1>fi</h1>
-
-<h1>Compilation flags</h1>
-
-<h1>export ARCHFLAGS=&ldquo;-arch x86_64&rdquo;</h1>
-
-<h1>ssh</h1>
-
-<h1>export SSH_KEY_PATH=&ldquo;~/.ssh/dsa_id&rdquo;</h1>
-
-<p>export CLICOLOR=1
-export LSCOLORS=gxfxaxdxcxegedabagacad</p>
-
-<p>add_alias(){</p>
-
-<p>}
-alias dl=&lsquo;cd /Users/haoweishow/Downloads;pwd;echo &ldquo;<strong><strong><strong><strong><strong><strong><strong><strong> Downloads </strong></strong></strong></strong></strong></strong></strong></strong><strong>&rdquo;&rsquo;
-alias dt=&lsquo;cd /Users/haoweishow/Desktop;pwd;echo &ldquo;</strong><strong><strong><strong><strong><strong><strong><strong><em> Desktop </em></strong></strong></strong></strong></strong></strong></strong><strong><em>&rdquo;&rsquo;
-alias dp=&lsquo;cd /Users/haoweishow/Dropbox;pwd;echo &ldquo;</em></strong><strong><strong><strong><strong><strong><strong><strong> Dropbox </strong></strong></strong></strong></strong></strong></strong><strong><strong>&rdquo;&rsquo;
-alias doc=&lsquo;cd /Users/haoweishow/Documents;pwd;echo &ldquo;</strong></strong><strong><strong><strong><strong><strong><strong><em> Documents </em></strong></strong></strong></strong></strong></strong><strong><strong><em>&rdquo;&rsquo;
-alias tmp=&lsquo;cd /tmp;pwd;echo &ldquo;</em></strong></strong><strong><strong><strong><strong><strong><em> tmp </em></strong></strong></strong></strong></strong>*****&rdquo;&rsquo;</p>
-
-<p>alias wps=&lsquo;cd /Users/haoweishow/Documents/workspace;pwd&rsquo;
-alias jvm=&lsquo;cd /Users/haoweishow/Documents/code.jvm/openjdk.7u6&rsquo;</p>
-
-<h1>alias cp=&lsquo;cp -i&rsquo;</h1>
-
-<h1>alias mv=&lsquo;mv -i&rsquo;</h1>
-
-<h1>alias rm=&lsquo;rm -i&rsquo;</h1>
-
-<p>alias ls=&lsquo;ls -FG&rsquo;
-alias ll=&lsquo;ls -l&rsquo;
-alias lr=&lsquo;ls -lrt&rsquo;
-alias grep=&lsquo;grep &mdash;color=auto&rsquo;
-alias vi=&lsquo;vim&rsquo;
-alias ds=&lsquo;du -sh *&rsquo;
-alias km=&lsquo;kill -9 <code>pgrep mobilepartner</code>&rsquo;
-alias vm=&lsquo;nohup /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/jvisualvm &amp;&rsquo;</p>
-
-<p>alias cls=&lsquo;clear&rsquo;
-alias clss=&lsquo;/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user&rsquo;
-alias cc=&lsquo;top -l 1 -ncols 1|head -7|grep -E &ldquo;CPU usage|PhysMem&rdquo;&rsquo;
-alias cafe=&lsquo;cd /Users/haoweishow/Documents/code.gitcafe;pwd&rsquo;
-alias cdbin=&lsquo;cd /Users/haoweishow/Dropbox/code/java_workspace/SmartESB/bin;pwd&rsquo;
-alias cdmm=&lsquo;cd /Users/haoweishow/Dropbox/code/java_workspace/SmartMOM;pwd&rsquo;
-alias cdbl=&lsquo;cd /Users/haoweishow/Documents/blog/haoweishow.github.io;pwd&rsquo;</p>
-
-<p>alias eclipse=&lsquo;cd /Applications/eclipse/Eclipse.app/Contents/MacOS;sh 1_start.sh&rsquo;</p>
-
-<p>alias rp=&lsquo;rake preview&rsquo;
-alias rd=&lsquo;rake generate;rake deploy&rsquo;
-alias rake=&lsquo;noglob rake&rsquo;</p>
-
-<p>alias gs=&lsquo;git status&rsquo;
-alias gpush=&lsquo;git push origin master&rsquo;
-alias gl=&ldquo;git log &mdash;color &mdash;graph &mdash;pretty=format:&lsquo;%Cred%h%Creset &ndash;%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an>%Creset&rsquo; &mdash;abbrev-commit &mdash;&rdquo;</p>
-
-<p>hh()
-{</p>
-
-<pre><code>h1
-h3
-hgit
+#### save file stderr to file descriptor 3 and redirect stderr (including trace 
+#### output) to a file with the script's PID as an extension
+#exec 3&gt;&amp;2 2&gt;/tmp/startlog.$$
+
+#### set options to turn on tracing and expansion of commands contained in the prompt
+#setopt xtrace prompt_subst
+#################### trace zsh time step 1/2 ######################################
+
+# Path to your oh-my-zsh configuration.
+ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+#ZSH_THEME="robbyrussell"
+
+ZSH_THEME="af-magic"
+
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Set to this to use case-sensitive completion
+# CASE_SENSITIVE="true"
+
+# Uncomment this to disable bi-weekly auto-update checks
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment to change how often before auto-updates occur? (in days)
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment following line if you want to disable colors in ls
+# DISABLE_LS_COLORS="true"
+
+# Uncomment following line if you want to disable autosetting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment following line if you want to disable command autocorrection
+# DISABLE_CORRECTION="true"
+
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment following line if you want to disable marking untracked files under
+# VCS as dirty. This makes repository status check for large repositories much,
+# much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment following line if you want to  shown in the command execution time stamp 
+# in the history command output. The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|
+# yyyy-mm-dd
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git osx)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/go/bin:/Users/haoweishow/Downloads/software/software.mac/apache-ant-1.8.4/bin:/opt/local/bin:"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# # Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+export CLICOLOR=1
+export LSCOLORS=gxfxaxdxcxegedabagacad
+
+add_alias(){
+
+}
+alias dl='cd /Users/haoweishow/Downloads;pwd;echo "**************** Downloads ******************"'
+alias dt='cd /Users/haoweishow/Desktop;pwd;echo "***************** Desktop ******************"'
+alias dp='cd /Users/haoweishow/Dropbox;pwd;echo "***************** Dropbox ******************"'
+alias doc='cd /Users/haoweishow/Documents;pwd;echo "***************** Documents ******************"'
+alias tmp='cd /tmp;pwd;echo "**************** tmp ****************"'
+
+alias wps='cd /Users/haoweishow/Documents/workspace;pwd'
+alias jvm='cd /Users/haoweishow/Documents/code.jvm/openjdk.7u6'
+
+#alias cp='cp -i'
+#alias mv='mv -i'
+#alias rm='rm -i'
+alias ls='ls -FG'
+alias ll='ls -l'
+alias lr='ls -lrt'
+alias grep='grep --color=auto'
+alias vi='vim'
+alias ds='du -sh *'
+alias km='kill -9 `pgrep mobilepartner`'
+alias vm='nohup /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/jvisualvm &amp;'
+
+alias cls='clear'
+alias clss='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user'
+alias cc='top -l 1 -ncols 1|head -7|grep -E "CPU usage|PhysMem"'
+alias cafe='cd /Users/haoweishow/Documents/code.gitcafe;pwd'
+alias cdbin='cd /Users/haoweishow/Dropbox/code/java_workspace/SmartESB/bin;pwd'
+alias cdmm='cd /Users/haoweishow/Dropbox/code/java_workspace/SmartMOM;pwd'
+alias cdbl='cd /Users/haoweishow/Documents/blog/haoweishow.github.io;pwd'
+
+alias eclipse='cd /Applications/eclipse/Eclipse.app/Contents/MacOS;sh 1_start.sh'
+
+alias rp='rake preview'
+alias rd='rake generate;rake deploy'
+alias rake='noglob rake'
+
+alias gs='git status'
+alias gpush='git push origin master'
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit --"
+
+hh()
+{
+    h1
+    h3
+    hgit
+}
+
+h1()
+{
+    echo "*******************************************************************************************************"
+    echo "共享服务"
+    echo "      sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist    #启动FTP服务"
+    echo "      sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist  #关闭FTP服务"
+    echo "      python -m SimpleHTTPServer 8888                                      #启动Http服务"
+    echo "环境变量"
+    echo "      JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands"
+    echo "系统优化"
+    echo "      sudo periodic daily weekly monthly                  #系统维护"
+    echo "      sudo xcode-select -switch /Applications/Xcode.app   #更新Xcode"
+    echo "保持唤醒"
+    echo "      pmset noidle"
+    echo "程序配置"
+    echo "      open -a GoShell —args config                             #GoShell程序配置"
+    echo "      defaults write com.apple.finder AppleShowAllFiles TRUE   #Finder显示隐藏文件"
+    echo "      defaults write com.apple.finder AppleShowAllFiles FALSE  #Finder不显示隐藏文件"
+    echo "*******************************************************************************************************"
+    echo "博客发布"
+    echo "      rake new_post['title']          #创建一篇新的文章"
+    echo "      rp = rake preview               #启动本地服务,预览博客"
+    echo "      rd = rake generate;rake deploy  #发布文章到github"
+    echo "      git push origin source          #提交本地代码到github的远程仓库的source分支"
+}
+
+hgit()
+{
+    echo "*******************************************************************************************************"
+    echo "git操作"
+    echo "      git remote update"
+    echo "      git add ."
+    echo "      git commit -m xxx"
+    echo "      git push origin source"
+    echo "      git rm --cache &lt;file&gt;"
+    echo "      git status"
+    echo "      git log"
+    echo "      git diff &lt;file&gt;      #比较文件的历史版本"
+}
+
+h2()
+{
+    echo "*******************************************************************************************************"
+    echo "软件下载"
+    echo "      aria2c http://example.org/mylinux.iso"
+    echo "      aria2c http://a/f.iso ftp://b/f.iso"
+    echo "      aria2c http://example.org/mylinux.torrent"
+    echo "      aria2c 'magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C'"
+    echo "      aria2c -i uri.txt"
+    echo "      aria2c -S bit.torrent #显示种子中包含了哪些文件"
+}
+
+h3()
+{
+    echo "******************************************************************************************************"
+    echo "软件管理"
+    echo "       brew search           #搜索软件"
+    echo "       brew info xxxx        #软件检查"
+    echo "       brew list             #安装列表"
+    echo "       brew update           #软件更新"
+    echo "       brew upgrade          #全部更新"
+    echo "       brew install xxxx     #安装软件"
+    echo "       brew remove xxxx      #软件删除"
+    echo "       brew deps xxxx        #软件依赖"
+    echo "       brew outdated         #过期软件"
+}
+
+#################### trace zsh time step 2/2 ######################################
+#### 关闭 zsh tracing
+#unsetopt xtrace
+#restore stderr to the value saved in FD 3
+#exec 2&gt;&amp;3 3&gt;&amp;-
+#################### trace zsh time step 2/2 ######################################
 </code></pre>
-
-<p>}</p>
-
-<p>h1()
-{</p>
-
-<pre><code>echo "*******************************************************************************************************"
-echo "共享服务"
-echo "      sudo -s launchctl load -w /System/Library/LaunchDaemons/ftp.plist    #启动FTP服务"
-echo "      sudo -s launchctl unload -w /System/Library/LaunchDaemons/ftp.plist  #关闭FTP服务"
-echo "      python -m SimpleHTTPServer 8888                                      #启动Http服务"
-echo "环境变量"
-echo "      JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands"
-echo "系统优化"
-echo "      sudo periodic daily weekly monthly                  #系统维护"
-echo "      sudo xcode-select -switch /Applications/Xcode.app   #更新Xcode"
-echo "保持唤醒"
-echo "      pmset noidle"
-echo "程序配置"
-echo "      open -a GoShell —args config                             #GoShell程序配置"
-echo "      defaults write com.apple.finder AppleShowAllFiles TRUE   #Finder显示隐藏文件"
-echo "      defaults write com.apple.finder AppleShowAllFiles FALSE  #Finder不显示隐藏文件"
-echo "*******************************************************************************************************"
-echo "博客发布"
-echo "      rake new_post['title']          #创建一篇新的文章"
-echo "      rp = rake preview               #启动本地服务,预览博客"
-echo "      rd = rake generate;rake deploy  #发布文章到github"
-echo "      git push origin source          #提交本地代码到github的远程仓库的source分支"
-</code></pre>
-
-<p>}</p>
-
-<p>hgit()
-{</p>
-
-<pre><code>echo "*******************************************************************************************************"
-echo "git操作"
-echo "      git remote update"
-echo "      git add ."
-echo "      git commit -m xxx"
-echo "      git push origin source"
-echo "      git rm --cache &lt;file&gt;"
-echo "      git status"
-echo "      git log"
-echo "      git diff &lt;file&gt;      #比较文件的历史版本"
-</code></pre>
-
-<p>}</p>
-
-<p>h2()
-{</p>
-
-<pre><code>echo "*******************************************************************************************************"
-echo "软件下载"
-echo "      aria2c http://example.org/mylinux.iso"
-echo "      aria2c http://a/f.iso ftp://b/f.iso"
-echo "      aria2c http://example.org/mylinux.torrent"
-echo "      aria2c 'magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C'"
-echo "      aria2c -i uri.txt"
-echo "      aria2c -S bit.torrent #显示种子中包含了哪些文件"
-</code></pre>
-
-<p>}</p>
-
-<p>h3()
-{</p>
-
-<pre><code>echo "******************************************************************************************************"
-echo "软件管理"
-echo "       brew search           #搜索软件"
-echo "       brew info xxxx        #软件检查"
-echo "       brew list             #安装列表"
-echo "       brew update           #软件更新"
-echo "       brew upgrade          #全部更新"
-echo "       brew install xxxx     #安装软件"
-echo "       brew remove xxxx      #软件删除"
-echo "       brew deps xxxx        #软件依赖"
-echo "       brew outdated         #过期软件"
-</code></pre>
-
-<p>}</p>
-
-<h6>############## trace zsh time step 2/2</h6>
-
-<h4>关闭 zsh tracing</h4>
-
-<h1>unsetopt xtrace</h1>
-
-<h1>restore stderr to the value saved in FD 3</h1>
-
-<h1>exec 2>&amp;3 3>&amp;&ndash;</h1>
-
-<h6>############## trace zsh time step 2/2</h6>
-
-<p>```</p>
 ]]></content>
   </entry>
   
@@ -298,54 +234,53 @@ echo "       brew outdated         #过期软件"
     <link href="http://haoweishow.com/blog/2014/09/11/wo-de-vimrcpei-zhi/"/>
     <updated>2014-09-11T11:11:27+08:00</updated>
     <id>http://haoweishow.com/blog/2014/09/11/wo-de-vimrcpei-zhi</id>
-    <content type="html"><![CDATA[<p>``` java .vimrc<br/>
-&ldquo;==
+    <content type="html"><![CDATA[<pre><code class="java .vimrc  ">"== 
 "Author :haoweishow
 "Website:haoweishow.com
-"Version:1.0
-&rdquo;==</p>
+"Version:1.0 
+"==
 
-<p>&ldquo;语法高亮
+"语法高亮
 syntax enable
-syntax on</p>
+syntax on
 
-<p>&ldquo;显示行号
-set number</p>
+"显示行号
+set number
 
-<p>&ldquo;<strong><strong><strong><strong><strong><strong><strong><strong><strong>状态栏</strong></strong></strong></strong></strong></strong></strong></strong></strong><em>
+"******************状态栏*******************
 "打开状态栏的坐标信息
 set ruler
 "取消底部状态栏显示。1为关闭，2为开启。
 set laststatus=2
-set statusline=[%F]%y%r%m%</em>%=[Line:%l/%L,Column:%c][%p%%]
-&rdquo;<strong><strong><strong><strong><strong><strong><strong><strong><strong>状态栏</strong></strong></strong></strong></strong></strong></strong></strong></strong>*</p>
+set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
+"******************状态栏*******************
 
-<p>&ldquo;将输入的命令显示出来，便于查看当前输入的信息
+"将输入的命令显示出来，便于查看当前输入的信息
 set showcmd
 "设置vim存储的历史命令记录的条数
 set history=200
 "下划线高亮显示光标所在行
 set cursorline
-"插入右括号时会短暂地跳转到匹配的左括号
+"插入右括号时会短暂地跳转到匹配的左括号 
 set showmatch
-"不对匹配的括号进行高亮显示
-let loaded_matchparen=1
-"在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能。
+"不对匹配的括号进行高亮显示 
+let loaded_matchparen=1 
+"在执行宏命令时，不进行显示重绘；在宏命令执行完成后，一次性重绘，以便提高性能。 
 set lazyredraw
-"设置一个tab对应4个空格
-set tabstop=4
-"在按退格键时，如果前面有4个空格，则会统一清除
+"设置一个tab对应4个空格 
+set tabstop=4 
+"在按退格键时，如果前面有4个空格，则会统一清除 
 set softtabstop=4
-"最基本的自动缩进
+"最基本的自动缩进 
 set autoindent shiftwidth=4
-"高亮显示搜索匹配到的字符串
+"高亮显示搜索匹配到的字符串 
 set hlsearch
-"在搜索模式下，随着搜索字符的逐个输入，实时进行字符串匹配，并对首个匹配到的字符串高亮显示
-set incsearch</p>
+"在搜索模式下，随着搜索字符的逐个输入，实时进行字符串匹配，并对首个匹配到的字符串高亮显示 
+set incsearch
 
-<p>&ldquo;自动设置目录为正在编辑的文件所在的目录
+"自动设置目录为正在编辑的文件所在的目录
 set autochdir
-```</p>
+</code></pre>
 ]]></content>
   </entry>
   

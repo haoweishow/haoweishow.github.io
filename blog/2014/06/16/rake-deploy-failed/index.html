@@ -29,12 +29,7 @@
   <script src="/javascripts/libs/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<!--
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
--->
-
+  
   
 
 </head>
@@ -83,7 +78,7 @@
   
 
 
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true">2014-06-16</time>
+<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -97,28 +92,24 @@
 <p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
 2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
 3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误</p>
-
-<pre><code>To git@github.com:haoweishow/haoweishow.github.io.git  
-! [rejected]        master -&gt; master (non-fast-forward)  
-error: failed to push some refs to 'git@github.com:haoweishow/ haoweishow.github.io.git'  
-hint: Updates were rejected because the tip of your current branch is behind  
-hint: its remote counterpart. Integrate the remote changes (e.g.  
-hint: 'git pull ...') before pushing again.  
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.  
-</code></pre>
+4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误
+    To git@github.com:haoweishow/haoweishow.github.io.git<br/>
+    ! [rejected]        master -> master (non-fast-forward)<br/>
+    error: failed to push some refs to &lsquo;git@github.com:haoweishow/ haoweishow.github.io.git&rsquo;<br/>
+    hint: Updates were rejected because the tip of your current branch is behind<br/>
+    hint: its remote counterpart. Integrate the remote changes (e.g.<br/>
+    hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.<br/>
+    hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.</p>
 
 <h2>解决</h2>
 
 <hr />
 
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;</p>
-
-<pre><code>需要修改项目中Rakefile文件的内容：  
-原始内容：system "git push origin #{deploy_branch}"  
-改后内容：system "git push origin +#{deploy_branch}"  多个+号；  
-再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；  
-</code></pre>
+<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;<br/>
+    需要修改项目中Rakefile文件的内容：<br/>
+    原始内容：system &ldquo;git push origin #{deploy_branch}&rdquo;<br/>
+    改后内容：system &ldquo;git push origin +#{deploy_branch}&rdquo;  多个+号；<br/>
+    再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；</p>
 </div>
 
 
@@ -141,7 +132,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
   
 
 
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true">2014-06-16</time>
+<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
