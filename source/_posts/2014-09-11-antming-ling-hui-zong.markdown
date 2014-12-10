@@ -99,9 +99,9 @@ categories: ant
 ###jar参数
 ***
 ```
-<jar destfile="aaa.jar">
-    <fileset dir="">
-        <include name="com/**/**/*.class />
+<jar destfile="${dest.jar.name}">
+    <fileset dir="${dest.classes.dir}">
+        <include name="com/**/**/*.class" />
     </fileset>
 </jar>
 ```
