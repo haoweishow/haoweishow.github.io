@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-12-19T12:58:57+08:00</updated>
+  <updated>2014-12-26T10:21:11+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Jetty相关]]></title>
+    <link href="http://haoweishow.com/blog/2014/12/26/jettyxiang-guan/"/>
+    <updated>2014-12-26T10:17:43+08:00</updated>
+    <id>http://haoweishow.com/blog/2014/12/26/jettyxiang-guan</id>
+    <content type="html"><![CDATA[<h2>Jetty版本</h2>
+
+<ul>
+<li>首页
+
+<ul>
+<li><a href="http://www.eclipse.org/jetty/">http://www.eclipse.org/jetty/</a></li>
+</ul>
+</li>
+<li>下载地址
+
+<ul>
+<li><a href="http://download.eclipse.org/jetty/">http://download.eclipse.org/jetty/</a></li>
+</ul>
+</li>
+<li>8.x版本下载
+
+<ul>
+<li><a href="http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/">http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/</a></li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[WTF]]></title>

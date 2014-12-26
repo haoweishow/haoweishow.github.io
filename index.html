@@ -63,6 +63,64 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/12/26/jettyxiang-guan/">Jetty相关</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-26T10:17:43+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Jetty版本</h2>
+
+<ul>
+<li>首页
+
+<ul>
+<li><a href="http://www.eclipse.org/jetty/">http://www.eclipse.org/jetty/</a></li>
+</ul>
+</li>
+<li>下载地址
+
+<ul>
+<li><a href="http://download.eclipse.org/jetty/">http://download.eclipse.org/jetty/</a></li>
+</ul>
+</li>
+<li>8.x版本下载
+
+<ul>
+<li><a href="http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/">http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/12/13/wtf/">WTF</a></h1>
     
     
@@ -1583,67 +1641,9 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-16T17:20:04+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>过程</h2>
-
-<hr />
-
-<p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
-2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
-3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误
-    To git@github.com:haoweishow/haoweishow.github.io.git<br/>
-    ! [rejected]        master -> master (non-fast-forward)<br/>
-    error: failed to push some refs to &lsquo;git@github.com:haoweishow/ haoweishow.github.io.git&rsquo;<br/>
-    hint: Updates were rejected because the tip of your current branch is behind<br/>
-    hint: its remote counterpart. Integrate the remote changes (e.g.<br/>
-    hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.<br/>
-    hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.</p>
-
-<h2>解决</h2>
-
-<hr />
-
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;<br/>
-    需要修改项目中Rakefile文件的内容：<br/>
-    原始内容：system &ldquo;git push origin #{deploy_branch}&rdquo;<br/>
-    改后内容：system &ldquo;git push origin +#{deploy_branch}&rdquo;  多个+号；<br/>
-    再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1653,10 +1653,14 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (2)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (2)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/26/jettyxiang-guan/">Jetty相关</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/13/wtf/">WTF</a>
@@ -1672,10 +1676,6 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
     
       <li class="post">
         <a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/11/antming-ling-hui-zong/">Ant命令汇总</a>
       </li>
     
   </ul>
