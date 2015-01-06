@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2014-12-26T10:21:11+08:00</updated>
+  <updated>2015-01-06T17:42:49+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,44 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[DB2 load数据失败(SQL2036N)]]></title>
+    <link href="http://haoweishow.com/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n/"/>
+    <updated>2015-01-06T17:38:09+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n</id>
+    <content type="html"><![CDATA[<h2>背景</h2>
+
+<ul>
+<li>数据库实例用户:  userA</li>
+<li>数据操作用户:    userB</li>
+</ul>
+
+
+<h2>操作</h2>
+
+<ul>
+<li>userB执行export命令,导出ixf格式的数据;</li>
+<li>userB执行import命令,导入ixf格式的数据,正常导入;</li>
+<li>userB执行load命令,导入ixf格式的数据,导入失败;</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SQL2036N  The path for the file or device
+</span><span class='line'>"/home/esb/batch/data/tmp_xxxx_20141101.ixf" is not valid.</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>解决</h2>
+
+<ul>
+<li>数据库实例用户userA对文件<strong>/home/esb/batch/data/tmp_xxxx_20141101.ixf</strong>没有访问权限.</li>
+<li>给userA授权对该文件的访问权限,即可使用load导入数据.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Jetty相关]]></title>

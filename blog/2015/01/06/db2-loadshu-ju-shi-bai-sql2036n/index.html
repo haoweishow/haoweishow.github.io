@@ -6,11 +6,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="baidu-site-verification" content="yByKERe4RO" />
-  <title>Category: Oom - haoweishow Blog</title>
+  <title>DB2 load数据失败(SQL2036N) - haoweishow Blog</title>
   <meta name="author" content="haoweishow">
 
   
-  <meta name="description" content="Category: oom">
+  <meta name="description" content="背景 数据库实例用户: userA
+数据操作用户: userB 操作 userB执行export命令,导出ixf格式的数据;
+userB执行import命令,导入ixf格式的数据,正常导入;
+userB执行load命令,导入ixf格式的数据,导入失败; 1
+2
+SQL2036N The path &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://haoweishow.com/blog/categories/oom">
+  <link rel="canonical" href="http://haoweishow.com/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="haoweishow Blog" type="application/atom+xml">
@@ -56,35 +61,111 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Oom</h1>
+    
+      <h1 class="entry-title">DB2 load数据失败(SQL2036N)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-06T17:38:09+08:00" pubdate data-updated="true"></time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h2>背景</h2>
 
-  
-  <h2>2014</h2>
-
-<article>
-  
-<h1><a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a></h1>
-<time datetime="2014-09-13T10:10:42+08:00" pubdate><span class='month'>Sep</span> <span class='day'>13</span> <span class='year'>2014</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/oom/'>oom</a></span>
-</footer>
+<ul>
+<li>数据库实例用户:  userA</li>
+<li>数据操作用户:    userB</li>
+</ul>
 
 
-</article>
+<h2>操作</h2>
+
+<ul>
+<li>userB执行export命令,导出ixf格式的数据;</li>
+<li>userB执行import命令,导入ixf格式的数据,正常导入;</li>
+<li>userB执行load命令,导入ixf格式的数据,导入失败;</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SQL2036N  The path for the file or device
+</span><span class='line'>"/home/esb/batch/data/tmp_xxxx_20141101.ixf" is not valid.</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>解决</h2>
+
+<ul>
+<li>数据库实例用户userA对文件<strong>/home/esb/batch/data/tmp_xxxx_20141101.ixf</strong>没有访问权限.</li>
+<li>给userA授权对该文件的访问权限,即可使用load导入数据.</li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">haoweishow</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-06T17:38:09+08:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/db2/'>db2</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/12/26/jettyxiang-guan/" title="Previous Post: Jetty相关">&laquo; Jetty相关</a>
+      
+      
+    </p>
+  </footer>
 </article>
 
 </div>
@@ -140,6 +221,7 @@ ds.charset = 'UTF-8';
 
   
 </aside>
+
 
     </div>
   </div>

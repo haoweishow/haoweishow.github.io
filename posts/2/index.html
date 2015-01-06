@@ -63,6 +63,83 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">DB2启动失败(SQL5043N)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>背景</h2>
+
+<hr />
+
+<p>操作系统：  CentOS 6 <br/>
+数据库版本：db2_v101_linuxia32_expc <br/>
+数据库实例名称：esbinst<br/>
+实例用户名称：esbinst <br/>
+数据库安装成功 <br/>
+数据库实例创建成功</p>
+
+<h2>问题</h2>
+
+<hr />
+
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
+    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
+执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
+
+<h2>排查</h2>
+
+<hr />
+
+<p>在实例用户的目录中查看日志<br/>
+    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
+存在如下的内容：<br/>
+    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
+    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
+    INSTANCE: esbinst              NODE : 000<br/>
+    HOSTNAME: localhost.localdomain<br/>
+    EDUID   : 1                    EDUNAME: db2sysc<br/>
+    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
+    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
+
+<h2>解决</h2>
+
+<hr />
+
+<p>Step1:<br/>
+    db2 update dbm cfg using SVCENAME esbinst<br/>
+Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
+    esbinst     50000/tcp</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a></h1>
     
     
@@ -130,10 +207,14 @@
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (2)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n/">DB2 load数据失败(SQL2036N)</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/26/jettyxiang-guan/">Jetty相关</a>
@@ -149,10 +230,6 @@
     
       <li class="post">
         <a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a>
       </li>
     
   </ul>
@@ -181,7 +258,7 @@ ds.charset = 'UTF-8';
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - haoweishow -
+  Copyright &copy; 2015 - haoweishow -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
