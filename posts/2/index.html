@@ -63,6 +63,91 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/07/07/bu-shu-octopress/">部署octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T17:52:56+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>背景</h2>
+
+<hr />
+
+<p>操作系统：MacOS 10.9.4<br/>
+已有域名：haoweishow.com</p>
+
+<h2>安装</h2>
+
+<hr />
+
+<p>克隆octopress
+    cd /Users/haoweishow/Documents<br/>
+    git clone git://github.com/imathis/octopress.git octopress
+安装octopress
+    cd /Users/haoweishow/Documents/octopress<br/>
+    bundle update
+    rake install
+设置github信息
+    rake setup_github_pages
+    输入：git@github.com:haoweishow/haoweishow.github.io.git
+设置域名信息
+    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
+
+<h2>发布</h2>
+
+<hr />
+
+<p>创建文章<br/>
+    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
+    rake new_post[&lsquo;title&rsquo;]
+编辑文章
+    本文使用Mou工具编写
+提交文章
+    rake generate
+    rake deploy               #将文章部署到github服务器上
+提交源码
+    git add .
+    git commit -m &ldquo;xxxx&rdquo;
+    git push origin source    #将本地代码提交至github</p>
+
+<h2>测试</h2>
+
+<hr />
+
+<p>在本地服务器上预览页面<br/>
+启动本地服务<br/>
+    rake preview<br/>
+访问本地页面<br/>
+    <a href="http://localhost:4000">http://localhost:4000</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">DB2启动失败(SQL5043N)</a></h1>
     
     
@@ -207,10 +292,14 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n/">DB2 load数据失败(SQL2036N)</a>
@@ -226,10 +315,6 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
     
       <li class="post">
         <a href="/blog/2014/10/10/db2jian-kong-db2top/">DB2监控-db2top</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a>
       </li>
     
   </ul>
