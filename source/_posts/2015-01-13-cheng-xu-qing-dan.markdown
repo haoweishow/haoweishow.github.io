@@ -5,9 +5,6 @@ date: 2015-01-13 20:01:37 +0800
 comments: true
 categories: software
 ---
-
-程序清单
-
 **//add post at 2015-01-13**
 
 ## Mac系统
