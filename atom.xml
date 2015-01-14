@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-01-13T21:23:40+08:00</updated>
+  <updated>2015-01-14T11:51:50+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -14,13 +14,56 @@
 
   
   <entry>
+    <title type="html"><![CDATA[如何提高工作效率]]></title>
+    <link href="http://haoweishow.com/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/"/>
+    <updated>2015-01-14T11:45:51+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu</id>
+    <content type="html"><![CDATA[<p>//add post at 2015-01-14</p>
+
+<p>标题比较大,实际内容仅涉及到工作中的一小部分内容.</p>
+
+<h2>背景</h2>
+
+<p>项目组开发人员,在开发管理控制台的界面,由于框架的原因,页面文件必须放到jar包里才能加载.</p>
+
+<h2>开发过程</h2>
+
+<ol>
+<li>本地eclipse开发页面代码</li>
+<li>下载服务器上的jar包</li>
+<li>手动把文件拖到jar包</li>
+<li>上传jar包到服务器</li>
+<li>重启服务器</li>
+<li>打开页面看结果</li>
+</ol>
+
+
+<h2>过程分析</h2>
+
+<ul>
+<li>在整个开发过程中,过多的时间都浪费在第3步</li>
+<li>如果页面的源文件目录结构很深,又分布在不同的目录中,那么要把这些目录拖动到jar包里相应的目录上,消耗的时间可想而知</li>
+<li>可能到这里,有经验的或者稍微动动脑的同学都知道该怎么优化这个过程</li>
+<li>可问题是为什么不想办法提高一下效率呢?<code>磨刀不误砍柴工</code>的道理大家应该都懂</li>
+</ul>
+
+
+<h2>解决方法</h2>
+
+<ul>
+<li>通过ant脚本来抽取代码和执行打包的动作</li>
+<li>目前上传文件还是通过FTP工具实现,没有测试过ant是否可以上传</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[程序清单]]></title>
     <link href="http://haoweishow.com/blog/2015/01/13/cheng-xu-qing-dan/"/>
     <updated>2015-01-13T20:01:37+08:00</updated>
     <id>http://haoweishow.com/blog/2015/01/13/cheng-xu-qing-dan</id>
-    <content type="html"><![CDATA[<p>程序清单</p>
-
-<p><strong>//add post at 2015-01-13</strong></p>
+    <content type="html"><![CDATA[<p><strong>//add post at 2015-01-13</strong></p>
 
 <h2>Mac系统</h2>
 

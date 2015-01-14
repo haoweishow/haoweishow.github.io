@@ -6,14 +6,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="baidu-site-verification" content="yByKERe4RO" />
-  <title>性能问题排查 - haoweishow Blog</title>
+  <title>Category: 效率 - haoweishow Blog</title>
   <meta name="author" content="haoweishow">
 
   
-  <meta name="description" content="Linux系统 定位占用cpu高的java线程 1
-top -H -p &lt;pid&gt; -d 1 -n3 查看该线程的执行时间 1
-ps -mp &lt;pid&gt; -o THREAD,tid,time 通过pstack查看进程的栈信息 1
-pstack &lt;pid&gt; &hellip;">
+  <meta name="description" content="Category: 效率">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +19,7 @@ pstack &lt;pid&gt; &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://haoweishow.com/blog/2014/10/09/xing-neng-wen-ti-pai-cha">
+  <link rel="canonical" href="http://haoweishow.com/blog/categories/xiao-lu">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="haoweishow Blog" type="application/atom+xml">
@@ -59,144 +56,35 @@ pstack &lt;pid&gt; &hellip;">
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">性能问题排查</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-09T14:09:46+08:00" pubdate data-updated="true"></time>
-        
-      </p>
+    <h1 class="entry-title">Category: 效率</h1>
     
   </header>
+  
+  <div id="blog-archives" class="category">
 
 
-<div class="entry-content"><h3>Linux系统</h3>
 
-<ul>
-<li>定位占用cpu高的java线程</li>
-</ul>
+  
+  <h2>2015</h2>
 
+<article>
+  
+<h1><a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a></h1>
+<time datetime="2015-01-14T11:45:51+08:00" pubdate><span class='month'>Jan</span> <span class='day'>14</span> <span class='year'>2015</span></time>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>top -H -p &lt;pid&gt; -d 1 -n3</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>查看该线程的执行时间</li>
-</ul>
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/xiao-lu/'>效率</a></span>
+</footer>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD,tid,time</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>通过pstack查看进程的栈信息</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pstack &lt;pid&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Aix系统</h3>
-
-<ul>
-<li>定位占用cpu高的java线程</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD
-</span><span class='line'>结果显示格式：线程十进制的ID 状态:(R/S/Z) CPU占用百分比 其它...</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>将十进制线程ID转换为十六进制</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>printf "%x\n" 131268965</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>查找线程</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>kill -3 &lt;pid&gt;
-</span><span class='line'>根据十六进制的线程ID，可以定位到占用CPU高的线程</span></code></pre></td></tr></table></div></figure>
+</article>
 
 </div>
 
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">haoweishow</span></span>
-
-      
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-09T14:09:46+08:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/xing-neng/'>性能</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/" title="Previous Post: OOM故障分析-案例1">&laquo; OOM故障分析-案例1</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/10/10/db2jian-kong-db2top/" title="Next Post: DB2监控-db2top">DB2监控-db2top &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
 </div>
@@ -252,7 +140,6 @@ ds.charset = 'UTF-8';
 
   
 </aside>
-
 
     </div>
   </div>

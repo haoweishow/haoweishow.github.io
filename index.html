@@ -63,6 +63,78 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-14T11:45:51+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>//add post at 2015-01-14</p>
+
+<p>标题比较大,实际内容仅涉及到工作中的一小部分内容.</p>
+
+<h2>背景</h2>
+
+<p>项目组开发人员,在开发管理控制台的界面,由于框架的原因,页面文件必须放到jar包里才能加载.</p>
+
+<h2>开发过程</h2>
+
+<ol>
+<li>本地eclipse开发页面代码</li>
+<li>下载服务器上的jar包</li>
+<li>手动把文件拖到jar包</li>
+<li>上传jar包到服务器</li>
+<li>重启服务器</li>
+<li>打开页面看结果</li>
+</ol>
+
+
+<h2>过程分析</h2>
+
+<ul>
+<li>在整个开发过程中,过多的时间都浪费在第3步</li>
+<li>如果页面的源文件目录结构很深,又分布在不同的目录中,那么要把这些目录拖动到jar包里相应的目录上,消耗的时间可想而知</li>
+<li>可能到这里,有经验的或者稍微动动脑的同学都知道该怎么优化这个过程</li>
+<li>可问题是为什么不想办法提高一下效率呢?<code>磨刀不误砍柴工</code>的道理大家应该都懂</li>
+</ul>
+
+
+<h2>解决方法</h2>
+
+<ul>
+<li>通过ant脚本来抽取代码和执行打包的动作</li>
+<li>目前上传文件还是通过FTP工具实现,没有测试过ant是否可以上传</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a></h1>
     
     
@@ -86,9 +158,7 @@
   </header>
 
 
-  <div class="entry-content"><p>程序清单</p>
-
-<p><strong>//add post at 2015-01-13</strong></p>
+  <div class="entry-content"><p><strong>//add post at 2015-01-13</strong></p>
 
 <h2>Mac系统</h2>
 
@@ -1575,157 +1645,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">格式化Java代码</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T10:55:16+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>背景</h2>
-
-<hr />
-
-<ul>
-<li>产品中一个核心模块，会根据配置文件生成运行时的java代码（一个完整的java类）。</li>
-<li>自动生成的java类，没有对其进行格式化。</li>
-<li>排错时不方便阅读，代码量小还好，代码多的话，很难看清楚里面的逻辑，因此每次都是把代码拷贝到eclipse里面格式之后再看。</li>
-</ul>
-
-
-<h2>过程</h2>
-
-<hr />
-
-<ul>
-<li>搜索到这个文章,<a href="http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/">How to use the eclipse code formatter from your code</a>,自备梯子.</li>
-<li>作者是通过eclipse的formatter组件实现代码的格式化.</li>
-<li>按照文章的描述逐步实现,引入eclipse的10个jar包,可以实现代码的格式化.</li>
-<li>但是引入10个jar到项目中,过于复杂.</li>
-<li>该文章的评论中有人提到<a href="http://sourceforge.net/projects/jastyle/">jastyle</a>.</li>
-</ul>
-
-
-<h2>实现</h2>
-
-<ul>
-<li>下载jastyle的源码,并导入到eclipse工程中,当然也可以直接下载jar包使用.下图是导入到ecipse里的源码,可以看到代码还是很精简独立的.    <br/>
-<img src="/images/postImage/20140905-1.png"></li>
-<li>该模块的Main.java是格式化java代码的入口类.</li>
-<li>从中抽取出格式化单个java文件函数,测试代码:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>TestJavaFormat.java </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">net</span><span class="o">.</span><span class="na">barenca</span><span class="o">.</span><span class="na">jastyle</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.Reader</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestJavaFormat</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">&quot;C:/share/javaworkspace/jar/src/Test.java&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">Reader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">tmpFileName</span> <span class="o">=</span> <span class="n">fileName</span> <span class="o">+</span> <span class="s">&quot;.tmp&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">file</span><span class="o">.</span><span class="na">delete</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PrintWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">FileWriter</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">)));</span>
-</span><span class='line'>
-</span><span class='line'>      
-</span><span class='line'>      <span class="c1">//开始对文件进行格式化</span>
-</span><span class='line'>      <span class="n">ASFormatter</span> <span class="n">formatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ASFormatter</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">formatter</span><span class="o">.</span><span class="na">setJavaStyle</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">ASStreamIterator</span> <span class="n">streamIterator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ASStreamIterator</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">formatter</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">streamIterator</span><span class="o">);</span>
-</span><span class='line'>      <span class="k">while</span> <span class="o">(</span><span class="n">formatter</span><span class="o">.</span><span class="na">hasMoreLines</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">formatter</span><span class="o">.</span><span class="na">nextLine</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      
-</span><span class='line'>      <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>      
-</span><span class='line'>      <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">).</span><span class="na">renameTo</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="s">&quot;.orig&quot;</span><span class="o">));</span>
-</span><span class='line'>      <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">).</span><span class="na">renameTo</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1738,10 +1657,14 @@
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a>
@@ -1757,10 +1680,6 @@
     
       <li class="post">
         <a href="/blog/2014/12/13/wtf/">WTF</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/10/10/db2jian-kong-db2top/">DB2监控-db2top</a>
       </li>
     
   </ul>
