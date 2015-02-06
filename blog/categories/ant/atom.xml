@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ant | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/ant/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-01-26T15:30:18+08:00</updated>
+  <updated>2015-02-06T10:35:32+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -18,98 +18,98 @@
     <link href="http://haoweishow.com/blog/2014/09/11/antming-ling-hui-zong/"/>
     <updated>2014-09-11T14:49:43+08:00</updated>
     <id>http://haoweishow.com/blog/2014/09/11/antming-ling-hui-zong</id>
-    <content type="html"><![CDATA[<h3>更新zip包</h3>
-
-<hr />
+    <content type="html"><![CDATA[<h2>更新zip包</h2>
 
 <pre><code>&lt;target name="zip"&gt;
     &lt;zip destFile="111.zip" basedir="." includes="123.txt" update="true" /&gt;
 &lt;/target&gt;
 </code></pre>
 
-<h3>调用target</h3>
+<h2>调用target</h2>
 
-<hr />
-
-<p>方法1<br/>
+<ul>
+<li>方法1<br/>
 <code>
 &lt;target name="war.import" depends="svn.task,war.name"&gt;
-    &lt;echo&gt;A: ${war.name}&lt;/echo&gt;
+  &lt;echo&gt;A: ${war.name}&lt;/echo&gt;
 &lt;/target&gt;
-</code>
-方法2<br/>
+</code></li>
+<li>方法2<br/>
 <code>
 &lt;target name="war.import" depends="svn.task"&gt;
-    &lt;antcall target="war.name"/&gt;
-    &lt;echo&gt;B: ${war.name}&lt;/echo&gt;
+  &lt;antcall target="war.name"/&gt;
+  &lt;echo&gt;B: ${war.name}&lt;/echo&gt;
 &lt;/target&gt;
-</code></p>
+</code></li>
+</ul>
 
-<h3>copy命令</h3>
 
-<hr />
+<h2>copy命令</h2>
 
-<p>拷贝单个文件<br/>
+<ul>
+<li>拷贝单个文件<br/>
 <code>
 &lt;copy todir="/home/esb" file="/tmp/config/build.xml"/&gt;
-</code>
-拷贝文件夹<br/>
+</code></li>
+<li>拷贝文件夹<br/>
 <code>
 &lt;copy todir="/home/esb" includeEmptyDirs="yes" overwrite=“true” verbose="true"&gt;
-    &lt;fileset dir="/test/config"&gt;
-        &lt;include name="aaa/**"/&gt;
-        &lt;exclude name="bbb/**"/&gt;
-    &lt;/fileset&gt;
+  &lt;fileset dir="/test/config"&gt;
+      &lt;include name="aaa/**"/&gt;
+      &lt;exclude name="bbb/**"/&gt;
+  &lt;/fileset&gt;
 &lt;/copy&gt;
-</code></p>
+</code></li>
+</ul>
 
-<h3>文件移动</h3>
 
-<hr />
+<h2>文件移动</h2>
 
-<p>文件改名<br/>
+<ul>
+<li>文件改名<br/>
 <code>
 &lt;move file="src1/test.txt" tofile="src/test.txt"/&gt;
-</code>
-单个文件移动<br/>
+</code></li>
+<li>单个文件移动<br/>
 <code>
 &lt;move file="src1/test.txt" todir="src"/&gt;
-</code>
-文件夹移动<br/>
+</code></li>
+<li>文件夹移动<br/>
 <code>
 &lt;move todir="src"&gt;
-    &lt;fileset dir="src1"/&gt;
+  &lt;fileset dir="src1"/&gt;
 &lt;/move&gt;
-</code></p>
+</code></li>
+</ul>
 
-<h3>javac设置classpath</h3>
 
-<hr />
+<h2>javac设置classpath</h2>
 
-<p>方法1<br/>
+<ul>
+<li>方法1<br/>
 <code>
 &lt;javac srcdir="${src}" destdir="${classes}"&gt;
-    &lt;classpath&gt;
-        &lt;fileset dir="lib"&gt;
-            &lt;include name="*.jar"/&gt;
-        &lt;/fileset&gt;
-        &lt;path locaiton="build/classes" /&gt;
-    &lt;/classpath&gt;
+  &lt;classpath&gt;
+      &lt;fileset dir="lib"&gt;
+          &lt;include name="*.jar"/&gt;
+      &lt;/fileset&gt;
+      &lt;path locaiton="build/classes" /&gt;
+  &lt;/classpath&gt;
 &lt;/javac&gt;
-</code>
-方法2<br/>
+</code></li>
+<li>方法2<br/>
 <code>
 &lt;javac srcdir="${src}" destdir="${classes}"&gt;
-    &lt;classpath&gt;
-        &lt;fileset dir="build/lib/" includes="*.jar" /&gt;
-        &lt;dirset dir="build/classes/" /&gt;
-    &lt;/classpath&gt;
+  &lt;classpath&gt;
+      &lt;fileset dir="build/lib/" includes="*.jar" /&gt;
+      &lt;dirset dir="build/classes/" /&gt;
+  &lt;/classpath&gt;
 &lt;/javac&gt;
-</code></p>
+</code></li>
+</ul>
 
-<h3>javac参数</h3>
 
-<hr />
+<h2>javac参数</h2>
 
 <pre><code>&lt;javac srcdir="${common.src.dir}" destdir="${build.temp.common.classes.dir}" debug="on" memoryMaximumSize="256m" fork="true" deprecation="off" failonerror="false"&gt;
     &lt;!--给编译器指定编码，防止出现："警告： 编码 GBK 的不可映射字符"--&gt;
@@ -119,18 +119,41 @@
 &lt;/javac&gt;
 </code></pre>
 
-<h3>jar参数</h3>
-
-<hr />
+<h2>jar参数</h2>
 
 <pre><code>&lt;jar destfile="${dest.jar.name}"&gt;
     &lt;fileset dir="${dest.classes.dir}"&gt;
         &lt;include name="com/**/**/*.class" /&gt;
     &lt;/fileset&gt;
+    &lt;manifest&gt;
+        &lt;!-- 增加MF的参数信息 --&gt; 
+        &lt;attribute name="Main-class" value="${mainclass}"/&gt;
+        &lt;attribute name="Class-Path" value="${mf.classpath}"/&gt;
+    &lt;/manifest&gt;
 &lt;/jar&gt;
 </code></pre>
 
-<h3>执行java程序</h3>
+<h2>文件转路径</h2>
+
+<p>&#8220;`</p>
+
+<!-- Create a property containing all .jar files, prefix lib/, and seperated with a space -->
+
+
+<p><pathconvert property="mf.classpath" pathsep=" "><br/>
+    <mapper><br/>
+        <chainedmapper><br/>
+            <!-- jar包文件只留文件名，去掉目录信息 --><br/>
+            <flattenmapper/><br/>
+            <!-- add lib/ prefix --><br/>
+            <globmapper from="*" to="lib/*"/><br/>
+        </chainedmapper><br/>
+    </mapper><br/>
+    <path refid="lib-classpath"/><br/>
+</pathconvert>
+&#8220;`</p>
+
+<h2>执行java程序</h2>
 
 <pre><code>&lt;target name="test-crawl1"&gt;
     &lt;java classname="org.apache.nutch.crawl.Crawl"&gt;

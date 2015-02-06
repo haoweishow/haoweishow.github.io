@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-01-26T15:30:18+08:00</updated>
+  <updated>2015-02-06T10:35:32+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -1081,9 +1081,7 @@
     <link href="http://haoweishow.com/blog/2014/09/11/antming-ling-hui-zong/"/>
     <updated>2014-09-11T14:49:43+08:00</updated>
     <id>http://haoweishow.com/blog/2014/09/11/antming-ling-hui-zong</id>
-    <content type="html"><![CDATA[<h3>更新zip包</h3>
-
-<hr />
+    <content type="html"><![CDATA[<h2>更新zip包</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1093,11 +1091,12 @@
 </span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>调用target</h3>
+<h2>调用target</h2>
 
-<hr />
+<ul>
+<li>方法1</li>
+</ul>
 
-<p>方法1</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1107,7 +1106,10 @@
 </span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>方法2</p>
+<ul>
+<li>方法2</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1119,17 +1121,21 @@
 </span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>copy命令</h3>
+<h2>copy命令</h2>
 
-<hr />
+<ul>
+<li>拷贝单个文件</li>
+</ul>
 
-<p>拷贝单个文件</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="/home/esb" file="/tmp/config/build.xml"/&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>拷贝文件夹</p>
+<ul>
+<li>拷贝文件夹</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1145,23 +1151,30 @@
 </span><span class='line'>&lt;/copy&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>文件移动</h3>
+<h2>文件移动</h2>
 
-<hr />
+<ul>
+<li>文件改名</li>
+</ul>
 
-<p>文件改名</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;move file="src1/test.txt" tofile="src/test.txt"/&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>单个文件移动</p>
+<ul>
+<li>单个文件移动</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;move file="src1/test.txt" todir="src"/&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>文件夹移动</p>
+<ul>
+<li>文件夹移动</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1171,11 +1184,12 @@
 </span><span class='line'>&lt;/move&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>javac设置classpath</h3>
+<h2>javac设置classpath</h2>
 
-<hr />
+<ul>
+<li>方法1</li>
+</ul>
 
-<p>方法1</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1195,7 +1209,10 @@
 </span><span class='line'>&lt;/javac&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>方法2</p>
+<ul>
+<li>方法2</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1211,9 +1228,7 @@
 </span><span class='line'>&lt;/javac&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>javac参数</h3>
-
-<hr />
+<h2>javac参数</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1229,23 +1244,59 @@
 </span><span class='line'>&lt;/javac&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>jar参数</h3>
-
-<hr />
+<h2>jar参数</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>&lt;jar destfile="${dest.jar.name}"&gt;
 </span><span class='line'>    &lt;fileset dir="${dest.classes.dir}"&gt;
 </span><span class='line'>        &lt;include name="com/**/**/*.class" /&gt;
 </span><span class='line'>    &lt;/fileset&gt;
+</span><span class='line'>    &lt;manifest&gt;
+</span><span class='line'>        &lt;!-- 增加MF的参数信息 --&gt; 
+</span><span class='line'>        &lt;attribute name="Main-class" value="${mainclass}"/&gt;
+</span><span class='line'>        &lt;attribute name="Class-Path" value="${mf.classpath}"/&gt;
+</span><span class='line'>    &lt;/manifest&gt;
 </span><span class='line'>&lt;/jar&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>执行java程序</h3>
+<h2>文件转路径</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- Create a property containing all .jar files, prefix lib/, and seperated with a space --&gt;
+</span><span class='line'>&lt;pathconvert property="mf.classpath" pathsep=" "&gt;  
+</span><span class='line'>    &lt;mapper&gt;  
+</span><span class='line'>        &lt;chainedmapper&gt;  
+</span><span class='line'>            &lt;!-- jar包文件只留文件名，去掉目录信息 --&gt;  
+</span><span class='line'>            &lt;flattenmapper/&gt;  
+</span><span class='line'>            &lt;!-- add lib/ prefix --&gt;  
+</span><span class='line'>            &lt;globmapper from="*" to="lib/*"/&gt;  
+</span><span class='line'>        &lt;/chainedmapper&gt;  
+</span><span class='line'>    &lt;/mapper&gt;  
+</span><span class='line'>    &lt;path refid="lib-classpath"/&gt;  
+</span><span class='line'>&lt;/pathconvert&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>执行java程序</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
