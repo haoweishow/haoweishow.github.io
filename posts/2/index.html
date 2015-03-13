@@ -63,6 +63,574 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-13T10:10:42+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>背景</h3>
+
+<hr />
+
+<ul>
+<li>生产环境,应用刚上线,几乎每天一次OOM.</li>
+<li>操作系统: AIX 6.1</li>
+<li>JDK版本: J2RE 5.0 IBM J9 2.3 AIX ppc64-64 build j9vmap6423-20100808</li>
+<li>JVM参数: -Xmx2048m -Xms2048m 无其它参数设置,采用JVM默认设置</li>
+<li>分析工具: jca455.jar  ibm_ha446.jar</li>
+</ul>
+
+
+<h3>分析1</h3>
+
+<hr />
+
+<p>第一次出现故障,发过来java进程的dump文件,3组12个文件:</p>
+
+<ul>
+<li>4个heapdump.xxxx.phd;</li>
+<li>4个javacore.xxxx.txt;</li>
+<li>4个Snap.xxxx.trc</li>
+</ul>
+
+
+<h4>使用IBM HA工具分析phd文件</h4>
+
+<p>打开<strong>[Analysis View]</strong>如下:<br/>
+<img src="/images/postImage/20140913-1-IBM-ha-AnalysisView.png"></p>
+
+<ul>
+<li>通过HA的分析,结果很明显,java/util/Stack里的数据量超大,占用内存92.2%</li>
+<li>这个Stack是自定义的XML解析器里的一个属性,用于存储在解析过程中存储XML节点信息</li>
+<li>看到这里,如果对应用了解的话,是能够找到程序哪个模块调用这个XML解析器,可是我不了解这个应用,而且不在现场</li>
+<li>接下来的分析过程,包括未来几天陆续出现的OOM,分析其中的phd文件都是同样的现象,Stack里的数据量超大,都是超过90%的堆内存占用</li>
+</ul>
+
+
+<p>打开<strong>[Root List]</strong>如下:<br/>
+<img src="/images/postImage/20140913-2-IBM-ha-RootList.png"></p>
+
+<ul>
+<li>排名第一的是XML解析器,其它的对象内存使用都很小</li>
+</ul>
+
+
+<p>打开<strong>[Tree View]</strong>如下:<br/>
+<img src="/images/postImage/20140913-3-IBM-ha-TreeView.png"></p>
+
+<ul>
+<li>这里有个疑问,为什么这个解析器是root object,明明是有线程调用这个解析器进行XML解析的</li>
+<li><strong>关于JVM的root object还是不了解!!</strong></li>
+</ul>
+
+
+<h4>使用IBM JCA工具分析javacore文件</h4>
+
+<p>打开<strong>[Thread Dump List]</strong>如下:<br/>
+<img src="/images/postImage/20140913-4-IBM-jca-Thread.png"></p>
+
+<ul>
+<li>在网上查找关于javacore文件相关资料的时候,网上有个案例,可以根据这里的WARN提示就定位出产生OOM的线程</li>
+<li>我的这个案例不一样了,可以看到这几个WARN涉及的线程申请的内存都很小,说明这个时候内存已经被使用殆尽,这几个线程不是导致OOM的真正原因</li>
+</ul>
+
+
+<p>打开<strong>[Thread Status]</strong>如下:<br/>
+<img src="/images/postImage/20140913-5-IBM-jca-ThreadStatus.png"></p>
+
+<ul>
+<li>这里显示的线程信息,与OOM没有关系,但是可以看到这个应用里的一些问题,很多线程都处于Blocked状态,左下角框起来的仅仅是部分,几乎都是由于日志记录引起的</li>
+<li>这个应用由于业务场景的需要,需要记录交易的详细日志.后来到现场看到系统的日志,一共2个还是3个日志文件,每个小时切换一个日志文件.</li>
+<li>近300个线程,将大量的交易日志写到两个文件中,锁的竞争可想而知;这里其实也有优化的空间的,可以根据某些关键字,将日志文件分类,就像数据库表分区一样;相信300个线程写分散到20个日志文件中,性能的提升应该是可见的.</li>
+</ul>
+
+
+<h4>初步分析</h4>
+
+<ul>
+<li>至此,导致OOM的直接原因是解析XML的时候,该解析器的Stack里的数据超大</li>
+<li>而Stack里的数据超大,是不是解析过程中陷入某种循环无法退出导致呢?</li>
+</ul>
+
+
+<h3>分析2</h3>
+
+<p>终于到现场进行分析了,很庆幸的是,在现场的性能测试环境能够重现该问题.<br/>
+分析该解析器:</p>
+
+<ul>
+<li>该类在解析XML的时候,用Stack来存储节点的信息</li>
+<li>遇到节点开始,将节点的对象入栈,遇到节点结束,弹栈</li>
+<li>因此造成Stack数据量大就这能出现在入栈的地方了.</li>
+<li>所以在入栈之后,增加判断,当栈的size超过阀值之后,打印出一些信息</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">//伪代码  </span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">xxxxReader</span> <span class="kd">extends</span> <span class="n">xxxx</span><span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Stack</span> <span class="n">stack</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Stack</span><span class="o">();</span>
+</span><span class='line'>    <span class="cm">/**************************************************************/</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">debug</span><span class="o">(){</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">stack</span><span class="o">.</span><span class="na">size</span><span class="o">()&gt;</span><span class="mi">1000</span><span class="o">){</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;stacksize:&quot;</span><span class="o">+</span><span class="n">stack</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">Thread</span><span class="o">.</span><span class="na">dumpStack</span><span class="o">();</span><span class="c1">//打印栈信息,就知道哪个模块调用到这个解析器</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="cm">/**************************************************************/</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startElement</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">debug</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">endElement</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">startArray</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">push</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">debug</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">endArray</span><span class="o">(){</span>
+</span><span class='line'>        <span class="n">stack</span><span class="o">.</span><span class="na">pop</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在性能测试环境打上该类,重启,再次进行压力测试.</li>
+<li>半个小时左右的样子,出现OOM,经过统计System.out和Thread.dumpStack()的日志,锁定了两个调用的地方.</li>
+<li>再次修改这个解析器,加入临时属性,用于保存要解析的报文,这样在出现超大Stack的时候,可以将报文打印出来,这个代码就不贴了.</li>
+<li>重启,再压,得到异常时候的报文,该报文的结构正常,应该不会导致死循环,于是在本地编写解析器的测试代码,解析该报文1次,1万次都正常.</li>
+<li>难道是多线程的问题呢?</li>
+<li>修改测试代码,两个线程,同时各执行1万次,问题重现了!!!!</li>
+<li>又多跑了很多次,稳定重现,有时候是OOM,有时候是解析过程中抛解析的异常,很明显这个解析器多线不安全</li>
+<li>至此,该问题已经基本定位,该解析模块比较复杂,没深入研究,因为我这里有十分成熟的解决方案</li>
+<li>替换调用该解析器的两处代码,重启,再压,问题解决.</li>
+</ul>
+
+
+<h3>感受</h3>
+
+<ul>
+<li>刚开始被派到现场解决这个问题的时候,心里一直很忐忑,解决不了怎么办?因为之前给的dump文件没有分析出问题点,现场能提供的肯定也是这些文件.解决不了怎么跟客户交代呢&hellip;</li>
+<li>来到现场,问题能够重现,有戏!</li>
+<li>分析过程还是要根据经验,逐步排查问题点</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/11/antming-ling-hui-zong/">Ant命令汇总</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-11T14:49:43+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>更新zip包</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;target name="zip"&gt;
+</span><span class='line'>    &lt;zip destFile="111.zip" basedir="." includes="123.txt" update="true" /&gt;
+</span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>调用target</h2>
+
+<ul>
+<li>方法1</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;target name="war.import" depends="svn.task,war.name"&gt;
+</span><span class='line'>    &lt;echo&gt;A: ${war.name}&lt;/echo&gt;
+</span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>方法2</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;target name="war.import" depends="svn.task"&gt;
+</span><span class='line'>    &lt;antcall target="war.name"/&gt;
+</span><span class='line'>    &lt;echo&gt;B: ${war.name}&lt;/echo&gt;
+</span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>copy命令</h2>
+
+<ul>
+<li>拷贝单个文件</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="/home/esb" file="/tmp/config/build.xml"/&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>拷贝文件夹</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;copy todir="/home/esb" includeEmptyDirs="yes" overwrite=“true” verbose="true"&gt;
+</span><span class='line'>    &lt;fileset dir="/test/config"&gt;
+</span><span class='line'>        &lt;include name="aaa/**"/&gt;
+</span><span class='line'>        &lt;exclude name="bbb/**"/&gt;
+</span><span class='line'>    &lt;/fileset&gt;
+</span><span class='line'>&lt;/copy&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>文件移动</h2>
+
+<ul>
+<li>文件改名</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;move file="src1/test.txt" tofile="src/test.txt"/&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>单个文件移动</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;move file="src1/test.txt" todir="src"/&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>文件夹移动</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;move todir="src"&gt; 
+</span><span class='line'>    &lt;fileset dir="src1"/&gt;
+</span><span class='line'>&lt;/move&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>javac设置classpath</h2>
+
+<ul>
+<li>方法1</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;javac srcdir="${src}" destdir="${classes}"&gt;
+</span><span class='line'>    &lt;classpath&gt;
+</span><span class='line'>        &lt;fileset dir="lib"&gt;
+</span><span class='line'>            &lt;include name="*.jar"/&gt;
+</span><span class='line'>        &lt;/fileset&gt;
+</span><span class='line'>        &lt;path locaiton="build/classes" /&gt;
+</span><span class='line'>    &lt;/classpath&gt;
+</span><span class='line'>&lt;/javac&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>方法2</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;javac srcdir="${src}" destdir="${classes}"&gt;
+</span><span class='line'>    &lt;classpath&gt;
+</span><span class='line'>        &lt;fileset dir="build/lib/" includes="*.jar" /&gt;
+</span><span class='line'>        &lt;dirset dir="build/classes/" /&gt;
+</span><span class='line'>    &lt;/classpath&gt;
+</span><span class='line'>&lt;/javac&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>javac参数</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;javac srcdir="${common.src.dir}" destdir="${build.temp.common.classes.dir}" debug="on" memoryMaximumSize="256m" fork="true" deprecation="off" failonerror="false"&gt;
+</span><span class='line'>    &lt;!--给编译器指定编码，防止出现："警告： 编码 GBK 的不可映射字符"--&gt;
+</span><span class='line'>    &lt;compilerarg line="-encoding UTF-8"/&gt;
+</span><span class='line'>    &lt;classpath refid="common.lib.path"/&gt;
+</span><span class='line'>    &lt;include name="**"/&gt;
+</span><span class='line'>&lt;/javac&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>jar参数</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;jar destfile="${dest.jar.name}"&gt;
+</span><span class='line'>    &lt;fileset dir="${dest.classes.dir}"&gt;
+</span><span class='line'>        &lt;include name="com/**/**/*.class" /&gt;
+</span><span class='line'>    &lt;/fileset&gt;
+</span><span class='line'>    &lt;manifest&gt;
+</span><span class='line'>        &lt;!-- 增加MF的参数信息 --&gt; 
+</span><span class='line'>        &lt;attribute name="Main-class" value="${mainclass}"/&gt;
+</span><span class='line'>        &lt;attribute name="Class-Path" value="${mf.classpath}"/&gt;
+</span><span class='line'>    &lt;/manifest&gt;
+</span><span class='line'>&lt;/jar&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>文件转路径</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- Create a property containing all .jar files, prefix lib/, and seperated with a space --&gt;
+</span><span class='line'>&lt;pathconvert property="mf.classpath" pathsep=" "&gt;  
+</span><span class='line'>    &lt;mapper&gt;  
+</span><span class='line'>        &lt;chainedmapper&gt;  
+</span><span class='line'>            &lt;!-- jar包文件只留文件名，去掉目录信息 --&gt;  
+</span><span class='line'>            &lt;flattenmapper/&gt;  
+</span><span class='line'>            &lt;!-- add lib/ prefix --&gt;  
+</span><span class='line'>            &lt;globmapper from="*" to="lib/*"/&gt;  
+</span><span class='line'>        &lt;/chainedmapper&gt;  
+</span><span class='line'>    &lt;/mapper&gt;  
+</span><span class='line'>    &lt;path refid="lib-classpath"/&gt;  
+</span><span class='line'>&lt;/pathconvert&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>执行java程序</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;target name="test-crawl1"&gt;
+</span><span class='line'>    &lt;java classname="org.apache.nutch.crawl.Crawl"&gt;
+</span><span class='line'>        &lt;classpath&gt;
+</span><span class='line'>            &lt;path location="build/classes"&gt;&lt;/path&gt;
+</span><span class='line'>        &lt;/classpath&gt;
+</span><span class='line'>        &lt;classpath&gt;
+</span><span class='line'>            &lt;fileset dir="lib" includes="**/*.jar"&gt;&lt;/fileset&gt;
+</span><span class='line'>        &lt;/classpath&gt;
+</span><span class='line'>        &lt;arg value="multiurls1.txt"/&gt;
+</span><span class='line'>        &lt;arg value="-dir"/&gt;
+</span><span class='line'>        &lt;arg value="crawed1"/&gt;
+</span><span class='line'>        &lt;arg value="-depth"/&gt;
+</span><span class='line'>        &lt;arg value="7"/&gt;
+</span><span class='line'>        &lt;arg value="-threads"/&gt;
+</span><span class='line'>        &lt;arg value="7"/&gt;
+</span><span class='line'>        &lt;arg value="-topN"/&gt;
+</span><span class='line'>        &lt;arg value="-100"/&gt;
+</span><span class='line'>    &lt;/java&gt;
+</span><span class='line'>&lt;/target&gt;</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/09/pu-fa-yin-xing-esbxiang-mu-shi-shi-jing-yan-zong-jie/">浦发银行ESB项目实施经验总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-09T23:41:37+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>项目实施经验总结</h3>
+
+<hr />
+
+<ul>
+<li>XML报文的转义字符处理</li>
+<li>如果XML报文要传输不可见字符，则要制定相应的规范（例如转换成十六进制字符）</li>
+<li>数据库建表，添加约束，可以避免不必要的重复数据或者空数据，主键或者约束必须落在关键的字段上，否则无法避免关键数据的重复</li>
+<li>日志打印，info日志是描述做什么，debug日志描述怎么做的</li>
+<li>异常日志，没有特殊情况，不能把日志吞掉，相反，详细的输出出现异常情况时运行态相关的数据到日志中，可以方便问题定位</li>
+<li>数据从数据库加载到内存，如果是静态数据，可以先将数据落地到文件系统，再从文件系统加载到内存中，这样如果出现运行时异常，可以查看本地文件系统进行问题定位（此方法要结合实际情况）</li>
+<li>项目过程中的问题、环境、联系人等一些静态信息，可以使用wiki或者blog系统存放，这样的好处是查看、检索、修订方便</li>
+<li>项目组环境等信息及时更新，记录到文档中，方便归档，但是不方便使用；</li>
+<li>问题总结清单</li>
+<li>每次代码更新需要review&mdash;这个要根据项目实际情况而定</li>
+<li>所有的备份操作必须进行恢复性验证，特别是数据库的备份</li>
+<li>与外围系统的通讯模式之类的方案，需要项目组统一评审确定</li>
+<li>代码库与版本库更新部署流程</li>
+<li>确定标准字段/定义标准报文的时候，需要明确每个字段的含义，如果有出现模糊不清楚，或者未来废弃的字段，必须在服务化治理过程中，逐步废弃掉这些含糊不清的字段</li>
+<li>线程池怎么用?
+
+<ul>
+<li>必须根据根据其实际功能 为 不同的线程池 设置相应的名称，这样在dump出线程信息里面，可以根据名称来区分线程</li>
+<li>能想像一下,dump文件里有1万多个线程池,名字都是<strong>[pool-xxx-thread-xxx]</strong>,而你不知道这些线程池是哪里创建出来的</li>
+</ul>
+</li>
+<li>标准性的接口规范，例如SOP报文转SOAP报文，这个转换过程中，需要字段映射，同时还需要将每个字段对应的转换方式在工作之初，要确定下来，如果前期因为接口有些字段不明确，很可能造成后期频繁的修改规范或者处理方式</li>
+<li>上线的脚本，制定标准的格式：脚本名称（脚本文件名称格式标准化；脚本名称分类：ddl和dml分类；功能分类；insert和update等分类），脚本内容（每条语句或者每组语句，必须添加脚本注释）</li>
+<li>监控功能，监控内容：数据库连接池，容器线程池，虚拟机内存监控，队列监控</li>
+<li>交接工作一定要对其交接的内容深入了解。</li>
+<li>性能测试由行内进行</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">格式化Java代码</a></h1>
     
     
@@ -449,23 +1017,23 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/13/db2shu-ju-ku-ri-zhi-kong-jian-man/">DB2数据库日志空间满</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n/">DB2 表状态异常SQL20054N</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
       </li>
     
       <li class="post">
         <a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n/">DB2 load数据失败(SQL2036N)</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/26/jettyxiang-guan/">Jetty相关</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/12/13/wtf/">WTF</a>
       </li>
     
   </ul>

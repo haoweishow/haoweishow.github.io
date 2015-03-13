@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-02-08T12:04:42+08:00</updated>
+  <updated>2015-03-13T14:19:49+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[浦发ESB性能测试优化方案]]></title>
+    <link href="http://haoweishow.com/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/"/>
+    <updated>2015-03-13T11:25:29+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[DB2数据库日志空间满]]></title>
+    <link href="http://haoweishow.com/blog/2015/03/13/db2shu-ju-ku-ri-zhi-kong-jian-man/"/>
+    <updated>2015-03-13T11:14:36+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/03/13/db2shu-ju-ku-ri-zhi-kong-jian-man</id>
+    <content type="html"><![CDATA[<p>DB2数据库日志空间满</p>
+
+<h2>错误:</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SQL0964C The transaction log for the database is full. SQLSTATE=57011</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>检查数据库日志配置</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 connect to esbdbfe user esbinst using esbinst 
+</span><span class='line'>db2 get db cfg for esbdbfe show detail |grep -i log
+</span><span class='line'>Log buffer size(4KB)  (LOGBUFSZ) = 8192      8192
+</span><span class='line'>Log file size(4KB)   (LOGFILSIZ) = 655       655   #单个日志文件size太小</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>更新数据库日志配置</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 connect to esbdbfe user esbinst using esbinst
+</span><span class='line'>db2 update db cfg using LOGFILSIZ 10240  
+</span><span class='line'>db2stop force 
+</span><span class='line'>db2start</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[DB2 表状态异常SQL20054N]]></title>
+    <link href="http://haoweishow.com/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n/"/>
+    <updated>2015-03-13T10:48:49+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n</id>
+    <content type="html"><![CDATA[<p>DB2 表状态异常SQL20054N</p>
+
+<h2>背景</h2>
+
+<p>测试环境的一张表在前线库和后线库中进行了分区处理. 前线库存放当天和未来的分区, 后线库存放昨天和过去N天的数据.
+该表的消息ID字段是主键.</p>
+
+<h2>现象</h2>
+
+<p>在日终批量的时候,从前线库卸载下来的分区数据,可以导入后线库,但是该表的状态异常,不能删除更早的历史分区(手动执行也报错)
+DB2错误码: SQL20054N reeasoncode:29</p>
+
+<h2>原因</h2>
+
+<p>消息ID出现重复,前线库中有一条记录与后线库的历史分区里某一天的数据重复.因为消息ID可以保证在前线库唯一,但是无法保证两个库唯一.<br/>
+出现异常的流程:<br/>
+* 前线库:分区卸载<br/>
+* 前线库:数据导出ixf文件<br/>
+* 后线库:关闭约束检查<code>db2 "set integrity for tabname check immediate unchecked"</code><br/>
+* 后线库:从ixf文件中import数据(正常)<br/>
+* 后线库:开启约束检查<code>db2 "set integrity for tabname immediate checked"</code>(异常,该语句报错,导致后面删除分区也未能执行)</p>
+
+<h2>解决</h2>
+
+<h3>临时解决</h3>
+
+<ul>
+<li>删除后线库该表的数据(也可以只删除重复的数据)</li>
+<li>开启约束检查</li>
+<li>删除多余的分区
+
+<h3>永久方案</h3></li>
+<li>前线库采用唯一约束,保证逻辑处理不会产生重复.</li>
+<li>后线库删除该表的唯一约束,仅保存相应的索引即可</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[如何提高工作效率]]></title>
