@@ -17,8 +17,8 @@ footer: true
 ### 基本技能
 * 编程语言: Java/C
 * 脚本语言: Shell
-* 前端编程: Flex
-* 操作系统: Linux/AIX
+* 前端编程: Flex/JSP
+* 操作系统: Linux/AIX/OSX
 * 数据库相关: Oracle/DB2
 * 版本管理: Git/SVN/ClearCase
 

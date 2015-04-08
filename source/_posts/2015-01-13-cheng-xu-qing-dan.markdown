@@ -10,7 +10,6 @@ categories: software
 ## Mac系统
 
 #### 编程
-* GitHub
 * IntelliJ IDEA 13(其实不是很习惯这个软件,但是Eclipse总是崩溃)
 * Xcode(试过obj-c和swift,但是一直没有开发出成型的东西)
 * XMind(尝试过一些写作,但是没有深度使用)
@@ -26,7 +25,7 @@ categories: software
 * Atom(从github上下载源码,编译生成,SublimeText)
 * BBEdit
 * MacVim
-* MacDown
+* MacDown(现在用这个软件来维护blog的文章,ulysses好用,但是导出的md文件格式跟blog的不兼容)mod at 2015-03-17
 * DiffMerge
 * Mou(开始些blog的时候用过,不过有了Ulysses,就不再使用了)
 * Ulysses(不愧是AppStore的推荐,比Mou好用N多,以后一定支持作者)
@@ -57,10 +56,10 @@ categories: software
 * 云梯(国内上网必备,之前用国外的VPN Shield很不稳定,这个也是经常断线,几个国家的换着连接,到期再换曲径试试)
 
 #### GTD
-* Things(简洁,赞! 以后一定支持作者!之前用Wundlist,在多个项目之间拖动Item会有丢失,体验很差,放弃)
+* Things(简洁,赞!)(购买了超值的软件包,支持正版!mod at 2015-03-17)
 
 #### 同步
-* 115网盘(大容量,分享内容的用户很多)
+* 115网盘(大容量,分享内容的用户很多)(不过现在只有会员才能够得到别人分享的东西!mod at 2015-03-17)
 * 百度云(空间大,现在用来做数据备份)
 * CloudApp(同步剪切板,截图,小文件的软件,不过win下不怎么好用,正在考虑自己开发一个本地的版本)
 * Evernote(好用不解释,不过现在软件已经沦陷为收集器了.)
@@ -72,7 +71,7 @@ Win软件下还是没有付费习惯.
 第一个付费的Win软件是Evernote.  
 
 #### UI设计
-* WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)
+* WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)(调整系统时间,然后断网,继续使用...mod at 2015-03-17)
 * UIDesigner 2.5(腾讯出品,没有深入使用,不过配套的UIDPlayer可以在手机上直接运行设计出来的软件)
 
 #### 流程图
@@ -94,6 +93,6 @@ Win软件下还是没有付费习惯.
 
 #### 版本管理
 * SVN
-* Git
+* Git(最好用的版本管理软件,只有真正使用,才能说好.mod at 2015-03-17)
 
 ## IOS系统
