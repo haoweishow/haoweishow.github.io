@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-03-13T14:19:49+08:00</updated>
+  <updated>2015-04-08T14:06:16+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,91 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[DB2数据库同步]]></title>
+    <link href="http://haoweishow.com/blog/2015/04/08/db2shu-ju-ku-tong-bu/"/>
+    <updated>2015-04-08T14:03:52+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/04/08/db2shu-ju-ku-tong-bu</id>
+    <content type="html"><![CDATA[<h1>背景</h1>
+
+<ul>
+<li>在进行第二轮UAT测试的时候,需要进行版本重新部署,该部署过程要与上线一致(即验证投产的程序和SQL版本的正确性,验证部署说明的可操作性),因此需要将该UAT环境与准生产环境初始化成一致的状态.</li>
+<li>应用程序直接拷贝过来即可.</li>
+<li>数据库需要进行同步,来保证UAT环境的数据库和准生产环境的数据库一致.</li>
+</ul>
+
+
+<h1>前提</h1>
+
+<ul>
+<li>数据库: DB2 V9.7</li>
+<li>准生产环境: 简称PRD</li>
+<li>准生产数据库名称: prddb</li>
+<li>UAT环境: 简称UAT</li>
+<li>UAT数据库名称名称: uatdb</li>
+<li>数据库实例用户: db2inst</li>
+<li>数据库应用用户: db2app</li>
+<li>注:两个环境的数据库表结构/表空间等信息一致</li>
+<li>注:导入导出涉及两个用户,下述步骤忽略用户操作的目录和权限相关内容,在实际操作中请自行处理</li>
+</ul>
+
+
+<h1>导出</h1>
+
+<h2>导出DDL</h2>
+
+<ul>
+<li>db2app用户登录PRD环境</li>
+<li>连接数据库: <code>db2 connect to prddb</code></li>
+<li>导出DDL: <code>db2look -d prddb -e -o ddl.sql</code></li>
+<li>关闭连接: <code>db2 connect reset</code></li>
+<li>注:上述命令会导出db2app用户相关的所有表/视图/存储过程等</li>
+</ul>
+
+
+<h2>导出数据</h2>
+
+<ul>
+<li>db2inst用户登录PRD环境</li>
+<li>创建目录: <code>mkdir prddb.ixf;cd prddb.ixf</code></li>
+<li>导出ixf: <code>db2move prddb export</code></li>
+</ul>
+
+
+<h1>数据迁移</h1>
+
+<ul>
+<li>将db2db.sql文件从PRD环境传输到UAT环境</li>
+<li>将prddb.ixf文件夹从PRD环境传输到UAT环境</li>
+</ul>
+
+
+<h1>导入</h1>
+
+<h2>创建表</h2>
+
+<ul>
+<li>db2app用户登录UAT环境</li>
+<li>删除uatdb库中的全部表/视图/存储过程等,该步骤需要手动执行</li>
+<li>修改db2db.sql文件中的数据库名称为uatdb</li>
+<li>连接数据库: <code>db2 connect to uatdb</code></li>
+<li>执行命令<code>db2 -tvf db2db.sql</code>重新创建表/视图/存储过程等</li>
+<li>关闭连接: <code>db2 connect reset</code></li>
+</ul>
+
+
+<h2>导入数据</h2>
+
+<ul>
+<li>db2inst用户登录UAT环境</li>
+<li>进入文件夹: <code>cd prddb.ixf</code></li>
+<li>导入ixf:<code>db2move uatdb load -u db2app -p db2app</code></li>
+<li>注:-u 对应数据库用户名称;-p 是该用户的密码;此处采用load参数,所有的ixf文件的数据是insert到表中的.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[DB2 load数据失败(SQL2036N)]]></title>

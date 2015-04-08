@@ -63,6 +63,102 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-09T14:09:46+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Linux系统</h3>
+
+<ul>
+<li>定位占用cpu高的java线程</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>top -H -p &lt;pid&gt; -d 1 -n3</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>查看该线程的执行时间</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD,tid,time</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>通过pstack查看进程的栈信息</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pstack &lt;pid&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Aix系统</h3>
+
+<ul>
+<li>定位占用cpu高的java线程</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD
+</span><span class='line'>结果显示格式：线程十进制的ID 状态:(R/S/Z) CPU占用百分比 其它...</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>将十进制线程ID转换为十六进制</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>printf "%x\n" 131268965</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>查找线程</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>kill -3 &lt;pid&gt;
+</span><span class='line'>根据十六进制的线程ID，可以定位到占用CPU高的线程</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/13/oomgu-zhang-fen-xi-an-li-1/">OOM故障分析-案例1</a></h1>
     
     
@@ -1011,10 +1107,14 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (4)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
@@ -1030,10 +1130,6 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
     
       <li class="post">
         <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Software | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/software/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-03-13T14:19:49+08:00</updated>
+  <updated>2015-04-08T14:06:16+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -25,7 +25,6 @@
 <h4>编程</h4>
 
 <ul>
-<li>GitHub</li>
 <li>IntelliJ IDEA 13(其实不是很习惯这个软件,但是Eclipse总是崩溃)</li>
 <li>Xcode(试过obj-c和swift,但是一直没有开发出成型的东西)</li>
 <li>XMind(尝试过一些写作,但是没有深度使用)</li>
@@ -49,7 +48,7 @@
 <li>Atom(从github上下载源码,编译生成,SublimeText)</li>
 <li>BBEdit</li>
 <li>MacVim</li>
-<li>MacDown</li>
+<li>MacDown(现在用这个软件来维护blog的文章,ulysses好用,但是导出的md文件格式跟blog的不兼容)mod at 2015-03-17</li>
 <li>DiffMerge</li>
 <li>Mou(开始些blog的时候用过,不过有了Ulysses,就不再使用了)</li>
 <li>Ulysses(不愧是AppStore的推荐,比Mou好用N多,以后一定支持作者)</li>
@@ -100,14 +99,14 @@
 <h4>GTD</h4>
 
 <ul>
-<li>Things(简洁,赞! 以后一定支持作者!之前用Wundlist,在多个项目之间拖动Item会有丢失,体验很差,放弃)</li>
+<li>Things(简洁,赞!)(购买了超值的软件包,支持正版!mod at 2015-03-17)</li>
 </ul>
 
 
 <h4>同步</h4>
 
 <ul>
-<li>115网盘(大容量,分享内容的用户很多)</li>
+<li>115网盘(大容量,分享内容的用户很多)(不过现在只有会员才能够得到别人分享的东西!mod at 2015-03-17)</li>
 <li>百度云(空间大,现在用来做数据备份)</li>
 <li>CloudApp(同步剪切板,截图,小文件的软件,不过win下不怎么好用,正在考虑自己开发一个本地的版本)</li>
 <li>Evernote(好用不解释,不过现在软件已经沦陷为收集器了.)</li>
@@ -124,7 +123,7 @@
 <h4>UI设计</h4>
 
 <ul>
-<li>WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)</li>
+<li>WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)(调整系统时间,然后断网,继续使用&hellip;mod at 2015-03-17)</li>
 <li>UIDesigner 2.5(腾讯出品,没有深入使用,不过配套的UIDPlayer可以在手机上直接运行设计出来的软件)</li>
 </ul>
 
@@ -158,7 +157,7 @@
 
 <ul>
 <li>SVN</li>
-<li>Git</li>
+<li>Git(最好用的版本管理软件,只有真正使用,才能说好.mod at 2015-03-17)</li>
 </ul>
 
 

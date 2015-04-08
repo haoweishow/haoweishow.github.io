@@ -63,6 +63,118 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-08T14:03:52+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>背景</h1>
+
+<ul>
+<li>在进行第二轮UAT测试的时候,需要进行版本重新部署,该部署过程要与上线一致(即验证投产的程序和SQL版本的正确性,验证部署说明的可操作性),因此需要将该UAT环境与准生产环境初始化成一致的状态.</li>
+<li>应用程序直接拷贝过来即可.</li>
+<li>数据库需要进行同步,来保证UAT环境的数据库和准生产环境的数据库一致.</li>
+</ul>
+
+
+<h1>前提</h1>
+
+<ul>
+<li>数据库: DB2 V9.7</li>
+<li>准生产环境: 简称PRD</li>
+<li>准生产数据库名称: prddb</li>
+<li>UAT环境: 简称UAT</li>
+<li>UAT数据库名称名称: uatdb</li>
+<li>数据库实例用户: db2inst</li>
+<li>数据库应用用户: db2app</li>
+<li>注:两个环境的数据库表结构/表空间等信息一致</li>
+<li>注:导入导出涉及两个用户,下述步骤忽略用户操作的目录和权限相关内容,在实际操作中请自行处理</li>
+</ul>
+
+
+<h1>导出</h1>
+
+<h2>导出DDL</h2>
+
+<ul>
+<li>db2app用户登录PRD环境</li>
+<li>连接数据库: <code>db2 connect to prddb</code></li>
+<li>导出DDL: <code>db2look -d prddb -e -o ddl.sql</code></li>
+<li>关闭连接: <code>db2 connect reset</code></li>
+<li>注:上述命令会导出db2app用户相关的所有表/视图/存储过程等</li>
+</ul>
+
+
+<h2>导出数据</h2>
+
+<ul>
+<li>db2inst用户登录PRD环境</li>
+<li>创建目录: <code>mkdir prddb.ixf;cd prddb.ixf</code></li>
+<li>导出ixf: <code>db2move prddb export</code></li>
+</ul>
+
+
+<h1>数据迁移</h1>
+
+<ul>
+<li>将db2db.sql文件从PRD环境传输到UAT环境</li>
+<li>将prddb.ixf文件夹从PRD环境传输到UAT环境</li>
+</ul>
+
+
+<h1>导入</h1>
+
+<h2>创建表</h2>
+
+<ul>
+<li>db2app用户登录UAT环境</li>
+<li>删除uatdb库中的全部表/视图/存储过程等,该步骤需要手动执行</li>
+<li>修改db2db.sql文件中的数据库名称为uatdb</li>
+<li>连接数据库: <code>db2 connect to uatdb</code></li>
+<li>执行命令<code>db2 -tvf db2db.sql</code>重新创建表/视图/存储过程等</li>
+<li>关闭连接: <code>db2 connect reset</code></li>
+</ul>
+
+
+<h2>导入数据</h2>
+
+<ul>
+<li>db2inst用户登录UAT环境</li>
+<li>进入文件夹: <code>cd prddb.ixf</code></li>
+<li>导入ixf:<code>db2move uatdb load -u db2app -p db2app</code></li>
+<li>注:-u 对应数据库用户名称;-p 是该用户的密码;此处采用load参数,所有的ixf文件的数据是insert到表中的.</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a></h1>
     
     
@@ -338,7 +450,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 <h4>编程</h4>
 
 <ul>
-<li>GitHub</li>
 <li>IntelliJ IDEA 13(其实不是很习惯这个软件,但是Eclipse总是崩溃)</li>
 <li>Xcode(试过obj-c和swift,但是一直没有开发出成型的东西)</li>
 <li>XMind(尝试过一些写作,但是没有深度使用)</li>
@@ -362,7 +473,7 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 <li>Atom(从github上下载源码,编译生成,SublimeText)</li>
 <li>BBEdit</li>
 <li>MacVim</li>
-<li>MacDown</li>
+<li>MacDown(现在用这个软件来维护blog的文章,ulysses好用,但是导出的md文件格式跟blog的不兼容)mod at 2015-03-17</li>
 <li>DiffMerge</li>
 <li>Mou(开始些blog的时候用过,不过有了Ulysses,就不再使用了)</li>
 <li>Ulysses(不愧是AppStore的推荐,比Mou好用N多,以后一定支持作者)</li>
@@ -413,14 +524,14 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 <h4>GTD</h4>
 
 <ul>
-<li>Things(简洁,赞! 以后一定支持作者!之前用Wundlist,在多个项目之间拖动Item会有丢失,体验很差,放弃)</li>
+<li>Things(简洁,赞!)(购买了超值的软件包,支持正版!mod at 2015-03-17)</li>
 </ul>
 
 
 <h4>同步</h4>
 
 <ul>
-<li>115网盘(大容量,分享内容的用户很多)</li>
+<li>115网盘(大容量,分享内容的用户很多)(不过现在只有会员才能够得到别人分享的东西!mod at 2015-03-17)</li>
 <li>百度云(空间大,现在用来做数据备份)</li>
 <li>CloudApp(同步剪切板,截图,小文件的软件,不过win下不怎么好用,正在考虑自己开发一个本地的版本)</li>
 <li>Evernote(好用不解释,不过现在软件已经沦陷为收集器了.)</li>
@@ -437,7 +548,7 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 <h4>UI设计</h4>
 
 <ul>
-<li>WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)</li>
+<li>WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)(调整系统时间,然后断网,继续使用&hellip;mod at 2015-03-17)</li>
 <li>UIDesigner 2.5(腾讯出品,没有深入使用,不过配套的UIDPlayer可以在手机上直接运行设计出来的软件)</li>
 </ul>
 
@@ -471,7 +582,7 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 
 <ul>
 <li>SVN</li>
-<li>Git</li>
+<li>Git(最好用的版本管理软件,只有真正使用,才能说好.mod at 2015-03-17)</li>
 </ul>
 
 
@@ -1205,102 +1316,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-09T14:09:46+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Linux系统</h3>
-
-<ul>
-<li>定位占用cpu高的java线程</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>top -H -p &lt;pid&gt; -d 1 -n3</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>查看该线程的执行时间</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD,tid,time</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>通过pstack查看进程的栈信息</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>pstack &lt;pid&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Aix系统</h3>
-
-<ul>
-<li>定位占用cpu高的java线程</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ps -mp &lt;pid&gt; -o THREAD
-</span><span class='line'>结果显示格式：线程十进制的ID 状态:(R/S/Z) CPU占用百分比 其它...</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>将十进制线程ID转换为十六进制</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>printf "%x\n" 131268965</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>查找线程</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>kill -3 &lt;pid&gt;
-</span><span class='line'>根据十六进制的线程ID，可以定位到占用CPU高的线程</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1313,10 +1328,14 @@ DB2错误码: SQL20054N reeasoncode:29</p>
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (3)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (4)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
@@ -1332,10 +1351,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
     
       <li class="post">
         <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a>
       </li>
     
   </ul>
