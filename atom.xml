@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-04-08T14:06:16+08:00</updated>
+  <updated>2015-04-08T15:03:06+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -39,6 +39,7 @@
 <li>数据库应用用户: db2app</li>
 <li>注:两个环境的数据库表结构/表空间等信息一致</li>
 <li>注:导入导出涉及两个用户,下述步骤忽略用户操作的目录和权限相关内容,在实际操作中请自行处理</li>
+<li>注:此方法可以保证导入后的数据库,表的索引/约束等信息仍然保留</li>
 </ul>
 
 
