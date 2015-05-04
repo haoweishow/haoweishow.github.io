@@ -51,6 +51,9 @@ categories: db2
 ## 导入数据
 * db2inst用户登录UAT环境
 * 进入文件夹: `cd prddb.ixf`
-* 导入ixf:`db2move uatdb load -u db2app -p db2app`
-* 注:-u 对应数据库用户名称;-p 是该用户的密码;此处采用load参数,所有的ixf文件的数据是insert到表中的.
+* 方法1
+    * 导入ixf:`db2move uatdb load -u db2app -p db2app`
+    * 注:-u 对应数据库用户名称;-p 是该用户的密码;此处采用load参数,所有的ixf文件的数据是insert到表中的.
+* 方法2
+    * 导入ixf:`db2move uatdb import`
 
