@@ -162,14 +162,15 @@
 <li>方法1
 
 <ul>
-<li>导入ixf:<code>db2move uatdb load -u db2app -p db2app</code></li>
-<li>注:-u 对应数据库用户名称;-p 是该用户的密码;此处采用load参数,所有的ixf文件的数据是insert到表中的.</li>
+<li>导入ixf:<code>db2move uatdb load</code></li>
+<li>修改表状态:<code>db2 set integrity [表名] immediate checked</code></li>
 </ul>
 </li>
 <li>方法2
 
 <ul>
 <li>导入ixf:<code>db2move uatdb import</code></li>
+<li>有主外键依赖的关系,表数据会导入失败</li>
 </ul>
 </li>
 </ul>
@@ -220,6 +221,8 @@
         <a class="basic-alignment left" href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/" title="Previous Post: 浦发ESB性能测试优化方案">&laquo; 浦发ESB性能测试优化方案</a>
       
       
+        <a class="basic-alignment right" href="/blog/2015/05/13/db2stop-force-shi-bai/" title="Next Post: db2stop force 失败">db2stop force 失败 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -236,6 +239,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
       </li>
     
@@ -249,10 +256,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n/">DB2 表状态异常SQL20054N</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
       </li>
     
   </ul>

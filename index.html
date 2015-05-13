@@ -63,6 +63,74 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-13T09:53:07+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>背景</h2>
+
+<p>系统使用DB2数据库,日常操作没有遇到问题.
+但是最近出现两次操作错误,引起一些问题,有必要记录一下.</p>
+
+<h2>现象1</h2>
+
+<ul>
+<li>执行<code>db2move esbdb load</code>的时候,数据库名称写错,直接Ctrl+C终止,但是shell并未终止.</li>
+<li>再次执行<code>db2stop force</code>,仍然未停止,CPU占用在0~50%之间</li>
+<li>尝试发现DB2在做什么?无果,db2diag的日志在不停的刷</li>
+<li>经过一些毁灭性的操作之后,请来db2专家搞定(过程不表,反正是一身冷汗)</li>
+</ul>
+
+
+<h2>现象2</h2>
+
+<ul>
+<li>手动执行存储过程,由于未指定时间,导致SQL执行长时间未停止</li>
+<li>强制停止该存储过程,也是没有停掉</li>
+<li>执行<code>db2stop force</code>仍然未停止数据库</li>
+<li>有了第一次的经历,不敢再进行更进一步的动作,希望DB2能够自己处理完之后能够停下来</li>
+<li>等到第二天(大约过了15个小时),依然CPU很高,没有停止的迹象</li>
+</ul>
+
+
+<h2>解决</h2>
+
+<p>这个解决是在<strong>现象2</strong>之后执行的.
+* <code>ps -ef|grep db2stop</code>
+* <code>kill &lt;pid&gt;</code> #kill掉&#8217;db2stop force&#8217;对应的进程
+* 再次执行<code>ps -ef|grep db2stop</code>,没有对应的信息,数据已经停止
+* 重启数据库<code>db2start</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a></h1>
     
     
@@ -163,14 +231,15 @@
 <li>方法1
 
 <ul>
-<li>导入ixf:<code>db2move uatdb load -u db2app -p db2app</code></li>
-<li>注:-u 对应数据库用户名称;-p 是该用户的密码;此处采用load参数,所有的ixf文件的数据是insert到表中的.</li>
+<li>导入ixf:<code>db2move uatdb load</code></li>
+<li>修改表状态:<code>db2 set integrity [表名] immediate checked</code></li>
 </ul>
 </li>
 <li>方法2
 
 <ul>
 <li>导入ixf:<code>db2move uatdb import</code></li>
+<li>有主外键依赖的关系,表数据会导入失败</li>
 </ul>
 </li>
 </ul>
@@ -1281,53 +1350,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/10/db2jian-kong-db2top/">DB2监控-db2top</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-10T11:18:41+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>db2top命令使用</h3>
-
-<ul>
-<li><strong>db2top -d <dbname></strong>  该命令的面板<br/>
-<img src="/images/postImage/20141010-db2top1.png"></li>
-<li><strong>shift+d</strong> 查看SQL执行情况,包括SQL的调用次数,执行时间等<br/>
-通常可以根据SQL的<strong>执行次数</strong>以及<strong>执行时间</strong>可以判断数据库当前的处理能力
-<img src="/images/postImage/20141010-db2top2.png"></li>
-<li>每条sql都有对应的HashValue,<strong>shift+l</strong>可以根据该sql的HashValue查看完整的sql语句<br/>
-<img src="/images/postImage/20141010-db2top3.png"></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -1346,6 +1368,10 @@ DB2错误码: SQL20054N reeasoncode:29</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
       </li>
     
@@ -1359,10 +1385,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
     
       <li class="post">
         <a href="/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n/">DB2 表状态异常SQL20054N</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
       </li>
     
   </ul>

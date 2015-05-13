@@ -63,6 +63,53 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/10/10/db2jian-kong-db2top/">DB2监控-db2top</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-10T11:18:41+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>db2top命令使用</h3>
+
+<ul>
+<li><strong>db2top -d <dbname></strong>  该命令的面板<br/>
+<img src="/images/postImage/20141010-db2top1.png"></li>
+<li><strong>shift+d</strong> 查看SQL执行情况,包括SQL的调用次数,执行时间等<br/>
+通常可以根据SQL的<strong>执行次数</strong>以及<strong>执行时间</strong>可以判断数据库当前的处理能力
+<img src="/images/postImage/20141010-db2top2.png"></li>
+<li>每条sql都有对应的HashValue,<strong>shift+l</strong>可以根据该sql的HashValue查看完整的sql语句<br/>
+<img src="/images/postImage/20141010-db2top3.png"></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/10/09/xing-neng-wen-ti-pai-cha/">性能问题排查</a></h1>
     
     
@@ -1113,6 +1160,10 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
       </li>
     
@@ -1126,10 +1177,6 @@ Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
     
       <li class="post">
         <a href="/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n/">DB2 表状态异常SQL20054N</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a>
       </li>
     
   </ul>
