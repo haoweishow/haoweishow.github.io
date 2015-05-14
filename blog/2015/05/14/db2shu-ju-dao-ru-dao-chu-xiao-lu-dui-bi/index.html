@@ -6,13 +6,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="baidu-site-verification" content="yByKERe4RO" />
-  <title>DB2数据库同步 - haoweishow Blog</title>
+  <title>Db2数据导入导出效率对比 - haoweishow Blog</title>
   <meta name="author" content="haoweishow">
 
   
-  <meta name="description" content="背景 在进行第二轮UAT测试的时候,需要进行版本重新部署,该部署过程要与上线一致(即验证投产的程序和SQL版本的正确性,验证部署说明的可操作性),因此需要将该UAT环境与准生产环境初始化成一致的状态.
-应用程序直接拷贝过来即可.
-数据库需要进行同步,来保证UAT环境的数据库和准生产环境的数据库一致 &hellip;">
+  <meta name="description" content="背景 生产环境的流水数据,在日终批量的时候,需要把前一天的流水数据迁移至历史库.
+每天两千万条流水,整个批量耗时1~2个小时.
+当前交易量还只是未来计划的1/4,如果达到预期的交易量,那么批量程序的耗时这么下去就太离谱了.
+批量程序只记录开始和结束时间,未统计或者日志中输出每个主要过程的耗时, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +22,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://haoweishow.com/blog/2015/04/08/db2shu-ju-ku-tong-bu">
+  <link rel="canonical" href="http://haoweishow.com/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="haoweishow Blog" type="application/atom+xml">
@@ -62,7 +63,7 @@
   
   <header>
     
-      <h1 class="entry-title">DB2数据库同步</h1>
+      <h1 class="entry-title">Db2数据导入导出效率对比</h1>
     
     
       <p class="meta">
@@ -78,102 +79,137 @@
   
 
 
-<time datetime="2015-04-08T14:03:52+08:00" pubdate data-updated="true"></time>
+<time datetime="2015-05-14T13:52:50+08:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1>背景</h1>
+<div class="entry-content"><h2>背景</h2>
 
 <ul>
-<li>在进行第二轮UAT测试的时候,需要进行版本重新部署,该部署过程要与上线一致(即验证投产的程序和SQL版本的正确性,验证部署说明的可操作性),因此需要将该UAT环境与准生产环境初始化成一致的状态.</li>
-<li>应用程序直接拷贝过来即可.</li>
-<li>数据库需要进行同步,来保证UAT环境的数据库和准生产环境的数据库一致.</li>
+<li>生产环境的流水数据,在日终批量的时候,需要把前一天的流水数据迁移至历史库.</li>
+<li>每天两千万条流水,整个批量耗时1~2个小时.</li>
+<li>当前交易量还只是未来计划的1/4,如果达到预期的交易量,那么批量程序的耗时这么下去就太离谱了.</li>
+<li>批量程序只记录开始和结束时间,未统计或者日志中输出每个主要过程的耗时,因此只能在测试环境尝试发现耗时点和优化方法.</li>
+<li>有些地方更新线上版本实在太困难(没有大的问题,能跑就坚决不动)</li>
 </ul>
 
 
-<h1>前提</h1>
+<h2>处理过程</h2>
 
 <ul>
-<li>数据库: DB2 V9.7</li>
-<li>准生产环境: 简称PRD</li>
-<li>准生产数据库名称: prddb</li>
-<li>UAT环境: 简称UAT</li>
-<li>UAT数据库名称名称: uatdb</li>
-<li>数据库实例用户: db2inst</li>
-<li>数据库应用用户: db2app</li>
-<li>注:两个环境的数据库表结构/表空间等信息一致</li>
-<li>注:导入导出涉及两个用户,下述步骤忽略用户操作的目录和权限相关内容,在实际操作中请自行处理</li>
-<li>注:此方法可以保证导入后的数据库,表的索引/约束等信息仍然保留</li>
+<li>当前库.流水表->卸载分区->生成临时表->导出数据</li>
+<li>后线库.流水表->导入数据->生成临时表->加载分区->数据完整性校验</li>
+<li>当前库.流水表->删除临时表</li>
 </ul>
 
 
-<h1>导出</h1>
+<h2>耗时分析</h2>
 
-<h2>导出DDL</h2>
+<h3>数据导出</h3>
 
 <ul>
-<li>db2app用户登录PRD环境</li>
-<li>连接数据库: <code>db2 connect to prddb</code></li>
-<li>导出DDL: <code>db2look -d prddb -e -o ddl.sql</code></li>
-<li>关闭连接: <code>db2 connect reset</code></li>
-<li>注:上述命令会导出db2app用户相关的所有表/视图/存储过程等</li>
+<li>这里的导出是指<strong>[生成临时表->导出数据]</strong>这一步</li>
+<li>优化前</li>
 </ul>
 
 
-<h2>导出数据</h2>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "export to 文件名.ixf of ixf select * from 临时表名"</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li>db2inst用户登录PRD环境</li>
-<li>创建目录: <code>mkdir prddb.ixf;cd prddb.ixf</code></li>
-<li>导出ixf: <code>db2move prddb export</code></li>
+<li>优化后</li>
 </ul>
 
 
-<h1>数据迁移</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "export to 文件名.ixf of del modified by coldel0x01 select * from 临时表名"</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li>将db2db.sql文件从PRD环境传输到UAT环境</li>
-<li>将prddb.ixf文件夹从PRD环境传输到UAT环境</li>
+<li>两种方式导出的数据文件,数据的分隔符不同(再深入的差别不晓得)</li>
+<li>在测试环境,针对优化前后进行了测试</li>
 </ul>
 
 
-<h1>导入</h1>
+<table>
+<thead>
+<tr>
+<th>  项目 </th>
+<th>  数据量  </th>
+<th style="text-align:right;">  导出耗时  </th>
+<th style="text-align:right;">  导出文件  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 10分钟 </td>
+<td style="text-align:right;"> 8G </td>
+</tr>
+<tr>
+<td>优化后 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 2分钟 </td>
+<td style="text-align:right;"> 4G  </td>
+</tr>
+</tbody>
+</table>
 
-<h2>创建表</h2>
+
+<h3>数据导入</h3>
 
 <ul>
-<li>db2app用户登录UAT环境</li>
-<li>删除uatdb库中的全部表/视图/存储过程等,该步骤需要手动执行</li>
-<li>修改db2db.sql文件中的数据库名称为uatdb</li>
-<li>连接数据库: <code>db2 connect to uatdb</code></li>
-<li>执行命令<code>db2 -tvf db2db.sql</code>重新创建表/视图/存储过程等</li>
-<li>关闭连接: <code>db2 connect reset</code></li>
+<li>导入是指<strong>[导入数据->生成临时表]</strong>这一步</li>
+<li>优化前</li>
 </ul>
 
 
-<h2>导入数据</h2>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "import from 文件名.ixf of ixf commitcount 500 create into 临时表名 in 表空间"</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li>db2inst用户登录UAT环境</li>
-<li>进入文件夹: <code>cd prddb.ixf</code></li>
-<li>方法1
+<li>优化后</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "create table 临时表名 like 表名 in 表空间"
+</span><span class='line'>db2 "load from 文件名.ixf of ixf insert into 临时表名 nonrecoverable"</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li>导入ixf:<code>db2move uatdb load</code></li>
-<li>修改表状态:<code>db2 set integrity [表名] immediate checked</code></li>
+<li>在测试环境,针对优化前后进行了测试,该导入测试,依赖的导出数据为<strong>优化前的导出格式(默认的分隔符)</strong></li>
 </ul>
-</li>
-<li>方法2
 
-<ul>
-<li>导入ixf:<code>db2move uatdb import</code></li>
-<li>有主外键依赖的关系,表数据会导入失败</li>
-</ul>
-</li>
-</ul>
+
+<table>
+<thead>
+<tr>
+<th>  项目 </th>
+<th>  数据量  </th>
+<th style="text-align:right;">  导入耗时  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> too lang</td>
+</tr>
+<tr>
+<td>优化后 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 2分钟 </td>
+</tr>
+</tbody>
+</table>
 
 </div>
 
@@ -197,7 +233,7 @@
   
 
 
-<time datetime="2015-04-08T14:03:52+08:00" pubdate data-updated="true"></time>
+<time datetime="2015-05-14T13:52:50+08:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -218,10 +254,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/" title="Previous Post: 浦发ESB性能测试优化方案">&laquo; 浦发ESB性能测试优化方案</a>
+        <a class="basic-alignment left" href="/blog/2015/05/13/db2stop-force-shi-bai/" title="Previous Post: db2stop force 失败">&laquo; db2stop force 失败</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/05/13/db2stop-force-shi-bai/" title="Next Post: db2stop force 失败">db2stop force 失败 &raquo;</a>
       
     </p>
   </footer>

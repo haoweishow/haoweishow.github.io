@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-13T10:18:01+08:00</updated>
+  <updated>2015-05-14T15:49:50+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,139 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Db2数据导入导出效率对比]]></title>
+    <link href="http://haoweishow.com/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/"/>
+    <updated>2015-05-14T13:52:50+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi</id>
+    <content type="html"><![CDATA[<h2>背景</h2>
+
+<ul>
+<li>生产环境的流水数据,在日终批量的时候,需要把前一天的流水数据迁移至历史库.</li>
+<li>每天两千万条流水,整个批量耗时1~2个小时.</li>
+<li>当前交易量还只是未来计划的1/4,如果达到预期的交易量,那么批量程序的耗时这么下去就太离谱了.</li>
+<li>批量程序只记录开始和结束时间,未统计或者日志中输出每个主要过程的耗时,因此只能在测试环境尝试发现耗时点和优化方法.</li>
+<li>有些地方更新线上版本实在太困难(没有大的问题,能跑就坚决不动)</li>
+</ul>
+
+
+<h2>处理过程</h2>
+
+<ul>
+<li>当前库.流水表->卸载分区->生成临时表->导出数据</li>
+<li>后线库.流水表->导入数据->生成临时表->加载分区->数据完整性校验</li>
+<li>当前库.流水表->删除临时表</li>
+</ul>
+
+
+<h2>耗时分析</h2>
+
+<h3>数据导出</h3>
+
+<ul>
+<li>这里的导出是指<strong>[生成临时表->导出数据]</strong>这一步</li>
+<li>优化前</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "export to 文件名.ixf of ixf select * from 临时表名"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>优化后</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "export to 文件名.ixf of del modified by coldel0x01 select * from 临时表名"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>两种方式导出的数据文件,数据的分隔符不同(再深入的差别不晓得)</li>
+<li>在测试环境,针对优化前后进行了测试</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th>  项目 </th>
+<th>  数据量  </th>
+<th style="text-align:right;">  导出耗时  </th>
+<th style="text-align:right;">  导出文件  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 10分钟 </td>
+<td style="text-align:right;"> 8G </td>
+</tr>
+<tr>
+<td>优化后 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 2分钟 </td>
+<td style="text-align:right;"> 4G  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>数据导入</h3>
+
+<ul>
+<li>导入是指<strong>[导入数据->生成临时表]</strong>这一步</li>
+<li>优化前</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "import from 文件名.ixf of ixf commitcount 500 create into 临时表名 in 表空间"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>优化后</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>db2 "create table 临时表名 like 表名 in 表空间"
+</span><span class='line'>db2 "load from 文件名.ixf of ixf insert into 临时表名 nonrecoverable"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>在测试环境,针对优化前后进行了测试,该导入测试,依赖的导出数据为<strong>优化前的导出格式(默认的分隔符)</strong></li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th>  项目 </th>
+<th>  数据量  </th>
+<th style="text-align:right;">  导入耗时  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> too lang</td>
+</tr>
+<tr>
+<td>优化后 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 2分钟 </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Db2stop Force 失败]]></title>
@@ -196,6 +329,8 @@
 </span><span class='line'>db2 update db cfg using LOGFILSIZ 10240  
 </span><span class='line'>db2stop force 
 </span><span class='line'>db2start</span></code></pre></td></tr></table></div></figure>
+
+
 
 ]]></content>
   </entry>

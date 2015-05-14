@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-13T10:18:01+08:00</updated>
+  <updated>2015-05-14T15:49:50+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,159 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Db2数据导入导出效率对比]]></title>
+    <link href="http://haoweishow.com/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/"/>
+    <updated>2015-05-14T13:52:50+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi</id>
+    <content type="html"><![CDATA[<h2>背景</h2>
+
+<ul>
+<li>生产环境的流水数据,在日终批量的时候,需要把前一天的流水数据迁移至历史库.</li>
+<li>每天两千万条流水,整个批量耗时1~2个小时.</li>
+<li>当前交易量还只是未来计划的1/4,如果达到预期的交易量,那么批量程序的耗时这么下去就太离谱了.</li>
+<li>批量程序只记录开始和结束时间,未统计或者日志中输出每个主要过程的耗时,因此只能在测试环境尝试发现耗时点和优化方法.</li>
+<li>有些地方更新线上版本实在太困难(没有大的问题,能跑就坚决不动)</li>
+</ul>
+
+
+<h2>处理过程</h2>
+
+<ul>
+<li>当前库.流水表->卸载分区->生成临时表->导出数据</li>
+<li>后线库.流水表->导入数据->生成临时表->加载分区->数据完整性校验</li>
+<li>当前库.流水表->删除临时表</li>
+</ul>
+
+
+<h2>耗时分析</h2>
+
+<h3>数据导出</h3>
+
+<ul>
+<li>这里的导出是指<strong>[生成临时表->导出数据]</strong>这一步</li>
+<li>优化前
+<code>
+db2 "export to 文件名.ixf of ixf select * from 临时表名"
+</code></li>
+<li>优化后
+<code>
+db2 "export to 文件名.ixf of del modified by coldel0x01 select * from 临时表名"
+</code></li>
+<li>两种方式导出的数据文件,数据的分隔符不同(再深入的差别不晓得)</li>
+<li>在测试环境,针对优化前后进行了测试</li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th>  项目 </th>
+<th>  数据量  </th>
+<th style="text-align:right;">  导出耗时  </th>
+<th style="text-align:right;">  导出文件  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 10分钟 </td>
+<td style="text-align:right;"> 8G </td>
+</tr>
+<tr>
+<td>优化后 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 2分钟 </td>
+<td style="text-align:right;"> 4G  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>数据导入</h3>
+
+<ul>
+<li>导入是指<strong>[导入数据->生成临时表]</strong>这一步</li>
+<li>优化前
+<code>
+db2 "import from 文件名.ixf of ixf commitcount 500 create into 临时表名 in 表空间"
+</code></li>
+<li>优化后
+<code>
+db2 "create table 临时表名 like 表名 in 表空间"
+db2 "load from 文件名.ixf of ixf insert into 临时表名 nonrecoverable"
+</code></li>
+<li>在测试环境,针对优化前后进行了测试,该导入测试,依赖的导出数据为<strong>优化前的导出格式(默认的分隔符)</strong></li>
+</ul>
+
+
+<table>
+<thead>
+<tr>
+<th>  项目 </th>
+<th>  数据量  </th>
+<th style="text-align:right;">  导入耗时  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>优化前 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> too lang</td>
+</tr>
+<tr>
+<td>优化后 </td>
+<td> 1000万 </td>
+<td style="text-align:right;"> 2分钟 </td>
+</tr>
+</tbody>
+</table>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Db2stop Force 失败]]></title>
+    <link href="http://haoweishow.com/blog/2015/05/13/db2stop-force-shi-bai/"/>
+    <updated>2015-05-13T09:53:07+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/05/13/db2stop-force-shi-bai</id>
+    <content type="html"><![CDATA[<h2>背景</h2>
+
+<p>系统使用DB2数据库,日常操作没有遇到问题.
+但是最近出现两次操作错误,引起一些问题,有必要记录一下.</p>
+
+<h2>现象1</h2>
+
+<ul>
+<li>执行<code>db2move esbdb load</code>的时候,数据库名称写错,直接Ctrl+C终止,但是shell并未终止.</li>
+<li>再次执行<code>db2stop force</code>,仍然未停止,CPU占用在0~50%之间</li>
+<li>尝试发现DB2在做什么?无果,db2diag的日志在不停的刷</li>
+<li>经过一些毁灭性的操作之后,请来db2专家搞定(过程不表,反正是一身冷汗)</li>
+</ul>
+
+
+<h2>现象2</h2>
+
+<ul>
+<li>手动执行存储过程,由于未指定时间,导致SQL执行长时间未停止</li>
+<li>强制停止该存储过程,也是没有停掉</li>
+<li>执行<code>db2stop force</code>仍然未停止数据库</li>
+<li>有了第一次的经历,不敢再进行更进一步的动作,希望DB2能够自己处理完之后能够停下来</li>
+<li>等到第二天(大约过了15个小时),依然CPU很高,没有停止的迹象</li>
+</ul>
+
+
+<h2>解决</h2>
+
+<p>这个解决是在<strong>现象2</strong>之后执行的.
+* <code>ps -ef|grep db2stop</code>
+* <code>kill &lt;pid&gt;</code> #kill掉&#8217;db2stop force&#8217;对应的进程
+* 再次执行<code>ps -ef|grep db2stop</code>,没有对应的信息,数据已经停止
+* 重启数据库<code>db2start</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[DB2数据库同步]]></title>
@@ -112,108 +265,76 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[DB2 load数据失败(SQL2036N)]]></title>
-    <link href="http://haoweishow.com/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n/"/>
-    <updated>2015-01-06T17:38:09+08:00</updated>
-    <id>http://haoweishow.com/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n</id>
-    <content type="html"><![CDATA[<h2>背景</h2>
+    <title type="html"><![CDATA[DB2数据库日志空间满]]></title>
+    <link href="http://haoweishow.com/blog/2015/03/13/db2shu-ju-ku-ri-zhi-kong-jian-man/"/>
+    <updated>2015-03-13T11:14:36+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/03/13/db2shu-ju-ku-ri-zhi-kong-jian-man</id>
+    <content type="html"><![CDATA[<p>DB2数据库日志空间满</p>
 
-<ul>
-<li>数据库实例用户:  userA</li>
-<li>数据操作用户:    userB</li>
-</ul>
+<h2>错误:</h2>
 
+<pre><code>SQL0964C The transaction log for the database is full. SQLSTATE=57011
+</code></pre>
 
-<h2>操作</h2>
+<h2>检查数据库日志配置</h2>
 
-<ul>
-<li>userB执行export命令,导出ixf格式的数据;</li>
-<li>userB执行import命令,导入ixf格式的数据,正常导入;</li>
-<li>userB执行load命令,导入ixf格式的数据,导入失败; <br/>
-<code>
-SQL2036N  The path for the file or device
-"/home/esb/batch/data/tmp_xxxx_20141101.ixf" is not valid.
-</code></li>
-</ul>
+<pre><code>db2 connect to esbdbfe user esbinst using esbinst 
+db2 get db cfg for esbdbfe show detail |grep -i log
+Log buffer size(4KB)  (LOGBUFSZ) = 8192      8192
+Log file size(4KB)   (LOGFILSIZ) = 655       655   #单个日志文件size太小
+</code></pre>
 
+<h2>更新数据库日志配置</h2>
 
-<h2>解决</h2>
-
-<ul>
-<li>数据库实例用户userA对文件<strong>/home/esb/batch/data/tmp_xxxx_20141101.ixf</strong>没有访问权限.</li>
-<li>给userA授权对该文件的访问权限,即可使用load导入数据.</li>
-</ul>
-
+<pre><code>db2 connect to esbdbfe user esbinst using esbinst
+db2 update db cfg using LOGFILSIZ 10240  
+db2stop force 
+db2start
+</code></pre>
 ]]></content>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[DB2监控-db2top]]></title>
-    <link href="http://haoweishow.com/blog/2014/10/10/db2jian-kong-db2top/"/>
-    <updated>2014-10-10T11:18:41+08:00</updated>
-    <id>http://haoweishow.com/blog/2014/10/10/db2jian-kong-db2top</id>
-    <content type="html"><![CDATA[<h3>db2top命令使用</h3>
+    <title type="html"><![CDATA[DB2 表状态异常SQL20054N]]></title>
+    <link href="http://haoweishow.com/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n/"/>
+    <updated>2015-03-13T10:48:49+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/03/13/db2-biao-zhuang-tai-yi-chang-sql20054n</id>
+    <content type="html"><![CDATA[<p>DB2 表状态异常SQL20054N</p>
 
-<ul>
-<li><strong>db2top -d <dbname></strong>  该命令的面板<br/>
-<img src="/images/postImage/20141010-db2top1.png"></li>
-<li><strong>shift+d</strong> 查看SQL执行情况,包括SQL的调用次数,执行时间等<br/>
-通常可以根据SQL的<strong>执行次数</strong>以及<strong>执行时间</strong>可以判断数据库当前的处理能力
-<img src="/images/postImage/20141010-db2top2.png"></li>
-<li>每条sql都有对应的HashValue,<strong>shift+l</strong>可以根据该sql的HashValue查看完整的sql语句<br/>
-<img src="/images/postImage/20141010-db2top3.png"></li>
-</ul>
+<h2>背景</h2>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DB2启动失败(SQL5043N)]]></title>
-    <link href="http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/"/>
-    <updated>2014-07-07T16:41:11+08:00</updated>
-    <id>http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n</id>
-    <content type="html"><![CDATA[<h2>背景</h2>
+<p>测试环境的一张表在前线库和后线库中进行了分区处理. 前线库存放当天和未来的分区, 后线库存放昨天和过去N天的数据.
+该表的消息ID字段是主键.</p>
 
-<hr />
+<h2>现象</h2>
 
-<p>操作系统：  CentOS 6 <br/>
-数据库版本：db2_v101_linuxia32_expc <br/>
-数据库实例名称：esbinst<br/>
-实例用户名称：esbinst <br/>
-数据库安装成功 <br/>
-数据库实例创建成功</p>
+<p>在日终批量的时候,从前线库卸载下来的分区数据,可以导入后线库,但是该表的状态异常,不能删除更早的历史分区(手动执行也报错)
+DB2错误码: SQL20054N reeasoncode:29</p>
 
-<h2>问题</h2>
+<h2>原因</h2>
 
-<hr />
-
-<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
-    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
-执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
-
-<h2>排查</h2>
-
-<hr />
-
-<p>在实例用户的目录中查看日志<br/>
-    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
-存在如下的内容：<br/>
-    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
-    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
-    INSTANCE: esbinst              NODE : 000<br/>
-    HOSTNAME: localhost.localdomain<br/>
-    EDUID   : 1                    EDUNAME: db2sysc<br/>
-    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
-    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
+<p>消息ID出现重复,前线库中有一条记录与后线库的历史分区里某一天的数据重复.因为消息ID可以保证在前线库唯一,但是无法保证两个库唯一.<br/>
+出现异常的流程:<br/>
+* 前线库:分区卸载<br/>
+* 前线库:数据导出ixf文件<br/>
+* 后线库:关闭约束检查<code>db2 "set integrity for tabname check immediate unchecked"</code><br/>
+* 后线库:从ixf文件中import数据(正常)<br/>
+* 后线库:开启约束检查<code>db2 "set integrity for tabname immediate checked"</code>(异常,该语句报错,导致后面删除分区也未能执行)</p>
 
 <h2>解决</h2>
 
-<hr />
+<h3>临时解决</h3>
 
-<p>Step1:<br/>
-    db2 update dbm cfg using SVCENAME esbinst<br/>
-Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
-    esbinst     50000/tcp</p>
+<ul>
+<li>删除后线库该表的数据(也可以只删除重复的数据)</li>
+<li>开启约束检查</li>
+<li>删除多余的分区
+
+<h3>永久方案</h3></li>
+<li>前线库采用唯一约束,保证逻辑处理不会产生重复.</li>
+<li>后线库删除该表的唯一约束,仅保存相应的索引即可</li>
+</ul>
+
 ]]></content>
   </entry>
   
