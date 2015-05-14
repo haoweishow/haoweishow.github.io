@@ -3,7 +3,7 @@ layout: post
 title: "DB2 表状态异常SQL20054N"
 date: 2015-03-13 10:48:49 +0800
 comments: true
-categories: 
+categories: db2
 ---
 DB2 表状态异常SQL20054N
 ## 背景

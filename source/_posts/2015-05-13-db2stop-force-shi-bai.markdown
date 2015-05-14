@@ -3,7 +3,7 @@ layout: post
 title: "db2stop force 失败"
 date: 2015-05-13 09:53:07 +0800
 comments: true
-categories: 
+categories: db2
 ---
 
 ## 背景

@@ -1,2 +1,58 @@
-// This File is imported last, and will override other styles in the cascade
-// Add styles here to make changes without digging in too much
+/* 
+Generic Styling, for Desktops/Laptops 
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+tr:nth-of-type(odd) { 
+  background: #eee; 
+}
+th { 
+  background: #333; 
+  color: white; 
+  font-weight: bold; 
+}
+td, th { 
+  padding: 6px; 
+  border: 1px solid #ccc; 
+  text-align: left; 
+}
+*/
+
+
+
+
+
+
+* + table {
+  border-style:solid;
+  border-width:2px;
+  border-color:#000000;
+}
+ 
+* + table th, * + table td {
+  border-style:solid;
+  border-width:2px;
+  border-color:#000000;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+ 
+* + table th {
+  border-style:solid;
+  font-weight:bold;
+  background: url("/images/noise.png?1330434582") repeat scroll left top #F7F3F7;
+}
+ 
+* + table th[align="left"], * + table td[align="left"] {
+  text-align:left;
+}
+ 
+* + table th[align="right"], * + table td[align="right"] {
+  text-align:right;
+}
+ 
+* + table th[align="center"], * + table td[align="center"] {
+  text-align:center;
+}

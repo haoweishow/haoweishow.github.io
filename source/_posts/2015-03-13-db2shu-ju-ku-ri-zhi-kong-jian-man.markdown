@@ -3,7 +3,7 @@ layout: post
 title: "DB2数据库日志空间满"
 date: 2015-03-13 11:14:36 +0800
 comments: true
-categories: 
+categories: db2
 ---
 DB2数据库日志空间满
 
@@ -27,3 +27,4 @@ db2 update db cfg using LOGFILSIZ 10240
 db2stop force 
 db2start
 ```
+
