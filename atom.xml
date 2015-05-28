@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-14T15:49:50+08:00</updated>
+  <updated>2015-05-28T17:08:59+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[端口占用查询]]></title>
+    <link href="http://haoweishow.com/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/"/>
+    <updated>2015-05-28T17:04:46+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/05/28/duan-kou-zhan-yong-cha-xun</id>
+    <content type="html"><![CDATA[<p> <strong>根据端口号,查找对应的进程</strong></p>
+
+<h2>Win系统</h2>
+
+<ul>
+<li>查找pid: <code>C:\&gt;netstat -aon|findstr "1088"</code></li>
+<li>查找进程名称: <code>C:\&gt;tasklist|findstr "&lt;pid&gt;"</code></li>
+</ul>
+
+
+<h2>Linux系统</h2>
+
+<ul>
+<li>查找pid: <code>lsof -i :8388</code></li>
+</ul>
+
+
+<h2>Aix系统</h2>
+
+<ul>
+<li>step1: <code>netstat -Aan|grep 6200|grep LISTEN</code></li>
+<li>step2: <code>rmsock f1000e0000307bb0 tcpcb</code></li>
+<li>step3: <code>ps -ef|grep &lt;pid&gt;</code></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Db2数据导入导出效率对比]]></title>
@@ -1975,39 +2008,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
     db2 update dbm cfg using SVCENAME esbinst<br/>
 Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
     esbinst     50000/tcp</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rake Deploy Failed]]></title>
-    <link href="http://haoweishow.com/blog/2014/06/16/rake-deploy-failed/"/>
-    <updated>2014-06-16T17:20:04+08:00</updated>
-    <id>http://haoweishow.com/blog/2014/06/16/rake-deploy-failed</id>
-    <content type="html"><![CDATA[<h2>过程</h2>
-
-<hr />
-
-<p>1.按照<a href="http://www.octopress.org">octopress.org</a>网站上的说明，本地安装完成，并成功部署到github上;<br/>
-2. 访问<a href="http://haoweishow.com">http://haoweishow.com</a>可以看到部署的页面;
-3. 但是在通过safari访问<a href="https://github.com/haoweishow/haoweishow.github.io">repo</a>,在网页上增加了README.md的文件，提交成功；<br/>
-4. 然后本地修改其它配置，通过reke deploy的时候出现下面的错误
-    To git@github.com:haoweishow/haoweishow.github.io.git<br/>
-    ! [rejected]        master -> master (non-fast-forward)<br/>
-    error: failed to push some refs to &lsquo;git@github.com:haoweishow/ haoweishow.github.io.git&rsquo;<br/>
-    hint: Updates were rejected because the tip of your current branch is behind<br/>
-    hint: its remote counterpart. Integrate the remote changes (e.g.<br/>
-    hint: &lsquo;git pull &hellip;&rsquo;) before pushing again.<br/>
-    hint: See the &lsquo;Note about fast-forwards&rsquo; in &lsquo;git push &ndash;help&rsquo; for details.</p>
-
-<h2>解决</h2>
-
-<hr />
-
-<p>在stackoverflow.com上找到<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">解决方法</a>;<br/>
-    需要修改项目中Rakefile文件的内容：<br/>
-    原始内容：system &ldquo;git push origin #{deploy_branch}&rdquo;<br/>
-    改后内容：system &ldquo;git push origin +#{deploy_branch}&rdquo;  多个+号；<br/>
-    再次执行rake deploy，至此，我的问题解决，项目可以deploy到github，回头再将+号去掉；</p>
 ]]></content>
   </entry>
   

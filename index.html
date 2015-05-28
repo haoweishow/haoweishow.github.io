@@ -63,6 +63,66 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/">端口占用查询</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-28T17:04:46+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> <strong>根据端口号,查找对应的进程</strong></p>
+
+<h2>Win系统</h2>
+
+<ul>
+<li>查找pid: <code>C:\&gt;netstat -aon|findstr "1088"</code></li>
+<li>查找进程名称: <code>C:\&gt;tasklist|findstr "&lt;pid&gt;"</code></li>
+</ul>
+
+
+<h2>Linux系统</h2>
+
+<ul>
+<li>查找pid: <code>lsof -i :8388</code></li>
+</ul>
+
+
+<h2>Aix系统</h2>
+
+<ul>
+<li>step1: <code>netstat -Aan|grep 6200|grep LISTEN</code></li>
+<li>step2: <code>rmsock f1000e0000307bb0 tcpcb</code></li>
+<li>step3: <code>ps -ef|grep &lt;pid&gt;</code></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/">Db2数据导入导出效率对比</a></h1>
     
     
@@ -902,64 +962,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/26/jettyxiang-guan/">Jetty相关</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-26T10:17:43+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Jetty版本</h2>
-
-<ul>
-<li>首页
-
-<ul>
-<li><a href="http://www.eclipse.org/jetty/">http://www.eclipse.org/jetty/</a></li>
-</ul>
-</li>
-<li>下载地址
-
-<ul>
-<li><a href="http://download.eclipse.org/jetty/">http://download.eclipse.org/jetty/</a></li>
-</ul>
-</li>
-<li>8.x版本下载
-
-<ul>
-<li><a href="http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/">http://download.eclipse.org/jetty/updates/jetty-bundles-8.x/</a></li>
-</ul>
-</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -972,10 +974,14 @@ DB2错误码: SQL20054N reeasoncode:29</p>
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/">端口占用查询</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/">Db2数据导入导出效率对比</a>
@@ -991,10 +997,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
     
       <li class="post">
         <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/13/db2shu-ju-ku-ri-zhi-kong-jian-man/">DB2数据库日志空间满</a>
       </li>
     
   </ul>

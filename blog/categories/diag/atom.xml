@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Diag | haoweishow Blog]]></title>
+  <link href="http://haoweishow.com/blog/categories/diag/atom.xml" rel="self"/>
+  <link href="http://haoweishow.com/"/>
+  <updated>2015-05-28T17:08:59+08:00</updated>
+  <id>http://haoweishow.com/</id>
+  <author>
+    <name><![CDATA[haoweishow]]></name>
+    <email><![CDATA[haoweishow@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[端口占用查询]]></title>
+    <link href="http://haoweishow.com/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/"/>
+    <updated>2015-05-28T17:04:46+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/05/28/duan-kou-zhan-yong-cha-xun</id>
+    <content type="html"><![CDATA[<p> <strong>根据端口号,查找对应的进程</strong></p>
+
+<h2>Win系统</h2>
+
+<ul>
+<li>查找pid: <code>C:\&gt;netstat -aon|findstr "1088"</code></li>
+<li>查找进程名称: <code>C:\&gt;tasklist|findstr "&lt;pid&gt;"</code></li>
+</ul>
+
+
+<h2>Linux系统</h2>
+
+<ul>
+<li>查找pid: <code>lsof -i :8388</code></li>
+</ul>
+
+
+<h2>Aix系统</h2>
+
+<ul>
+<li>step1: <code>netstat -Aan|grep 6200|grep LISTEN</code></li>
+<li>step2: <code>rmsock f1000e0000307bb0 tcpcb</code></li>
+<li>step3: <code>ps -ef|grep &lt;pid&gt;</code></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
