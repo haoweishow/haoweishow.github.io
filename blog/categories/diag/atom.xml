@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Diag | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/diag/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-28T17:08:59+08:00</updated>
+  <updated>2015-05-28T17:15:53+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -18,7 +18,7 @@
     <link href="http://haoweishow.com/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/"/>
     <updated>2015-05-28T17:04:46+08:00</updated>
     <id>http://haoweishow.com/blog/2015/05/28/duan-kou-zhan-yong-cha-xun</id>
-    <content type="html"><![CDATA[<p> <strong>根据端口号,查找对应的进程</strong></p>
+    <content type="html"><![CDATA[<p> <strong>(根据端口号,查找对应的进程)</strong></p>
 
 <h2>Win系统</h2>
 
@@ -31,7 +31,14 @@
 <h2>Linux系统</h2>
 
 <ul>
-<li>查找pid: <code>lsof -i :8388</code></li>
+<li>方法1: <code>lsof -i :8388</code></li>
+<li>方法2: <code>netstat -ntlp</code>
+<code>
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      868/sshd
+tcp6       0      0 :::22                   :::*                    LISTEN      868/sshd
+</code></li>
 </ul>
 
 

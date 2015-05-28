@@ -86,7 +86,7 @@
   </header>
 
 
-  <div class="entry-content"><p> <strong>根据端口号,查找对应的进程</strong></p>
+  <div class="entry-content"><p> <strong>(根据端口号,查找对应的进程)</strong></p>
 
 <h2>Win系统</h2>
 
@@ -99,8 +99,19 @@
 <h2>Linux系统</h2>
 
 <ul>
-<li>查找pid: <code>lsof -i :8388</code></li>
+<li>方法1: <code>lsof -i :8388</code></li>
+<li>方法2: <code>netstat -ntlp</code></li>
 </ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Active Internet connections (only servers)
+</span><span class='line'>Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+</span><span class='line'>tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      868/sshd
+</span><span class='line'>tcp6       0      0 :::22                   :::*                    LISTEN      868/sshd</span></code></pre></td></tr></table></div></figure>
 
 
 <h2>Aix系统</h2>
