@@ -3,7 +3,7 @@ layout: post
 title: "OSX 升级导致 octopress 异常"
 date: 2015-11-15 08:57:31 +0800
 comments: true
-categories: 
+categories: octopress 
 ---
 ## 现象
 octopress创建文章,本地测试,上传等命令都无法使用.
