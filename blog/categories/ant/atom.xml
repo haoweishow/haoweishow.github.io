@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ant | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/ant/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-28T17:15:53+08:00</updated>
+  <updated>2015-11-15T09:05:28+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -135,7 +135,7 @@
 
 <h2>文件转路径</h2>
 
-<p>&#8220;`</p>
+<p>```</p>
 
 <!-- Create a property containing all .jar files, prefix lib/, and seperated with a space -->
 
@@ -151,7 +151,7 @@
     </mapper><br/>
     <path refid="lib-classpath"/><br/>
 </pathconvert>
-&#8220;`</p>
+```</p>
 
 <h2>执行java程序</h2>
 

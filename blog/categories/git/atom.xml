@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | haoweishow Blog]]></title>
+  <link href="http://haoweishow.com/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://haoweishow.com/"/>
+  <updated>2015-11-15T09:05:28+08:00</updated>
+  <id>http://haoweishow.com/</id>
+  <author>
+    <name><![CDATA[haoweishow]]></name>
+    <email><![CDATA[haoweishow@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git常用命令]]></title>
+    <link href="http://haoweishow.com/blog/2015/08/05/Git-chang-yong-ming-ling/"/>
+    <updated>2015-08-05T23:18:00+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/08/05/Git-chang-yong-ming-ling</id>
+    <content type="html"><![CDATA[<h2>数据库维护</h2>
+
+<ul>
+<li>查看数据库的使用统计<code>git count-objects -v</code></li>
+<li>数据库垃圾回收<code>git gc</code>
+
+<h2>恢复分支</h2></li>
+<li>查看最近访问的sha1数(版本号)<code>git reflog</code></li>
+<li>重新创建删去的分支<code>git branch experimental SHA1_OF_HASH</code>
+
+<h2>基本命令</h2></li>
+<li>添加文件到暂存区<code>git add .</code></li>
+<li>提交并添加注释<code>git commit -a -m "xx"</code></li>
+<li>修改文件名称<code>git mv oldname newname</code></li>
+<li>删除文件<code>git rm file</code></li>
+<li>删除文件夹<code>git rm -r dir</code></li>
+<li>停止跟踪文件但不删除<code>git rm --cached file</code>
+
+<h2>合并</h2></li>
+<li>把dev分支合并到当前分支<code>git merge dev</code></li>
+<li><code>git rebase branch</code>
+
+<h2>分支</h2></li>
+<li>创建并切换到新分支<code>git checkout -b dev</code></li>
+<li>切换分支<code>git checkout dev</code></li>
+<li>以某个版本创建分支<code>git checkout -b dev commitid</code></li>
+<li>在主分支的基础上创建分支<code>git checkout -b dev master</code></li>
+<li>创建分支<code>git branch dev</code></li>
+<li>删除分支<code>git branch -d dev</code></li>
+<li>强制删除<code>git branch -D dev</code></li>
+<li>查看分支<code>git branch</code></li>
+<li>修改分支名称<code>git branch -m oldname newname</code>
+
+<h2>标签</h2></li>
+<li>抽取某个tag的版本<code>git archive --format=zip --output=v1.0.zip v1.0</code></li>
+<li>列出所有本地tag<code>git tag</code></li>
+<li>创建标签,基于已经提交的版本<code>git tag tagname</code></li>
+<li>删除标签<code>git tag -d tagname</code></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Db2 | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/db2/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-28T17:15:53+08:00</updated>
+  <updated>2015-11-15T09:05:28+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -160,7 +160,7 @@ db2 "load from 文件名.ixf of ixf insert into 临时表名 nonrecoverable"
 
 <p>这个解决是在<strong>现象2</strong>之后执行的.
 * <code>ps -ef|grep db2stop</code>
-* <code>kill &lt;pid&gt;</code> #kill掉&#8217;db2stop force&#8217;对应的进程
+* <code>kill &lt;pid&gt;</code> #kill掉'db2stop force'对应的进程
 * 再次执行<code>ps -ef|grep db2stop</code>,没有对应的信息,数据已经停止
 * 重启数据库<code>db2start</code></p>
 ]]></content>

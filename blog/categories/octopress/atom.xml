@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | haoweishow Blog]]></title>
   <link href="http://haoweishow.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-28T17:15:53+08:00</updated>
+  <updated>2015-11-15T09:05:28+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OSX 升级导致 Octopress 异常]]></title>
+    <link href="http://haoweishow.com/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang/"/>
+    <updated>2015-11-15T08:57:31+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang</id>
+    <content type="html"><![CDATA[<h2>现象</h2>
+
+<p>octopress创建文章,本地测试,上传等命令都无法使用.</p>
+
+<h2>解决</h2>
+
+<pre><code>ruby -v   #ruby 版本异常
+brew update
+brew install rbenv ruby-build
+rbenv install 2.2.3 #这个之后只是安装了2.2.3版本,但并未在环境变量中生效
+在.bash_profile 中增加 export PATH=/Users/haoweishow/.rbenv/versions/2.2.3/bin:$PATH
+gem install bundler
+rbenv rehash
+bundle install  #进入博客的目录执行该命令(需要 Gemfiles,在2.2.3中在重新安装一次 octopress 依赖的组件,2.0.0的 ruby 目录/Library/Ruby/Gems/2.0.0)
+</code></pre>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://www.jianshu.com/p/dff042c2d10d">http://www.jianshu.com/p/dff042c2d10d</a></li>
+<li><a href="http://schalkneethling.github.io/blog/2015/10/16/errno-enoent-no-such-file-or-directory-jekyll-octopress-el-capitan/">http://schalkneethling.github.io/blog/2015/10/16/errno-enoent-no-such-file-or-directory-jekyll-octopress-el-capitan/</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[部署octopress]]></title>
@@ -22,52 +53,71 @@
 
 <hr />
 
-<p>操作系统：MacOS 10.9.4<br/>
-已有域名：haoweishow.com</p>
+<ul>
+<li>操作系统：MacOS 10.9.4</li>
+<li>已有域名：haoweishow.com</li>
+</ul>
+
 
 <h2>安装</h2>
 
 <hr />
 
-<p>克隆octopress
-    cd /Users/haoweishow/Documents<br/>
+<h3>安装octopress</h3>
+
+<pre><code>    cd /Users/haoweishow/Documents   
     git clone git://github.com/imathis/octopress.git octopress
-安装octopress
-    cd /Users/haoweishow/Documents/octopress<br/>
+    cd /Users/haoweishow/Documents/octopress  
     bundle update
     rake install
-设置github信息
-    rake setup_github_pages
+</code></pre>
+
+<h3>设置github信息</h3>
+
+<pre><code>    rake setup_github_pages
     输入：git@github.com:haoweishow/haoweishow.github.io.git
-设置域名信息
-    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
+</code></pre>
+
+<h3>设置域名信息</h3>
+
+<pre><code>    echo ‘haoweishow.com' &gt;&gt; source/CNAME
+</code></pre>
 
 <h2>发布</h2>
 
 <hr />
 
-<p>创建文章<br/>
-    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
-    rake new_post[&lsquo;title&rsquo;]
-编辑文章
-    本文使用Mou工具编写
-提交文章
-    rake generate
+<h3>创建文章</h3>
+
+<pre><code class="">    alias rake='noglob rake'  #使rake命令支持[和]符号
+    rake new_post['title']
+</code></pre>
+
+<h3>提交文章</h3>
+
+<pre><code>    rake generate
     rake deploy               #将文章部署到github服务器上
-提交源码
-    git add .
-    git commit -m &ldquo;xxxx&rdquo;
-    git push origin source    #将本地代码提交至github</p>
+</code></pre>
+
+<h3>提交源码</h3>
+
+<pre><code>    git add .
+    git commit -m "xxxx"
+    git push origin source    #将本地代码提交至github
+</code></pre>
 
 <h2>测试</h2>
 
 <hr />
 
-<p>在本地服务器上预览页面<br/>
-启动本地服务<br/>
-    rake preview<br/>
-访问本地页面<br/>
-    <a href="http://localhost:4000">http://localhost:4000</a></p>
+<ul>
+<li>在本地服务器上预览页面</li>
+<li>启动本地服务<br/>
+  <code>rake preview</code></li>
+<li>访问本地页面<br/>
+  <code>http://localhost:4000</code></li>
+</ul>
+
 ]]></content>
   </entry>
   

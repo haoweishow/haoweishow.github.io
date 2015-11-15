@@ -4,7 +4,7 @@
   <title><![CDATA[haoweishow Blog]]></title>
   <link href="http://haoweishow.com/atom.xml" rel="self"/>
   <link href="http://haoweishow.com/"/>
-  <updated>2015-05-28T17:15:53+08:00</updated>
+  <updated>2015-11-15T09:05:28+08:00</updated>
   <id>http://haoweishow.com/</id>
   <author>
     <name><![CDATA[haoweishow]]></name>
@@ -12,6 +12,220 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[OSX 升级导致 Octopress 异常]]></title>
+    <link href="http://haoweishow.com/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang/"/>
+    <updated>2015-11-15T08:57:31+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang</id>
+    <content type="html"><![CDATA[<h2>现象</h2>
+
+<p>octopress创建文章,本地测试,上传等命令都无法使用.</p>
+
+<h2>解决</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby -v   #ruby 版本异常
+</span><span class='line'>brew update
+</span><span class='line'>brew install rbenv ruby-build
+</span><span class='line'>rbenv install 2.2.3 #这个之后只是安装了2.2.3版本,但并未在环境变量中生效
+</span><span class='line'>在.bash_profile 中增加 export PATH=/Users/haoweishow/.rbenv/versions/2.2.3/bin:$PATH
+</span><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash
+</span><span class='line'>bundle install  #进入博客的目录执行该命令(需要 Gemfiles,在2.2.3中在重新安装一次 octopress 依赖的组件,2.0.0的 ruby 目录/Library/Ruby/Gems/2.0.0)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://www.jianshu.com/p/dff042c2d10d">http://www.jianshu.com/p/dff042c2d10d</a></li>
+<li><a href="http://schalkneethling.github.io/blog/2015/10/16/errno-enoent-no-such-file-or-directory-jekyll-octopress-el-capitan/">http://schalkneethling.github.io/blog/2015/10/16/errno-enoent-no-such-file-or-directory-jekyll-octopress-el-capitan/</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Git常用命令]]></title>
+    <link href="http://haoweishow.com/blog/2015/08/05/Git-chang-yong-ming-ling/"/>
+    <updated>2015-08-05T23:18:00+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/08/05/Git-chang-yong-ming-ling</id>
+    <content type="html"><![CDATA[<h2>数据库维护</h2>
+
+<ul>
+<li>查看数据库的使用统计<code>git count-objects -v</code></li>
+<li>数据库垃圾回收<code>git gc</code>
+
+<h2>恢复分支</h2></li>
+<li>查看最近访问的sha1数(版本号)<code>git reflog</code></li>
+<li>重新创建删去的分支<code>git branch experimental SHA1_OF_HASH</code>
+
+<h2>基本命令</h2></li>
+<li>添加文件到暂存区<code>git add .</code></li>
+<li>提交并添加注释<code>git commit -a -m "xx"</code></li>
+<li>修改文件名称<code>git mv oldname newname</code></li>
+<li>删除文件<code>git rm file</code></li>
+<li>删除文件夹<code>git rm -r dir</code></li>
+<li>停止跟踪文件但不删除<code>git rm --cached file</code>
+
+<h2>合并</h2></li>
+<li>把dev分支合并到当前分支<code>git merge dev</code></li>
+<li><code>git rebase branch</code>
+
+<h2>分支</h2></li>
+<li>创建并切换到新分支<code>git checkout -b dev</code></li>
+<li>切换分支<code>git checkout dev</code></li>
+<li>以某个版本创建分支<code>git checkout -b dev commitid</code></li>
+<li>在主分支的基础上创建分支<code>git checkout -b dev master</code></li>
+<li>创建分支<code>git branch dev</code></li>
+<li>删除分支<code>git branch -d dev</code></li>
+<li>强制删除<code>git branch -D dev</code></li>
+<li>查看分支<code>git branch</code></li>
+<li>修改分支名称<code>git branch -m oldname newname</code>
+
+<h2>标签</h2></li>
+<li>抽取某个tag的版本<code>git archive --format=zip --output=v1.0.zip v1.0</code></li>
+<li>列出所有本地tag<code>git tag</code></li>
+<li>创建标签,基于已经提交的版本<code>git tag tagname</code></li>
+<li>删除标签<code>git tag -d tagname</code></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[工作总结]]></title>
+    <link href="http://haoweishow.com/blog/2015/06/20/gong-zuo-zong-jie/"/>
+    <updated>2015-06-20T13:53:02+08:00</updated>
+    <id>http://haoweishow.com/blog/2015/06/20/gong-zuo-zong-jie</id>
+    <content type="html"><![CDATA[<p>工作总结
+2015-06-20
+终于自由了,跟以往的休假不一样了.没有工作的问题,没有工作上的电话,就算有,心态也会不同.
+工作6年,学到了很多东西.</p>
+
+<h1>西安神州数码</h1>
+
+<p>从09年毕业,入职神码西安平台,没有经历过实习.刚入职的时候,还感觉有些后悔,因为其它实习过的同学跟公司其它人都很熟,公司的流程,项目的工作,都能侃侃而谈.而我,干瞪眼.
+新入职的好像分了两批,刚进公司之后,出来领取电脑,装系统一些杂事之后,一帮人被拉到会议室开会.
+会议的内容也不见简单,简单的介绍公司,介绍各个项目(公司的项目很多),下来是自我介绍.从哪开始呢,按照座位顺序来吧.好吧,我是第一个,我的介绍很简单(听了后面同学的介绍,发现自己真的说的太简单了,有点懊悔.好歹这算是个表现自己的机会啊)
+后来被分到了一个组,新人4个,跟着两位老大学.感谢李敏姐,Thinks very much!学习ESB,从ESB的发展,到ESB的作用,到ESB的架构,到ESB的环境.在那台用了1个月的台式机上搭建环境.再到我们四个人写PPT,介绍自己对ESB的理解.那一个月没有留下多少印象,只记得有一次,下午下班跟同事讨论技术,讨论到很晚,没有给女朋友电话短信,后来她发飙了.
+在这一个月里,真的就是年轻,用不完的经历,每天早上6点多就起床,坐车1个多小时,早早来到公司,晚上回去偶尔很晚.用不完的精力,已经不记得那个时候在公司都干了些什么.
+公司每个月15号发上个月的工资,领取到上个月1周的工资700+,哇.好开心,自己第一次正式的赚钱了(以前做过临时工不算).在回去的路上给女朋友买了好多零食.
+在租的房子里,笔记本电脑丢了,大学毕业前,老爸给买的,没敢告诉他老人家.报警,感受到中国警察的工作内容和态度,无语.最后又把台式机搬出来用.</p>
+
+<h1>深圳平安银行</h1>
+
+<p>公司安排去深圳出差,女朋友亲自送我,同去的还有个女同事,她男朋友送.到机场跟李敏姐碰面,还被笑话.
+第一次坐飞机,起飞的时候,怕,脚底都冒汗了,超重到无所谓,失重的感觉,让人毫无安全感.后来好多次的出差也就习惯了.
+来到大深圳,天呐,好热.之前李敏姐说深圳的雨很夸张;当你发现下雨,从你把伞拿出来到撑开,雨已经很大了.后来,有一次是真真切切的体会到了.
+下飞机,去酒店,换衣服,直接去客户现场(平安大厦).这一去,就是3年8个月,我成长的第一个阵地.
+项目组好多人呀,客户和同事十几二十呢.</p>
+
+<p>项目经理金义红,人称老金,工作上很严厉,平时都很好,有一次他带我去吃深圳的卤肉饭,一个很小的店.
+跟经理在一起聊的很少,没有过多的谈过工作之外的事情,但是在我成长道路上给我压力的第一个人.
+印象最深刻的是一次,系统出现生产问题,需要运营同事帮忙从备份库中找出历史某天某个服务的日志.历史日志都是压缩备份的,我跟经理通过VNC(平安都使用VNC,这个在多人协查问题的时候真的很方便)连接运营的电脑,告诉他找哪天哪个文件.一连串的操作命令之后,日志文件找出来交给我们之后他就闪人了.</p>
+
+<p>插播一下,平安高效的执行率,离不开VNC和电话会议,超级方便和高效.浦发差远了.</p>
+
+<p>剩下的是我在那检查日志,检查了一会发现日志不够,还得查.好在之前运营告诉我们日志服务器用查询用户可以上去登录,只要记得把解压的临时文件清理掉就可以了.
+然后我连上那台机器,根据记忆中的路径找到了日志文件,但是解压命令忘了.日志是gz结尾,tar命令我是刚刚看过运营的同事使用了,再轮到自己解压,中间的参数忘了是zcvf还是zxvf.在犹豫的时候,经理提醒了我,顺带说了下这些命令我都不熟悉,以后怎么解决问题(言语中带了不满,或者生气,或者鼓励,他的态度已经不重要了,重要的是我不懂这些接本的命令,而且我已进入项目组有一段时间了).这件事,过去5年多了,我一直记得.后来我也指导新同事,发现他们linux命令不熟悉,我也提醒过,态度和语气,有缓和的说明,也有严肃的教育,但是没觉得多少人后来能下功夫学习.</p>
+
+<p>系统架构师陈宏鸿:这位可是公司的传奇人物,连续升职,最年轻的架构师,最年轻的技术总监,他的成长都是他拼搏所得.出入职能跟到这样一位大人物,真的太荣幸了.不过不是所有人都能进入架构师培养的视野.我刚进去的时候,都是做最底层的开发,渐渐的技术能力提升,做的事情也比较多,人也灵活(自我评价:思维灵活有想法).
+慢慢的工作难度上去了,任务也越来越艰巨.宏鸿给我最最深刻的印象是,那时候我在处理一个数据修改的功能,总是出现数据丢失或者数据异常的问题.(具体逻辑就不表了,没多大的事,但是对刚刚开搞的我来说,晚上想问题都想的睡不着,夜里做梦都是工作上的那个问题,困扰了我好久(能困扰好久的问题,而不将问题升级,这个也是我的问题))后来宏鸿,当着我的面,写了一个完整的数据库操作工具类.我惊呆了,我那个问题也解决了(我的问题是当操作出现异常的时候,程序没有正确的回滚,导致数据状态异常).原来程序的问题是可以解决的.</p>
+
+<p>跟女朋友异地,总是各种相思,后来同住的老同事(老雷)提醒我说可以让女朋友过来一起住,可以问问项目经理.我找老金说了情况,他同意了.(感谢老金,感谢公司的各位领导,在神码的6年里,我一直有这样的福利待遇)
+女朋友来深圳,工作生活结婚生子,再到后来我在上海出差,公司也是给我很好的福利,我可以带着老婆孩子,还有我妈,一起来上海.</p>
+
+<p>在平安的三年里,经历了ESB可能有上百次的版本投产,碰到了各种各样的问题,修复和优化了系统无数的bug和功能.工作和生活在平安都显得无比安逸和稳定.</p>
+
+<p>但是现在想想,那个时候的想法真的很幼稚.自己虽然有空余的时间学习其它技术,但是没有经历过实战应用的技术和思想,是无法经得起考验,并且印象也不会深刻.
+在平安的工作太安逸了.</p>
+
+<p>在离开平安要来到浦发项目组的时候,我的想法并不是很清晰,但是我心底里知道,我要来这里.因此,平安的项目经理鲁健伟,最后一次邀请我挽留的时候,我还是拒绝了.我记得那顿饭,鲁总和他老婆,我和我老婆,还有我们家宝宝,一起在八卦一路的老船长旁边的餐厅吃的饭.感谢鲁总对我的认可.</p>
+
+<p>在平安待久了,有时候都觉得东家都忘了是谁,可是毕竟无法跟银行相比.但在神码这家公司,在平安做项目,成长虽然慢,但是我走出来了.我工作的3年里,我收获了很多,得到了客户和公司的认可.
+&ndash; 2015-06-20 12:00 写于上海虹桥机场(快要登机了.再见,大上海!)</p>
+
+<p>在从深圳平安银行去上海浦发银行的过程中,还在深圳顺丰待了一个礼拜,学习新版本的ESB,顺丰用神码的ESB产品,不过是神码工程院的人在实施.
+之后就来上海浦发了.</p>
+
+<h1>上海浦发银行</h1>
+
+<p>插播一条:从深圳到上海预订机票的时候,至考虑了价格(公司规定,折扣在7折以上的需要领导特批),买的机票居然是要在景德镇中转,刚好那天晚上上海暴雨,好多航班都未在上海落地.在景德镇待了一晚,第二天上午才到上海.</p>
+
+<p>正式开启新的工作.
+满心期待的可以一展身手,可以好好的写代码.结果按照项目实施,或者软件开发的流程,先是文档的编写,各种需求文档,概要设计,详细设计(虽然是公司现成的产品,但是文档多多少少有问题,要么缺少,要么不符合行内的规范),总之花了好多个人月来写文档.</p>
+
+<p>这里必须提一下,在这个过程中,我写文档的能力又被鄙视了(不对,是我自己深深的意识到自己的这方面的能力是有多差劲).由于产品是工程院出品,客户有些特别的需求,跟我们提及之后,我们需要整理成需求文档,发给工程院的同事,让他们实现.
+我写的需求文档(记得好像就3,4个需求吧),拿给宏鸿看,结果他无语的表情深深的刺激了我.我了解他,我的东西如果只是一般的差,他会当面批评教育,但是这时,肯定是我的东西差到无话可说的地步.
+又发现了自己的薄弱.这个薄弱点是在之前的工作中不曾遇到多的,工作中也很少涉及文档,或者正式文档的编写.</p>
+
+<p>既然有弱项,那么就改进喽.边改进,边反思.这方面的经验,简直是对自己几年ESB实施经历的否认,做了这么多年ESB的是实施,来到这里,感觉跟没做过一样.</p>
+
+<p>坚持不懈,我挺过来了,挺过了那段自我怀疑的阶段.文档编写的能力在之后的两年里慢慢的一点点提升,虽然达不到很厉害的水平,但总归有所提升,有所收获.</p>
+
+<p>2013年6月初来到上海浦发银行,到2013年12月份,系统上线.这半年时间里,几乎每天加班,项目组的同事和领导都很有干劲,工作是那么有激情.浦发项目成功上线,我作为项目架构师(在这里担任架构师的职责,宏鸿负责督战),也满心期望的能成为真正的架构师.
+在公司的架构师评审中,我的表现很差,当初没有认真对待,没有认真准备自己的材料.通过电话会议的评审,没有通过各位委员的认可.
+总结几点:
+1. 评审问了我ESB产品的缺点?我当时脑袋空白,不知道该怎么回答,就说了ESB产品模块化程度不够&hellip;bilibili说了一些.
+2. 我有没有从头到尾做过一个产品的架构?有还是没有?我脑子闪过我所做的事情,除了ESB产品的实施,而且做实施类项目,怎么可能有机会从头到尾进行产品的架构设计呢?而那些之前做过的小产品我也没觉得架构有多NB,因此我坚定的回答了没有.
+过了好久之后,宏鸿总告诉我结果,当然是没有通过了.告诉我失败的原因,上面两点还有其它的一些.
+当时还没怎么想,没怎么考虑,当天就糊里糊涂的过去了.</p>
+
+<p>在后来的工作过程中,我的工作热情慢慢的降下来了,由原来的200%慢慢回归到正常的工作状态.
+怀疑过公司,怀疑过我的努力,怀疑过自己的能力&hellip;.
+期间看过淘宝的一篇文章,作者是在非常努力,各种表现都很好的情况下,毫无理由的被否定,后来领导告诉他说这是对他的考验,如果连这点压力都扛不住,那他真的不适合这个职位.</p>
+
+<p>我也这么想过,我也试着平复自己的心情,平复自己内心的无奈.
+时间是最好的药.
+很庆幸自己那时候没有太冲动(当然很大一部分原因在于家庭,我拖家带口的,怎么可能说走就走呢).
+自己之所以没有成为架构师,原因还是在自己.
+&ndash; 2015-06-20 13:00 写于上海虹桥机场(飞机登机时间延迟到13:00)</p>
+
+<p>自己确实如他所说,没有从头开始进行一个产品架构的设计,那些小的系统,在我眼里真的不值一提.
+后来公司组织的一次架构培训,他也提到过,要成为架构师,必须经历两个阶段,一个失败的架构设计,和一个成功的架构设计.
+个人理解:经历过失败,你才明白,产品或者功能要怎么设计才能解决问题,避免踩坑.其实在现在这种类型的实施项目中,我也经历的可能更多的是产品细节实现上一些有问题的设计.</p>
+
+<p>不过这些要作为成为架构师的资本来说,远远不够,真的就要像他说的一样,必须从头开始设计产品的架构,才有资格成为架构师.</p>
+
+<p>因此我的思想,慢慢的从抱怨(做实施类的项目怎么可能有机会从头开始呢),到慢慢的接受,再到现在发现自己不成功的原因.</p>
+
+<p>关于我不能成为架构师,我的理解:
+公司角度:我做的过项目太少,经历的少,经验方面肯定会有局限性,经验这东西真的需要踩坑,需要实际接触到,才能变成自己的;而我自己因为家庭,同时公司也需要一些稳定的人来支撑项目的实施,因此我也不用到处跑,待在一个项目里好好干即可.</p>
+
+<p>个人角度:我做过的东西确实少,写过的技术博客也很单薄,到目前为止也都是一些工作总结性质的,技术方面的深度还是不够.因此,就算公司给我个架构师,我也觉得自己不合格.</p>
+
+<p>既然找到原因:
+那么结论就显而易见了,我选择了离开神码,几点原因:
+1. 出差,长期的出差,很少有归属感,也不好照顾父母;
+2. 家庭,孩子的教育问题,在上海或者其它地方,肯定无法给孩子安稳的教育环境;
+3. 环境,是指工作周围的同事,这里绝无贬义,但却是个不争的事实,我希望自己能够与优秀的人共事;
+4. 工资,这个行业现状,跳槽永远比升职工资涨的快;
+这个思想的转变也是慢慢形成的,包括对自己当前环境,工作状态的审视,更早的时候,都没有考虑过这些问题.当被严重打击之后,才意识到要好好考虑考虑,好好想想.</p>
+
+<p>推荐一篇文章,二爷写的:人生苦短,度日如年.
+这么短暂的人生,哪有时间浪费呢?因此,我要找更优秀的公司,更优秀的团队,更优秀的同事一起共事,提升自己的能力.
+而且你周围人的平均水平就是你的水平,因此,如何选择就很容易了.</p>
+
+<p>再提一句,我喜欢与聪明的人共事.
+培养那些上进心不足的人,简直是浪费时间.(请见谅这句话如此的过分,但如果你觉这句话让你不舒服,那么你有可能就是那种人)</p>
+
+<p>&ndash; 2015-06-20 写于虹桥机场MU2156(已经登机,等待起飞,晚点多久,不得而知)</p>
+
+<h1>西安华为</h1>
+
+<p>2015-07-17将会加入华为云计算部门,后面的境况如何,现在无法预测.
+工作6年,明白的道理:
+<strong>如果当前的环境无法再让你有所提升,那么你就必须考虑换一个,人生苦短,考虑好就不要再犹豫!</strong></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[端口占用查询]]></title>
@@ -225,7 +439,7 @@
 
 <p>这个解决是在<strong>现象2</strong>之后执行的.
 * <code>ps -ef|grep db2stop</code>
-* <code>kill &lt;pid&gt;</code> #kill掉&#8217;db2stop force&#8217;对应的进程
+* <code>kill &lt;pid&gt;</code> #kill掉'db2stop force'对应的进程
 * 再次执行<code>ps -ef|grep db2stop</code>,没有对应的信息,数据已经停止
 * 重启数据库<code>db2start</code></p>
 ]]></content>
@@ -1787,238 +2001,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 <li>性能测试由行内进行</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[格式化Java代码]]></title>
-    <link href="http://haoweishow.com/blog/2014/09/05/ge-shi-hua-javadai-ma/"/>
-    <updated>2014-09-05T10:55:16+08:00</updated>
-    <id>http://haoweishow.com/blog/2014/09/05/ge-shi-hua-javadai-ma</id>
-    <content type="html"><![CDATA[<h2>背景</h2>
-
-<hr />
-
-<ul>
-<li>产品中一个核心模块，会根据配置文件生成运行时的java代码（一个完整的java类）。</li>
-<li>自动生成的java类，没有对其进行格式化。</li>
-<li>排错时不方便阅读，代码量小还好，代码多的话，很难看清楚里面的逻辑，因此每次都是把代码拷贝到eclipse里面格式之后再看。</li>
-</ul>
-
-
-<h2>过程</h2>
-
-<hr />
-
-<ul>
-<li>搜索到这个文章,<a href="http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/">How to use the eclipse code formatter from your code</a>,自备梯子.</li>
-<li>作者是通过eclipse的formatter组件实现代码的格式化.</li>
-<li>按照文章的描述逐步实现,引入eclipse的10个jar包,可以实现代码的格式化.</li>
-<li>但是引入10个jar到项目中,过于复杂.</li>
-<li>该文章的评论中有人提到<a href="http://sourceforge.net/projects/jastyle/">jastyle</a>.</li>
-</ul>
-
-
-<h2>实现</h2>
-
-<ul>
-<li>下载jastyle的源码,并导入到eclipse工程中,当然也可以直接下载jar包使用.下图是导入到ecipse里的源码,可以看到代码还是很精简独立的.    <br/>
-<img src="http://haoweishow.com/images/postImage/20140905-1.png"></li>
-<li>该模块的Main.java是格式化java代码的入口类.</li>
-<li>从中抽取出格式化单个java文件函数,测试代码:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>TestJavaFormat.java </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">net</span><span class="o">.</span><span class="na">barenca</span><span class="o">.</span><span class="na">jastyle</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileReader</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.Reader</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestJavaFormat</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">&quot;C:/share/javaworkspace/jar/src/Test.java&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">Reader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
-</span><span class='line'>      <span class="n">String</span> <span class="n">tmpFileName</span> <span class="o">=</span> <span class="n">fileName</span> <span class="o">+</span> <span class="s">&quot;.tmp&quot;</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">file</span><span class="o">.</span><span class="na">delete</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PrintWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">FileWriter</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">)));</span>
-</span><span class='line'>
-</span><span class='line'>      
-</span><span class='line'>      <span class="c1">//开始对文件进行格式化</span>
-</span><span class='line'>      <span class="n">ASFormatter</span> <span class="n">formatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ASFormatter</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">formatter</span><span class="o">.</span><span class="na">setJavaStyle</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">ASStreamIterator</span> <span class="n">streamIterator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ASStreamIterator</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">formatter</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">streamIterator</span><span class="o">);</span>
-</span><span class='line'>      <span class="k">while</span> <span class="o">(</span><span class="n">formatter</span><span class="o">.</span><span class="na">hasMoreLines</span><span class="o">())</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">formatter</span><span class="o">.</span><span class="na">nextLine</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      
-</span><span class='line'>      <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>      
-</span><span class='line'>      <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">).</span><span class="na">renameTo</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="s">&quot;.orig&quot;</span><span class="o">));</span>
-</span><span class='line'>      <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">).</span><span class="na">renameTo</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[部署octopress]]></title>
-    <link href="http://haoweishow.com/blog/2014/07/07/bu-shu-octopress/"/>
-    <updated>2014-07-07T17:52:56+08:00</updated>
-    <id>http://haoweishow.com/blog/2014/07/07/bu-shu-octopress</id>
-    <content type="html"><![CDATA[<h2>背景</h2>
-
-<hr />
-
-<p>操作系统：MacOS 10.9.4<br/>
-已有域名：haoweishow.com</p>
-
-<h2>安装</h2>
-
-<hr />
-
-<p>克隆octopress
-    cd /Users/haoweishow/Documents<br/>
-    git clone git://github.com/imathis/octopress.git octopress
-安装octopress
-    cd /Users/haoweishow/Documents/octopress<br/>
-    bundle update
-    rake install
-设置github信息
-    rake setup_github_pages
-    输入：git@github.com:haoweishow/haoweishow.github.io.git
-设置域名信息
-    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
-
-<h2>发布</h2>
-
-<hr />
-
-<p>创建文章<br/>
-    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
-    rake new_post[&lsquo;title&rsquo;]
-编辑文章
-    本文使用Mou工具编写
-提交文章
-    rake generate
-    rake deploy               #将文章部署到github服务器上
-提交源码
-    git add .
-    git commit -m &ldquo;xxxx&rdquo;
-    git push origin source    #将本地代码提交至github</p>
-
-<h2>测试</h2>
-
-<hr />
-
-<p>在本地服务器上预览页面<br/>
-启动本地服务<br/>
-    rake preview<br/>
-访问本地页面<br/>
-    <a href="http://localhost:4000">http://localhost:4000</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DB2启动失败(SQL5043N)]]></title>
-    <link href="http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/"/>
-    <updated>2014-07-07T16:41:11+08:00</updated>
-    <id>http://haoweishow.com/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n</id>
-    <content type="html"><![CDATA[<h2>背景</h2>
-
-<hr />
-
-<p>操作系统：  CentOS 6 <br/>
-数据库版本：db2_v101_linuxia32_expc <br/>
-数据库实例名称：esbinst<br/>
-实例用户名称：esbinst <br/>
-数据库安装成功 <br/>
-数据库实例创建成功</p>
-
-<h2>问题</h2>
-
-<hr />
-
-<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
-    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
-执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
-
-<h2>排查</h2>
-
-<hr />
-
-<p>在实例用户的目录中查看日志<br/>
-    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
-存在如下的内容：<br/>
-    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
-    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
-    INSTANCE: esbinst              NODE : 000<br/>
-    HOSTNAME: localhost.localdomain<br/>
-    EDUID   : 1                    EDUNAME: db2sysc<br/>
-    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
-    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
-
-<h2>解决</h2>
-
-<hr />
-
-<p>Step1:<br/>
-    db2 update dbm cfg using SVCENAME esbinst<br/>
-Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
-    esbinst     50000/tcp</p>
 ]]></content>
   </entry>
   

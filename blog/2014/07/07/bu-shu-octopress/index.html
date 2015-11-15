@@ -11,7 +11,12 @@
 
   
   <meta name="description" content="背景 操作系统：MacOS 10.9.4
-已有域名：haoweishow.com 安装 克隆octopress cd /Users/haoweishow/Documents git clone git://github.com/imathis/octopress.git octopress &hellip;">
+已有域名：haoweishow.com 安装 安装octopress 1
+2
+3
+4
+5
+cd /Users/haoweishow/Documents git clone git://github.com/imathis/octopress.git &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,52 +93,86 @@
 
 <hr />
 
-<p>操作系统：MacOS 10.9.4<br/>
-已有域名：haoweishow.com</p>
+<ul>
+<li>操作系统：MacOS 10.9.4</li>
+<li>已有域名：haoweishow.com</li>
+</ul>
+
 
 <h2>安装</h2>
 
 <hr />
 
-<p>克隆octopress
-    cd /Users/haoweishow/Documents<br/>
-    git clone git://github.com/imathis/octopress.git octopress
-安装octopress
-    cd /Users/haoweishow/Documents/octopress<br/>
-    bundle update
-    rake install
-设置github信息
-    rake setup_github_pages
-    输入：git@github.com:haoweishow/haoweishow.github.io.git
-设置域名信息
-    echo ‘haoweishow.com&#8217; >> source/CNAME</p>
+<h3>安装octopress</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /Users/haoweishow/Documents   
+</span><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd /Users/haoweishow/Documents/octopress  
+</span><span class='line'>bundle update
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置github信息</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages
+</span><span class='line'>输入：git@github.com:haoweishow/haoweishow.github.io.git</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置域名信息</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo ‘haoweishow.com' &gt;&gt; source/CNAME</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>发布</h2>
 
 <hr />
 
-<p>创建文章<br/>
-    alias rake=&lsquo;noglob rake&rsquo;  #使rake命令支持[和]符号
-    rake new_post[&lsquo;title&rsquo;]
-编辑文章
-    本文使用Mou工具编写
-提交文章
-    rake generate
-    rake deploy               #将文章部署到github服务器上
-提交源码
-    git add .
-    git commit -m &ldquo;xxxx&rdquo;
-    git push origin source    #将本地代码提交至github</p>
+<h3>创建文章</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias rake='noglob rake'  #使rake命令支持[和]符号
+</span><span class='line'>rake new_post['title']</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>提交文章</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy               #将文章部署到github服务器上</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>提交源码</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add .
+</span><span class='line'>git commit -m "xxxx"
+</span><span class='line'>git push origin source    #将本地代码提交至github</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>测试</h2>
 
 <hr />
 
-<p>在本地服务器上预览页面<br/>
-启动本地服务<br/>
-    rake preview<br/>
-访问本地页面<br/>
-    <a href="http://localhost:4000">http://localhost:4000</a></p>
+<ul>
+<li>在本地服务器上预览页面</li>
+<li>启动本地服务<br/>
+  <code>rake preview</code></li>
+<li>访问本地页面<br/>
+  <code>http://localhost:4000</code></li>
+</ul>
+
 </div>
 
 
@@ -192,10 +231,22 @@
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/git/'>git (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (3)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang/">OSX 升级导致 Octopress 异常</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/05/Git-chang-yong-ming-ling/">Git常用命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/20/gong-zuo-zong-jie/">工作总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/">端口占用查询</a>
@@ -203,18 +254,6 @@
     
       <li class="post">
         <a href="/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/">Db2数据导入导出效率对比</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
       </li>
     
   </ul>

@@ -63,6 +63,301 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang/">OSX 升级导致 Octopress 异常</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-11-15T08:57:31+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>现象</h2>
+
+<p>octopress创建文章,本地测试,上传等命令都无法使用.</p>
+
+<h2>解决</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby -v   #ruby 版本异常
+</span><span class='line'>brew update
+</span><span class='line'>brew install rbenv ruby-build
+</span><span class='line'>rbenv install 2.2.3 #这个之后只是安装了2.2.3版本,但并未在环境变量中生效
+</span><span class='line'>在.bash_profile 中增加 export PATH=/Users/haoweishow/.rbenv/versions/2.2.3/bin:$PATH
+</span><span class='line'>gem install bundler
+</span><span class='line'>rbenv rehash
+</span><span class='line'>bundle install  #进入博客的目录执行该命令(需要 Gemfiles,在2.2.3中在重新安装一次 octopress 依赖的组件,2.0.0的 ruby 目录/Library/Ruby/Gems/2.0.0)</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="http://www.jianshu.com/p/dff042c2d10d">http://www.jianshu.com/p/dff042c2d10d</a></li>
+<li><a href="http://schalkneethling.github.io/blog/2015/10/16/errno-enoent-no-such-file-or-directory-jekyll-octopress-el-capitan/">http://schalkneethling.github.io/blog/2015/10/16/errno-enoent-no-such-file-or-directory-jekyll-octopress-el-capitan/</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/08/05/Git-chang-yong-ming-ling/">Git常用命令</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-05T23:18:00+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>数据库维护</h2>
+
+<ul>
+<li>查看数据库的使用统计<code>git count-objects -v</code></li>
+<li>数据库垃圾回收<code>git gc</code>
+
+<h2>恢复分支</h2></li>
+<li>查看最近访问的sha1数(版本号)<code>git reflog</code></li>
+<li>重新创建删去的分支<code>git branch experimental SHA1_OF_HASH</code>
+
+<h2>基本命令</h2></li>
+<li>添加文件到暂存区<code>git add .</code></li>
+<li>提交并添加注释<code>git commit -a -m "xx"</code></li>
+<li>修改文件名称<code>git mv oldname newname</code></li>
+<li>删除文件<code>git rm file</code></li>
+<li>删除文件夹<code>git rm -r dir</code></li>
+<li>停止跟踪文件但不删除<code>git rm --cached file</code>
+
+<h2>合并</h2></li>
+<li>把dev分支合并到当前分支<code>git merge dev</code></li>
+<li><code>git rebase branch</code>
+
+<h2>分支</h2></li>
+<li>创建并切换到新分支<code>git checkout -b dev</code></li>
+<li>切换分支<code>git checkout dev</code></li>
+<li>以某个版本创建分支<code>git checkout -b dev commitid</code></li>
+<li>在主分支的基础上创建分支<code>git checkout -b dev master</code></li>
+<li>创建分支<code>git branch dev</code></li>
+<li>删除分支<code>git branch -d dev</code></li>
+<li>强制删除<code>git branch -D dev</code></li>
+<li>查看分支<code>git branch</code></li>
+<li>修改分支名称<code>git branch -m oldname newname</code>
+
+<h2>标签</h2></li>
+<li>抽取某个tag的版本<code>git archive --format=zip --output=v1.0.zip v1.0</code></li>
+<li>列出所有本地tag<code>git tag</code></li>
+<li>创建标签,基于已经提交的版本<code>git tag tagname</code></li>
+<li>删除标签<code>git tag -d tagname</code></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/20/gong-zuo-zong-jie/">工作总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-20T13:53:02+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>工作总结
+2015-06-20
+终于自由了,跟以往的休假不一样了.没有工作的问题,没有工作上的电话,就算有,心态也会不同.
+工作6年,学到了很多东西.</p>
+
+<h1>西安神州数码</h1>
+
+<p>从09年毕业,入职神码西安平台,没有经历过实习.刚入职的时候,还感觉有些后悔,因为其它实习过的同学跟公司其它人都很熟,公司的流程,项目的工作,都能侃侃而谈.而我,干瞪眼.
+新入职的好像分了两批,刚进公司之后,出来领取电脑,装系统一些杂事之后,一帮人被拉到会议室开会.
+会议的内容也不见简单,简单的介绍公司,介绍各个项目(公司的项目很多),下来是自我介绍.从哪开始呢,按照座位顺序来吧.好吧,我是第一个,我的介绍很简单(听了后面同学的介绍,发现自己真的说的太简单了,有点懊悔.好歹这算是个表现自己的机会啊)
+后来被分到了一个组,新人4个,跟着两位老大学.感谢李敏姐,Thinks very much!学习ESB,从ESB的发展,到ESB的作用,到ESB的架构,到ESB的环境.在那台用了1个月的台式机上搭建环境.再到我们四个人写PPT,介绍自己对ESB的理解.那一个月没有留下多少印象,只记得有一次,下午下班跟同事讨论技术,讨论到很晚,没有给女朋友电话短信,后来她发飙了.
+在这一个月里,真的就是年轻,用不完的经历,每天早上6点多就起床,坐车1个多小时,早早来到公司,晚上回去偶尔很晚.用不完的精力,已经不记得那个时候在公司都干了些什么.
+公司每个月15号发上个月的工资,领取到上个月1周的工资700+,哇.好开心,自己第一次正式的赚钱了(以前做过临时工不算).在回去的路上给女朋友买了好多零食.
+在租的房子里,笔记本电脑丢了,大学毕业前,老爸给买的,没敢告诉他老人家.报警,感受到中国警察的工作内容和态度,无语.最后又把台式机搬出来用.</p>
+
+<h1>深圳平安银行</h1>
+
+<p>公司安排去深圳出差,女朋友亲自送我,同去的还有个女同事,她男朋友送.到机场跟李敏姐碰面,还被笑话.
+第一次坐飞机,起飞的时候,怕,脚底都冒汗了,超重到无所谓,失重的感觉,让人毫无安全感.后来好多次的出差也就习惯了.
+来到大深圳,天呐,好热.之前李敏姐说深圳的雨很夸张;当你发现下雨,从你把伞拿出来到撑开,雨已经很大了.后来,有一次是真真切切的体会到了.
+下飞机,去酒店,换衣服,直接去客户现场(平安大厦).这一去,就是3年8个月,我成长的第一个阵地.
+项目组好多人呀,客户和同事十几二十呢.</p>
+
+<p>项目经理金义红,人称老金,工作上很严厉,平时都很好,有一次他带我去吃深圳的卤肉饭,一个很小的店.
+跟经理在一起聊的很少,没有过多的谈过工作之外的事情,但是在我成长道路上给我压力的第一个人.
+印象最深刻的是一次,系统出现生产问题,需要运营同事帮忙从备份库中找出历史某天某个服务的日志.历史日志都是压缩备份的,我跟经理通过VNC(平安都使用VNC,这个在多人协查问题的时候真的很方便)连接运营的电脑,告诉他找哪天哪个文件.一连串的操作命令之后,日志文件找出来交给我们之后他就闪人了.</p>
+
+<p>插播一下,平安高效的执行率,离不开VNC和电话会议,超级方便和高效.浦发差远了.</p>
+
+<p>剩下的是我在那检查日志,检查了一会发现日志不够,还得查.好在之前运营告诉我们日志服务器用查询用户可以上去登录,只要记得把解压的临时文件清理掉就可以了.
+然后我连上那台机器,根据记忆中的路径找到了日志文件,但是解压命令忘了.日志是gz结尾,tar命令我是刚刚看过运营的同事使用了,再轮到自己解压,中间的参数忘了是zcvf还是zxvf.在犹豫的时候,经理提醒了我,顺带说了下这些命令我都不熟悉,以后怎么解决问题(言语中带了不满,或者生气,或者鼓励,他的态度已经不重要了,重要的是我不懂这些接本的命令,而且我已进入项目组有一段时间了).这件事,过去5年多了,我一直记得.后来我也指导新同事,发现他们linux命令不熟悉,我也提醒过,态度和语气,有缓和的说明,也有严肃的教育,但是没觉得多少人后来能下功夫学习.</p>
+
+<p>系统架构师陈宏鸿:这位可是公司的传奇人物,连续升职,最年轻的架构师,最年轻的技术总监,他的成长都是他拼搏所得.出入职能跟到这样一位大人物,真的太荣幸了.不过不是所有人都能进入架构师培养的视野.我刚进去的时候,都是做最底层的开发,渐渐的技术能力提升,做的事情也比较多,人也灵活(自我评价:思维灵活有想法).
+慢慢的工作难度上去了,任务也越来越艰巨.宏鸿给我最最深刻的印象是,那时候我在处理一个数据修改的功能,总是出现数据丢失或者数据异常的问题.(具体逻辑就不表了,没多大的事,但是对刚刚开搞的我来说,晚上想问题都想的睡不着,夜里做梦都是工作上的那个问题,困扰了我好久(能困扰好久的问题,而不将问题升级,这个也是我的问题))后来宏鸿,当着我的面,写了一个完整的数据库操作工具类.我惊呆了,我那个问题也解决了(我的问题是当操作出现异常的时候,程序没有正确的回滚,导致数据状态异常).原来程序的问题是可以解决的.</p>
+
+<p>跟女朋友异地,总是各种相思,后来同住的老同事(老雷)提醒我说可以让女朋友过来一起住,可以问问项目经理.我找老金说了情况,他同意了.(感谢老金,感谢公司的各位领导,在神码的6年里,我一直有这样的福利待遇)
+女朋友来深圳,工作生活结婚生子,再到后来我在上海出差,公司也是给我很好的福利,我可以带着老婆孩子,还有我妈,一起来上海.</p>
+
+<p>在平安的三年里,经历了ESB可能有上百次的版本投产,碰到了各种各样的问题,修复和优化了系统无数的bug和功能.工作和生活在平安都显得无比安逸和稳定.</p>
+
+<p>但是现在想想,那个时候的想法真的很幼稚.自己虽然有空余的时间学习其它技术,但是没有经历过实战应用的技术和思想,是无法经得起考验,并且印象也不会深刻.
+在平安的工作太安逸了.</p>
+
+<p>在离开平安要来到浦发项目组的时候,我的想法并不是很清晰,但是我心底里知道,我要来这里.因此,平安的项目经理鲁健伟,最后一次邀请我挽留的时候,我还是拒绝了.我记得那顿饭,鲁总和他老婆,我和我老婆,还有我们家宝宝,一起在八卦一路的老船长旁边的餐厅吃的饭.感谢鲁总对我的认可.</p>
+
+<p>在平安待久了,有时候都觉得东家都忘了是谁,可是毕竟无法跟银行相比.但在神码这家公司,在平安做项目,成长虽然慢,但是我走出来了.我工作的3年里,我收获了很多,得到了客户和公司的认可.
+&ndash; 2015-06-20 12:00 写于上海虹桥机场(快要登机了.再见,大上海!)</p>
+
+<p>在从深圳平安银行去上海浦发银行的过程中,还在深圳顺丰待了一个礼拜,学习新版本的ESB,顺丰用神码的ESB产品,不过是神码工程院的人在实施.
+之后就来上海浦发了.</p>
+
+<h1>上海浦发银行</h1>
+
+<p>插播一条:从深圳到上海预订机票的时候,至考虑了价格(公司规定,折扣在7折以上的需要领导特批),买的机票居然是要在景德镇中转,刚好那天晚上上海暴雨,好多航班都未在上海落地.在景德镇待了一晚,第二天上午才到上海.</p>
+
+<p>正式开启新的工作.
+满心期待的可以一展身手,可以好好的写代码.结果按照项目实施,或者软件开发的流程,先是文档的编写,各种需求文档,概要设计,详细设计(虽然是公司现成的产品,但是文档多多少少有问题,要么缺少,要么不符合行内的规范),总之花了好多个人月来写文档.</p>
+
+<p>这里必须提一下,在这个过程中,我写文档的能力又被鄙视了(不对,是我自己深深的意识到自己的这方面的能力是有多差劲).由于产品是工程院出品,客户有些特别的需求,跟我们提及之后,我们需要整理成需求文档,发给工程院的同事,让他们实现.
+我写的需求文档(记得好像就3,4个需求吧),拿给宏鸿看,结果他无语的表情深深的刺激了我.我了解他,我的东西如果只是一般的差,他会当面批评教育,但是这时,肯定是我的东西差到无话可说的地步.
+又发现了自己的薄弱.这个薄弱点是在之前的工作中不曾遇到多的,工作中也很少涉及文档,或者正式文档的编写.</p>
+
+<p>既然有弱项,那么就改进喽.边改进,边反思.这方面的经验,简直是对自己几年ESB实施经历的否认,做了这么多年ESB的是实施,来到这里,感觉跟没做过一样.</p>
+
+<p>坚持不懈,我挺过来了,挺过了那段自我怀疑的阶段.文档编写的能力在之后的两年里慢慢的一点点提升,虽然达不到很厉害的水平,但总归有所提升,有所收获.</p>
+
+<p>2013年6月初来到上海浦发银行,到2013年12月份,系统上线.这半年时间里,几乎每天加班,项目组的同事和领导都很有干劲,工作是那么有激情.浦发项目成功上线,我作为项目架构师(在这里担任架构师的职责,宏鸿负责督战),也满心期望的能成为真正的架构师.
+在公司的架构师评审中,我的表现很差,当初没有认真对待,没有认真准备自己的材料.通过电话会议的评审,没有通过各位委员的认可.
+总结几点:
+1. 评审问了我ESB产品的缺点?我当时脑袋空白,不知道该怎么回答,就说了ESB产品模块化程度不够&hellip;bilibili说了一些.
+2. 我有没有从头到尾做过一个产品的架构?有还是没有?我脑子闪过我所做的事情,除了ESB产品的实施,而且做实施类项目,怎么可能有机会从头到尾进行产品的架构设计呢?而那些之前做过的小产品我也没觉得架构有多NB,因此我坚定的回答了没有.
+过了好久之后,宏鸿总告诉我结果,当然是没有通过了.告诉我失败的原因,上面两点还有其它的一些.
+当时还没怎么想,没怎么考虑,当天就糊里糊涂的过去了.</p>
+
+<p>在后来的工作过程中,我的工作热情慢慢的降下来了,由原来的200%慢慢回归到正常的工作状态.
+怀疑过公司,怀疑过我的努力,怀疑过自己的能力&hellip;.
+期间看过淘宝的一篇文章,作者是在非常努力,各种表现都很好的情况下,毫无理由的被否定,后来领导告诉他说这是对他的考验,如果连这点压力都扛不住,那他真的不适合这个职位.</p>
+
+<p>我也这么想过,我也试着平复自己的心情,平复自己内心的无奈.
+时间是最好的药.
+很庆幸自己那时候没有太冲动(当然很大一部分原因在于家庭,我拖家带口的,怎么可能说走就走呢).
+自己之所以没有成为架构师,原因还是在自己.
+&ndash; 2015-06-20 13:00 写于上海虹桥机场(飞机登机时间延迟到13:00)</p>
+
+<p>自己确实如他所说,没有从头开始进行一个产品架构的设计,那些小的系统,在我眼里真的不值一提.
+后来公司组织的一次架构培训,他也提到过,要成为架构师,必须经历两个阶段,一个失败的架构设计,和一个成功的架构设计.
+个人理解:经历过失败,你才明白,产品或者功能要怎么设计才能解决问题,避免踩坑.其实在现在这种类型的实施项目中,我也经历的可能更多的是产品细节实现上一些有问题的设计.</p>
+
+<p>不过这些要作为成为架构师的资本来说,远远不够,真的就要像他说的一样,必须从头开始设计产品的架构,才有资格成为架构师.</p>
+
+<p>因此我的思想,慢慢的从抱怨(做实施类的项目怎么可能有机会从头开始呢),到慢慢的接受,再到现在发现自己不成功的原因.</p>
+
+<p>关于我不能成为架构师,我的理解:
+公司角度:我做的过项目太少,经历的少,经验方面肯定会有局限性,经验这东西真的需要踩坑,需要实际接触到,才能变成自己的;而我自己因为家庭,同时公司也需要一些稳定的人来支撑项目的实施,因此我也不用到处跑,待在一个项目里好好干即可.</p>
+
+<p>个人角度:我做过的东西确实少,写过的技术博客也很单薄,到目前为止也都是一些工作总结性质的,技术方面的深度还是不够.因此,就算公司给我个架构师,我也觉得自己不合格.</p>
+
+<p>既然找到原因:
+那么结论就显而易见了,我选择了离开神码,几点原因:
+1. 出差,长期的出差,很少有归属感,也不好照顾父母;
+2. 家庭,孩子的教育问题,在上海或者其它地方,肯定无法给孩子安稳的教育环境;
+3. 环境,是指工作周围的同事,这里绝无贬义,但却是个不争的事实,我希望自己能够与优秀的人共事;
+4. 工资,这个行业现状,跳槽永远比升职工资涨的快;
+这个思想的转变也是慢慢形成的,包括对自己当前环境,工作状态的审视,更早的时候,都没有考虑过这些问题.当被严重打击之后,才意识到要好好考虑考虑,好好想想.</p>
+
+<p>推荐一篇文章,二爷写的:人生苦短,度日如年.
+这么短暂的人生,哪有时间浪费呢?因此,我要找更优秀的公司,更优秀的团队,更优秀的同事一起共事,提升自己的能力.
+而且你周围人的平均水平就是你的水平,因此,如何选择就很容易了.</p>
+
+<p>再提一句,我喜欢与聪明的人共事.
+培养那些上进心不足的人,简直是浪费时间.(请见谅这句话如此的过分,但如果你觉这句话让你不舒服,那么你有可能就是那种人)</p>
+
+<p>&ndash; 2015-06-20 写于虹桥机场MU2156(已经登机,等待起飞,晚点多久,不得而知)</p>
+
+<h1>西安华为</h1>
+
+<p>2015-07-17将会加入华为云计算部门,后面的境况如何,现在无法预测.
+工作6年,明白的道理:
+<strong>如果当前的环境无法再让你有所提升,那么你就必须考虑换一个,人生苦短,考虑好就不要再犹豫!</strong></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/">端口占用查询</a></h1>
     
     
@@ -347,7 +642,7 @@
 
 <p>这个解决是在<strong>现象2</strong>之后执行的.
 * <code>ps -ef|grep db2stop</code>
-* <code>kill &lt;pid&gt;</code> #kill掉&#8217;db2stop force&#8217;对应的进程
+* <code>kill &lt;pid&gt;</code> #kill掉'db2stop force'对应的进程
 * 再次执行<code>ps -ef|grep db2stop</code>,没有对应的信息,数据已经停止
 * 重启数据库<code>db2start</code></p>
 </div>
@@ -657,322 +952,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/14/ru-he-ti-gao-gong-zuo-xiao-lu/">如何提高工作效率</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-14T11:45:51+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>//add post at 2015-01-14</p>
-
-<p>标题比较大,实际内容仅涉及到工作中的一小部分内容.</p>
-
-<h2>背景</h2>
-
-<p>项目组开发人员,在开发管理控制台的界面,由于框架的原因,页面文件必须放到jar包里才能加载.</p>
-
-<h2>开发过程</h2>
-
-<ol>
-<li>本地eclipse开发页面代码</li>
-<li>下载服务器上的jar包</li>
-<li>手动把文件拖到jar包</li>
-<li>上传jar包到服务器</li>
-<li>重启服务器</li>
-<li>打开页面看结果</li>
-</ol>
-
-
-<h2>过程分析</h2>
-
-<ul>
-<li>在整个开发过程中,过多的时间都浪费在第3步</li>
-<li>如果页面的源文件目录结构很深,又分布在不同的目录中,那么要把这些目录拖动到jar包里相应的目录上,消耗的时间可想而知</li>
-<li>可能到这里,有经验的或者稍微动动脑的同学都知道该怎么优化这个过程</li>
-<li>可问题是为什么不想办法提高一下效率呢?<code>磨刀不误砍柴工</code>的道理大家应该都懂</li>
-</ul>
-
-
-<h2>解决方法</h2>
-
-<ul>
-<li>通过ant脚本来抽取代码和执行打包的动作</li>
-<li>目前上传文件还是通过FTP工具实现,没有测试过ant是否可以上传</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/13/cheng-xu-qing-dan/">程序清单</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-13T20:01:37+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><strong>//add post at 2015-01-13</strong></p>
-
-<h2>Mac系统</h2>
-
-<h4>编程</h4>
-
-<ul>
-<li>IntelliJ IDEA 13(其实不是很习惯这个软件,但是Eclipse总是崩溃)</li>
-<li>Xcode(试过obj-c和swift,但是一直没有开发出成型的东西)</li>
-<li>XMind(尝试过一些写作,但是没有深度使用)</li>
-<li>Dash(用的比较少,不然还是要用付费版本的,那个等待的设计,真坑;今天还看到这个作者90后,年收入XX万美金,励志榜样啊)</li>
-<li>OmniGraffle(还未深入使用)</li>
-</ul>
-
-
-<h4>阅读</h4>
-
-<ul>
-<li>Pocket(一直默默使用)</li>
-<li>Reader(RSS阅读器,以后一定支持作者)</li>
-<li>PDFNut(PDF文件阅读,管理软件,简洁;关键自己阅读的少)</li>
-</ul>
-
-
-<h4>编辑</h4>
-
-<ul>
-<li>Atom(从github上下载源码,编译生成,SublimeText)</li>
-<li>BBEdit</li>
-<li>MacVim</li>
-<li>MacDown(现在用这个软件来维护blog的文章,ulysses好用,但是导出的md文件格式跟blog的不兼容)mod at 2015-03-17</li>
-<li>DiffMerge</li>
-<li>Mou(开始些blog的时候用过,不过有了Ulysses,就不再使用了)</li>
-<li>Ulysses(不愧是AppStore的推荐,比Mou好用N多,以后一定支持作者)</li>
-<li>Writer Pro</li>
-<li>Microsoft Office 2011</li>
-</ul>
-
-
-<h4>日志</h4>
-
-<ul>
-<li>Day One(记录生活的日志软件,目前基本都是关于我们家玥玥的:))</li>
-</ul>
-
-
-<h4>虚拟机</h4>
-
-<ul>
-<li>Parallel Desktop 10(圣诞节优惠购,值)</li>
-<li>Virtual Box(现在很少用)</li>
-</ul>
-
-
-<h4>系统</h4>
-
-<ul>
-<li>iTerm2(下载源码编译安装)</li>
-<li>Moom(付费的软件就是不一样,很方便,跟OSX系统的结合很自然)</li>
-<li>Go2Shell(用了Alfred高级功能,这个软件就基本可以歇菜了)</li>
-<li>Alfred 2(高级功能使用很少)</li>
-<li>DesktopActivity(简洁,赞!)</li>
-<li>Wallpapers HD Lite(图片的质量很不错)</li>
-<li>BetterZip(Mac下的解压缩软件,不如WinRAR还用,还是用命令打包解压)</li>
-<li>1Password 5(圣诞节优惠购,值)</li>
-<li>CleanMyMac 2 (圣诞节优惠购,值)</li>
-</ul>
-
-
-<h4>网路</h4>
-
-<ul>
-<li>NetSpot</li>
-<li>Network Inspector</li>
-<li>云梯(国内上网必备,之前用国外的VPN Shield很不稳定,这个也是经常断线,几个国家的换着连接,到期再换曲径试试)</li>
-</ul>
-
-
-<h4>GTD</h4>
-
-<ul>
-<li>Things(简洁,赞!)(购买了超值的软件包,支持正版!mod at 2015-03-17)</li>
-</ul>
-
-
-<h4>同步</h4>
-
-<ul>
-<li>115网盘(大容量,分享内容的用户很多)(不过现在只有会员才能够得到别人分享的东西!mod at 2015-03-17)</li>
-<li>百度云(空间大,现在用来做数据备份)</li>
-<li>CloudApp(同步剪切板,截图,小文件的软件,不过win下不怎么好用,正在考虑自己开发一个本地的版本)</li>
-<li>Evernote(好用不解释,不过现在软件已经沦陷为收集器了.)</li>
-<li>麦库(先发现的有道笔记,开始的时候很热心,在微博上提过一些意见,但是反馈很X,逐渐放弃;搜索同类找到Evernote,那个时候还没有印象笔记,同步不稳定;又尝试麦库;再后来有回到Evernote,并付费使用)</li>
-<li>Dropbox(12或者13年的时候,可以不翻墙使用,用过一段时间,主要用来备份数据,2G的免费空间暂时后用,后来无法访问就放弃了;现在因为Day One支持的iCloud同步不稳定,又因为有了VPN,所有把Day One的同步切换到了dropbox上,可恶的gfw,同步个笔记还得开VPN)</li>
-</ul>
-
-
-<h2>Win系统</h2>
-
-<p>Win软件下还是没有付费习惯.<br/>
-第一个付费的Win软件是Evernote.</p>
-
-<h4>UI设计</h4>
-
-<ul>
-<li>WireframeSketcher(最近使用,14天的免费试用,感觉还不错,希望能尽快完成任务)(调整系统时间,然后断网,继续使用&hellip;mod at 2015-03-17)</li>
-<li>UIDesigner 2.5(腾讯出品,没有深入使用,不过配套的UIDPlayer可以在手机上直接运行设计出来的软件)</li>
-</ul>
-
-
-<h4>流程图</h4>
-
-<ul>
-<li>Microsoft Visio(现在流程图之类的主要靠这个啦)</li>
-<li>ArgoUML(大学的时候,老师上课演示用过,工作以后用的不过,关键是画UML图画的少)</li>
-<li>Diagram Designer</li>
-</ul>
-
-
-<h4>编程</h4>
-
-<ul>
-<li>Dev-C++(第一个C开发工具,大学的C++课程老师用的就是这个,一直使用到现在,简洁)</li>
-<li>Eclipse(这个就不用说了,最爱用的MyEclipse3.3的那个版本)</li>
-<li>Beyond Compare 3(神器,在平安的时候,处理过8个并行版本的版本同步)</li>
-<li>UltraEdit-32(文本编译还是习惯用这个,EditPlus和NotePad用不久)</li>
-<li>Cygwin Terminal(偶尔用个grep/find之类的命令)</li>
-<li>Altova XMLSpy(用了N久了,但是一直都是用来格式化XML)</li>
-<li>SecureCRT 7.2(在平安的时候,同事推荐过,但是没有深入了解,感觉不如SSH Secure Shell Client好用,但是后来另一个同事告诉我这个工具上传文件的方式之后,就彻底沦陷了,Alt+p,太方便了)</li>
-<li>SSH Secure Shell Client(用的最早的一款ssh软件)</li>
-<li>Xmanager Enterprise 4(在多个页签之间切换会卡顿,不知道是版本的问题还是其它)</li>
-<li>Wireshark</li>
-</ul>
-
-
-<h4>版本管理</h4>
-
-<ul>
-<li>SVN</li>
-<li>Git(最好用的版本管理软件,只有真正使用,才能说好.mod at 2015-03-17)</li>
-</ul>
-
-
-<h2>IOS系统</h2>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/06/db2-loadshu-ju-shi-bai-sql2036n/">DB2 load数据失败(SQL2036N)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-06T17:38:09+08:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>背景</h2>
-
-<ul>
-<li>数据库实例用户:  userA</li>
-<li>数据操作用户:    userB</li>
-</ul>
-
-
-<h2>操作</h2>
-
-<ul>
-<li>userB执行export命令,导出ixf格式的数据;</li>
-<li>userB执行import命令,导入ixf格式的数据,正常导入;</li>
-<li>userB执行load命令,导入ixf格式的数据,导入失败;</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>SQL2036N  The path for the file or device
-</span><span class='line'>"/home/esb/batch/data/tmp_xxxx_20141101.ixf" is not valid.</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>解决</h2>
-
-<ul>
-<li>数据库实例用户userA对文件<strong>/home/esb/batch/data/tmp_xxxx_20141101.ixf</strong>没有访问权限.</li>
-<li>给userA授权对该文件的访问权限,即可使用load导入数据.</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -985,10 +964,22 @@ DB2错误码: SQL20054N reeasoncode:29</p>
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/git/'>git (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (3)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang/">OSX 升级导致 Octopress 异常</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/05/Git-chang-yong-ming-ling/">Git常用命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/20/gong-zuo-zong-jie/">工作总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/">端口占用查询</a>
@@ -996,18 +987,6 @@ DB2错误码: SQL20054N reeasoncode:29</p>
     
       <li class="post">
         <a href="/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/">Db2数据导入导出效率对比</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
       </li>
     
   </ul>

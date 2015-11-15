@@ -63,6 +63,353 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/05/ge-shi-hua-javadai-ma/">格式化Java代码</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T10:55:16+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>背景</h2>
+
+<hr />
+
+<ul>
+<li>产品中一个核心模块，会根据配置文件生成运行时的java代码（一个完整的java类）。</li>
+<li>自动生成的java类，没有对其进行格式化。</li>
+<li>排错时不方便阅读，代码量小还好，代码多的话，很难看清楚里面的逻辑，因此每次都是把代码拷贝到eclipse里面格式之后再看。</li>
+</ul>
+
+
+<h2>过程</h2>
+
+<hr />
+
+<ul>
+<li>搜索到这个文章,<a href="http://ssscripting.wordpress.com/2009/06/10/how-to-use-the-eclipse-code-formatter-from-your-code/">How to use the eclipse code formatter from your code</a>,自备梯子.</li>
+<li>作者是通过eclipse的formatter组件实现代码的格式化.</li>
+<li>按照文章的描述逐步实现,引入eclipse的10个jar包,可以实现代码的格式化.</li>
+<li>但是引入10个jar到项目中,过于复杂.</li>
+<li>该文章的评论中有人提到<a href="http://sourceforge.net/projects/jastyle/">jastyle</a>.</li>
+</ul>
+
+
+<h2>实现</h2>
+
+<ul>
+<li>下载jastyle的源码,并导入到eclipse工程中,当然也可以直接下载jar包使用.下图是导入到ecipse里的源码,可以看到代码还是很精简独立的.    <br/>
+<img src="/images/postImage/20140905-1.png"></li>
+<li>该模块的Main.java是格式化java代码的入口类.</li>
+<li>从中抽取出格式化单个java文件函数,测试代码:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>TestJavaFormat.java </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">package</span> <span class="n">net</span><span class="o">.</span><span class="na">barenca</span><span class="o">.</span><span class="na">jastyle</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.BufferedWriter</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileReader</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.FileWriter</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.PrintWriter</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.io.Reader</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestJavaFormat</span> <span class="o">{</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">&quot;C:/share/javaworkspace/jar/src/Test.java&quot;</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">Reader</span> <span class="n">in</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">FileReader</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">String</span> <span class="n">tmpFileName</span> <span class="o">=</span> <span class="n">fileName</span> <span class="o">+</span> <span class="s">&quot;.tmp&quot;</span><span class="o">;</span>
+</span><span class='line'>      <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">file</span><span class="o">.</span><span class="na">delete</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">PrintWriter</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PrintWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">BufferedWriter</span><span class="o">(</span><span class="k">new</span> <span class="n">FileWriter</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">)));</span>
+</span><span class='line'>
+</span><span class='line'>      
+</span><span class='line'>      <span class="c1">//开始对文件进行格式化</span>
+</span><span class='line'>      <span class="n">ASFormatter</span> <span class="n">formatter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ASFormatter</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">formatter</span><span class="o">.</span><span class="na">setJavaStyle</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">ASStreamIterator</span> <span class="n">streamIterator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ASStreamIterator</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">formatter</span><span class="o">.</span><span class="na">init</span><span class="o">(</span><span class="n">streamIterator</span><span class="o">);</span>
+</span><span class='line'>      <span class="k">while</span> <span class="o">(</span><span class="n">formatter</span><span class="o">.</span><span class="na">hasMoreLines</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>          <span class="n">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">formatter</span><span class="o">.</span><span class="na">nextLine</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">out</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">out</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">in</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>      
+</span><span class='line'>      <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">).</span><span class="na">renameTo</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span> <span class="o">+</span> <span class="s">&quot;.orig&quot;</span><span class="o">));</span>
+</span><span class='line'>      <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">tmpFileName</span><span class="o">).</span><span class="na">renameTo</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">fileName</span><span class="o">));</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/07/bu-shu-octopress/">部署octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T17:52:56+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>背景</h2>
+
+<hr />
+
+<ul>
+<li>操作系统：MacOS 10.9.4</li>
+<li>已有域名：haoweishow.com</li>
+</ul>
+
+
+<h2>安装</h2>
+
+<hr />
+
+<h3>安装octopress</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /Users/haoweishow/Documents   
+</span><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd /Users/haoweishow/Documents/octopress  
+</span><span class='line'>bundle update
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置github信息</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages
+</span><span class='line'>输入：git@github.com:haoweishow/haoweishow.github.io.git</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置域名信息</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo ‘haoweishow.com' &gt;&gt; source/CNAME</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>发布</h2>
+
+<hr />
+
+<h3>创建文章</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>alias rake='noglob rake'  #使rake命令支持[和]符号
+</span><span class='line'>rake new_post['title']</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>提交文章</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy               #将文章部署到github服务器上</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>提交源码</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add .
+</span><span class='line'>git commit -m "xxxx"
+</span><span class='line'>git push origin source    #将本地代码提交至github</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>测试</h2>
+
+<hr />
+
+<ul>
+<li>在本地服务器上预览页面</li>
+<li>启动本地服务<br/>
+  <code>rake preview</code></li>
+<li>访问本地页面<br/>
+  <code>http://localhost:4000</code></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/07/db2qi-dong-shi-bai-sql5043n/">DB2启动失败(SQL5043N)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-07T16:41:11+08:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>背景</h2>
+
+<hr />
+
+<p>操作系统：  CentOS 6 <br/>
+数据库版本：db2_v101_linuxia32_expc <br/>
+数据库实例名称：esbinst<br/>
+实例用户名称：esbinst <br/>
+数据库安装成功 <br/>
+数据库实例创建成功</p>
+
+<h2>问题</h2>
+
+<hr />
+
+<p>执行<strong><em>db2start</em></strong>命令，启动数据库报错如下：<br/>
+    SQL5043N  Support for one or more communications protocols failed to start successfully. However, core database manager functionality started successfully. <br/>
+执行<strong><em>netstat -na|grep 50000</em></strong>，返回空。</p>
+
+<h2>排查</h2>
+
+<hr />
+
+<p>在实例用户的目录中查看日志<br/>
+    home/esbinst/sqllib/db2dump/db2diag.0.log<br/>
+存在如下的内容：<br/>
+    2014-07-07-11.45.59.454360-240 E365892G529          LEVEL: Error<br/>
+    PID     : 25807                TID : 3025136496     PROC : db2sysc<br/>
+    INSTANCE: esbinst              NODE : 000<br/>
+    HOSTNAME: localhost.localdomain<br/>
+    EDUID   : 1                    EDUNAME: db2sysc<br/>
+    FUNCTION: DB2 UDB, common communication, sqlcctcpconnmgr, probe:50<br/>
+    MESSAGE : ADM7006E  The SVCENAME DBM configuration parameter was not configured.  Update the SVCENAME configuration parameter using the service name defined in the TCP/IP services file.</p>
+
+<h2>解决</h2>
+
+<hr />
+
+<p>Step1:<br/>
+    db2 update dbm cfg using SVCENAME esbinst<br/>
+Step2: 在文件/etc/services的末尾添加，或者修改为下面的格式：
+    esbinst     50000/tcp</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/06/16/rake-deploy-failed/">Rake Deploy Failed</a></h1>
     
     
@@ -130,10 +477,22 @@
   
     <section>
   <h1>文章分类</h1>
-    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/ant/'>ant (1)</a></li><li><a href='/blog/categories/db2/'>db2 (8)</a></li><li><a href='/blog/categories/diag/'>diag (1)</a></li><li><a href='/blog/categories/esb/'>esb (1)</a></li><li><a href='/blog/categories/git/'>git (1)</a></li><li><a href='/blog/categories/java/'>java (2)</a></li><li><a href='/blog/categories/jetty/'>jetty (1)</a></li><li><a href='/blog/categories/octopress/'>octopress (3)</a></li><li><a href='/blog/categories/oom/'>oom (1)</a></li><li><a href='/blog/categories/software/'>software (1)</a></li><li><a href='/blog/categories/xing-neng/'>性能 (1)</a></li><li><a href='/blog/categories/xiao-lu/'>效率 (1)</a></li></ul>
 </section><section>
   <h1>最近评论</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/11/15/osx-sheng-ji-dao-zhi-octopress-yi-chang/">OSX 升级导致 Octopress 异常</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/05/Git-chang-yong-ming-ling/">Git常用命令</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/06/20/gong-zuo-zong-jie/">工作总结</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/28/duan-kou-zhan-yong-cha-xun/">端口占用查询</a>
@@ -141,18 +500,6 @@
     
       <li class="post">
         <a href="/blog/2015/05/14/db2shu-ju-dao-ru-dao-chu-xiao-lu-dui-bi/">Db2数据导入导出效率对比</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/05/13/db2stop-force-shi-bai/">Db2stop Force 失败</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/08/db2shu-ju-ku-tong-bu/">DB2数据库同步</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/13/pu-fa-esbxing-neng-ce-shi-you-hua-fang-an/">浦发ESB性能测试优化方案</a>
       </li>
     
   </ul>
